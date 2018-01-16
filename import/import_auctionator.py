@@ -4,7 +4,7 @@ import sys
 import re
 import datetime
 
-work_dir = 'D:/Yano/Drive/Other/python/auctionator_history/' # Working dir
+work_dir = 'D:/Yano/Drive/github/AH_history/import/' # Working dir
 os.chdir(work_dir) 
 source_dir = 'D:/Games/WoW/WTF/Account/HELLBLOOD1/SavedVariables/' # Source dir
 
