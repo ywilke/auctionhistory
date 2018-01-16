@@ -1,1 +1,4 @@
-output/*txt
+
+/import/*.txt
+config.py
+**/__pycache__/

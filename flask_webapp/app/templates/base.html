@@ -1,0 +1,17 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Yano Wilke<title>
+        {% endif %}
+    </head>
+    <body>
+        <div>
+            Content:
+            <a href="/index">Home</a> - 
+            <a href="/Lordaeron_AH_history">Lordaeron AH history</a>
+        </div>
+        {% block content %}{% endblock %}
+    </body>
+</html>
