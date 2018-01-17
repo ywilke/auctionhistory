@@ -4,7 +4,7 @@ from app.forms import LoginForm
 import pygal
 import datetime
 
-with open("D:/Yano/Drive/Other/python/auctionator_history/auction_history.txt","r") as auction_history_file: # Load dict of auction history
+with open("D:/Yano/Drive/github/AH_history/import/auction_history.txt","r") as auction_history_file: # Load dict of auction history
     auction_history = {}
     try:
         auction_history = eval(auction_history_file.read())
