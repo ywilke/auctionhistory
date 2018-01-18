@@ -2,3 +2,4 @@
 /import/*.txt
 config.py
 **/__pycache__/
+launch.bat
