@@ -56,18 +56,12 @@ with open('{}Auctionator.lua'.format(source_dir)) as import_file:
                 pass
             break
 with open('{}Auctionator.lua'.format(source_dir)) as import_file:
-    counter = 0
-    start_counting = False
     importing = False
     for line in import_file:
         line = line.rstrip()
-        if start_counting == True: # Counts lines to skip until first item
-            counter += 1
-            if counter == 3:
-                importing = True
         if importing == False:
-            if line == "AUCTIONATOR_PRICE_DATABASE = {":
-                start_counting = True # Starts import at first item
+            if line == '	["Lordaeron_Horde"] = {':
+                importing = True # Starts import at first item
         elif importing == True:
             if line == "	},":
                 importing = False # Ends import at final item
@@ -79,6 +73,6 @@ with open('{}Auctionator.lua'.format(source_dir)) as import_file:
                     auction_history[item] = [(scan_time,price)]
                 elif item in auction_history:
                     auction_history[item].append((scan_time,price))
-
+print (auction_history['Mithril Ore'])
 write_scan_times()                 
 save_history_dict()      
