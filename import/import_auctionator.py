@@ -73,6 +73,5 @@ with open('{}Auctionator.lua'.format(source_dir)) as import_file:
                     auction_history[item] = [(scan_time,price)]
                 elif item in auction_history:
                     auction_history[item].append((scan_time,price))
-print (auction_history['Mithril Ore'])
 write_scan_times()                 
 save_history_dict()      
