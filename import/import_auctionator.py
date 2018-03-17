@@ -50,9 +50,11 @@ with open('{}Auctionator.lua'.format(source_dir)) as import_file:
             scan_time = line.split(' ')[2]
             try:
                 with open("last_scan.txt","r") as last_scan_file:
-                    if int(scan_time) <= int(last_scan_file.read()):
+                    if int(scan_time) - int(last_scan_file.read()) <= 21600:
+                        print ('Less than 6 hours between scans. Prices not imprted')
                         sys.exit(0)
             except ValueError:
+                print ('ValueError: While comparing scan times')
                 pass
             break
 with open('{}Auctionator.lua'.format(source_dir)) as import_file:
