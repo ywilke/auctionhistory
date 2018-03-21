@@ -1,5 +1,7 @@
 
 /import/*.txt
+/import/*.log
+/import/*.db
 config.py
 **/__pycache__/
 launch.bat
