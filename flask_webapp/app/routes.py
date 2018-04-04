@@ -8,6 +8,7 @@ import pygal
 import datetime
 import sqlite3 as sqlite
 from operator import itemgetter
+from pygal.style import DarkStyle
 
 con = sqlite.connect('D:/Yano/Drive/github/AH_history/import/AH_history.db') #db path
 cur = con.cursor()
@@ -23,6 +24,7 @@ def copper_to_price(copper): # Converts copper int to a normal price
             return '{}s{}c'.format(s, c)
     else:
         return '{}g{}s{}c'.format(g, s, c)
+
 
 def get_date(unix_time):# Converts unix time dd-mm-yy
     return datetime.datetime.fromtimestamp(unix_time).strftime('%d-%m-%y')
@@ -48,7 +50,7 @@ def login():
         item = datapoints[0][0]
         date_price_list = [itemgetter(2,1)(i) for i in datapoints]
         
-        chart = pygal.XY(x_label_rotation=35, value_formatter=lambda y: copper_to_price(y), x_value_formatter=lambda x: get_date(x))
+        chart = pygal.XY(x_label_rotation=35, style=DarkStyle, value_formatter=lambda y: copper_to_price(y), x_value_formatter=lambda x: get_date(x))
         chart.title = "{}'s price history".format(item)
         chart.add(item, date_price_list)
         chart = chart.render_data_uri()

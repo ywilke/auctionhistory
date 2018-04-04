@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container">
     <h1>Search the lordaeron auction house history</h1>
 	<p>Type the exact item name. (Case Insensitive)<p>
     <form action="" method="post">
@@ -15,5 +16,6 @@
 	<div id="chart">
 	<embed type="image/svg+xml" src= {{ chart|safe }} width="1200" height="800" />
 	</div>
+</div>
 	{% endif %}
 {% endblock %}

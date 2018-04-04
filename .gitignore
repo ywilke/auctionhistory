@@ -2,6 +2,8 @@
 /import/*.txt
 /import/*.log
 /import/*.db
+/import/*.cfg
 config.py
 **/__pycache__/
 launch.bat
+/debug/*
