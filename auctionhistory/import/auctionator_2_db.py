@@ -58,7 +58,7 @@ def main(auctionator_path):
                     "FOREIGN KEY(itemid) REFERENCES LOR_H_items(itemid));")
 
     # Importing
-    with open('{}Auctionator.lua'.format(auctionator_path)) as import_file:
+    with open('{}Auctionator.lua'.format(auctionator_path),'r') as import_file:
         for line in import_file:
             line = line.rstrip()
             
@@ -78,7 +78,7 @@ def main(auctionator_path):
                     
                 break
             
-    with open('{}Auctionator.lua'.format(auctionator_path)) as import_file:
+    with open('{}Auctionator.lua'.format(auctionator_path),'r') as import_file:
         importing = False
         sql_params = []
         for line in import_file:
@@ -118,7 +118,7 @@ def main(auctionator_path):
     # Finish
     con.close()
     with open("completed_scans.txt","a") as scans_file:
-        scans_file.write('{date}\tPrices added: {scansize}\tDatabase now contains: {nr_items} items, {nr_prices} prices'.format(date = get_date(current_scantime), scansize = len(sql_params), nr_items = nr_items, nr_prices = nr_prices))
+        scans_file.write('{date}\tPrices added: {scansize}\tDatabase now contains: {nr_items} items, {nr_prices} prices\n'.format(date = get_date(current_scantime), scansize = len(sql_params), nr_items = nr_items, nr_prices = nr_prices))
     return True
     
 if __name__ == "__main__":

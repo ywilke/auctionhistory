@@ -1,9 +1,8 @@
 
-/import/*.txt
-/import/*.log
-/import/*.db
-/import/*.cfg
-config.py
+auctionhistory/import/*.txt
+auctionhistory/import/*.log
+auctionhistory/import/*.db
+auctionhistory/import/*.cfg
+auctionhistory/import/automatic_scan.py
 **/__pycache__/
-launch.bat
 /debug/*
