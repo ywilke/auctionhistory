@@ -6,7 +6,6 @@ import pandas as pd
 import datetime
 import sqlite3 as sqlite
 import numpy as np
-import datetime #timing
 
 con = sqlite.connect('import/AH_history.db') #db path
 cur = con.cursor()
@@ -34,17 +33,14 @@ def index():
 
 @app.route('/Lordaeron_Horde', methods=['GET'])
 def login():
-    start_time = (datetime.datetime.now()) #timing
     search_q = request.args.get('search', '')
     if search_q:
-        print (str(datetime.datetime.now() - start_time)+' query prepared') #timing
         # query data
         cur.execute("SELECT itemname, price, scantime FROM LOR_H_prices "
                     "INNER JOIN LOR_H_items ON LOR_H_prices.itemid=LOR_H_items.itemid "
                     "INNER JOIN LOR_H_scans ON LOR_H_prices.scanid=LOR_H_scans.scanid "
                     "WHERE LOR_H_items.itemname IS ?;",(search_q,))
         datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
-        print (str(datetime.datetime.now() - start_time)+' query executed')#timing
         if not datapoints: # need to add error message
             return render_template('Lordaeron_Horde.html', title='Lordaeron Horde', error='Item was not found in the database. Make sure you wrote the exact item name.')
         # prepare query data
@@ -54,13 +50,11 @@ def login():
         for i in datapoints:
             time_list.append(i[2])
             price_list.append(i[1])
-        print (str(datetime.datetime.now() - start_time)+' query data processed')#timing
         # generate moving average
         window = '5D'
         index = pd.to_datetime(time_list, unit = 's')
         df = pd.DataFrame({'prices': price_list}, index)
         dfr = df.rolling('5D').mean()
-        print (str(datetime.datetime.now() - start_time)+' MA generated')#timing
         # set traces
         trace_price = plotgo.Scattergl(
         x = index,
@@ -81,7 +75,7 @@ def login():
         )
         
         plotdata = [trace_price, trace_avg]
-        print (str(datetime.datetime.now() - start_time)+' traces generated')#timing
+
         # layout
         max_val = max(price_list)
         nr_ticks = 6
@@ -115,11 +109,10 @@ def login():
             plot_bgcolor='#263238'
             
         )
-        print (str(datetime.datetime.now() - start_time)+' layout generated')#timing
+
         fig = dict(data=plotdata, layout=layout)
-        print (str(datetime.datetime.now() - start_time)+' fig generated')#timing
+
         chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
-        print (str(datetime.datetime.now() - start_time)+' chart generated')#timing
         
         return render_template('Lordaeron_Horde.html', title='Lordaeron Horde', chart=chart)
     
