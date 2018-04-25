@@ -6,6 +6,7 @@ import datetime
 import time
 import sqlite3 as sqlite
 import configparser
+import random
 
 # Functions
 def fix_path(path):
@@ -28,34 +29,56 @@ def quit_script(print_message, con):
     time.sleep(5)
     sys.exit(1)
 
+def count_auctions(server, auctionator_path):
+    with open('{}Auctionator.lua'.format(auctionator_path),'r') as auc_file:
+            counting = False
+            count = 0
+            for line in auc_file:
+                line = line.rstrip()
+                
+                if counting == False:
+                    if line == '	["{server}"] = {{'.format(server=server):
+                        counting = True # Starts count at first item
+                elif counting == True:
+                    if line == "	},":
+                        return count
+                    else:
+                        count += 1
+
 def main(auctionator_path):
     
     # Create DB file
-    if not os.path.exists("AH_history.db"):
-        open("AH_history.db","w").close()
+    if not os.path.exists("auctionhistory.db"):
+        open("auctionhistory.db","w").close()
     
     # Connect to DB
-    con = sqlite.connect('AH_history.db')
+    con = sqlite.connect('auctionhistory.db')
     cur = con.cursor()  
     
     # Create Tables
     with con:    
             
-        cur.execute("CREATE TABLE IF NOT EXISTS LOR_H_items("
+        cur.execute("CREATE TABLE IF NOT EXISTS items("
                     "itemid INTEGER PRIMARY KEY,"
                     "itemname TEXT UNIQUE COLLATE NOCASE);")
             
-        cur.execute("CREATE TABLE IF NOT EXISTS LOR_H_scans("
+        cur.execute("CREATE TABLE IF NOT EXISTS scans("
                     "scanid INTEGER PRIMARY KEY,"
                     "scantime INT UNIQUE);")
-            
-        cur.execute("CREATE TABLE IF NOT EXISTS LOR_H_prices("
+
+        cur.execute("CREATE TABLE IF NOT EXISTS servers("
+                    "serverid INTEGER PRIMARY KEY,"
+                    "servername TEXT UNIQUE);")
+
+        cur.execute("CREATE TABLE IF NOT EXISTS prices("
                     "priceid INTEGER PRIMARY KEY,"
                     "price INT,"
                     "itemid INT,"
                     "scanid INT,"
-                    "FOREIGN KEY(scanid) REFERENCES LOR_H_scans(scanid),"
-                    "FOREIGN KEY(itemid) REFERENCES LOR_H_items(itemid));")
+                    "serverid INT,"
+                    "FOREIGN KEY(scanid) REFERENCES scans(scanid),"
+                    "FOREIGN KEY(itemid) REFERENCES items(itemid),"
+                    "FOREIGN KEY(serverid) REFERENCES servers(serverid));")
 
     # Importing
     with open('{}Auctionator.lua'.format(auctionator_path),'r') as import_file:
@@ -64,15 +87,16 @@ def main(auctionator_path):
             
             if line.split(' ')[0] == 'AUCTIONATOR_LAST_SCAN_TIME': # Gets the time of last scan
                 current_scantime = int(line.split(' ')[2])
-                cur.execute("SELECT MAX(scantime) FROM LOR_H_scans;")
+                cur.execute("SELECT MAX(scantime) FROM scans;")
                 last_scan_time = cur.fetchone()[0]
                 if not last_scan_time:
                     last_scan_time = 0
                     
-                if current_scantime - last_scan_time <= 21600: # or 1==1
+                if current_scantime - last_scan_time <= 21600: 
                     quit_script('Less than 6 hours between scans. Prices not imported', con)
                 elif current_scantime - last_scan_time > 21600:
-                        cur.execute("INSERT INTO LOR_H_scans (scantime) VALUES (?);", (current_scantime,))
+                    insert_scantime = current_scantime + random.randint(-1800,1800)
+                    cur.execute("INSERT INTO scans (scantime) VALUES (?);", (insert_scantime,))
                 else:
                     quit_script('Unknown problem while comparing scantimes', con)
                     
@@ -85,34 +109,40 @@ def main(auctionator_path):
             line = line.rstrip()
             
             if importing == False:
-                if line == '	["Lordaeron_Horde"] = {':
+                servermatch = re.match('\t\["(Lordaeron_Horde|Lordaeron_Alliance|Icecrown_Horde|Icecrown_Alliance)"\] = {', line)
+                if servermatch:
+                    server = servermatch.group(1)
                     importing = True # Starts import at first item
             elif importing == True:
                 if line == "	},":
-                    break
+                    server = None
+                    importing = False
                 else:
-                    match = re.match('\t\t\[\"(.+)\] = (\d+),',line)
-                    item = match.group(1)[:-1]
-                    price = int(match.group(2))
-                    sql_params.append((price, item, current_scantime))
+                    itemmatch = re.match('\t\t\[\"(.+)\] = (\d+),', line)
+                    item = itemmatch.group(1)[:-1]
+                    price = int(itemmatch.group(2))
+                    sql_params.append((price, item, insert_scantime, server))
     
-    cur.executemany('INSERT OR IGNORE INTO LOR_H_items (itemname) VALUES (?)',((sql_param[1],)for sql_param in sql_params))
+    cur.executemany('INSERT OR IGNORE INTO items (itemname) VALUES (?)',((sql_param[1],)for sql_param in sql_params))
     
-    cur.executemany("INSERT INTO LOR_H_prices (price, itemid, scanid) "
-                    "SELECT ?, sub.itemid, sub.scanid "
+    cur.executemany('INSERT OR IGNORE INTO servers (servername) VALUES (?)',((sql_param[3],)for sql_param in sql_params))
+    
+    cur.executemany("INSERT INTO prices (price, itemid, scanid, serverid) "
+                    "SELECT ?, sub.itemid, sub.scanid, sub.serverid "
                     "FROM ("
-                        "SELECT LOR_H_items.itemid, LOR_H_scans.scanid "
-                        "FROM LOR_H_items, LOR_H_scans "
-                        "WHERE LOR_H_items.itemname = ? "
-                        "AND LOR_H_scans.scantime = ? "
-                    ") sub;", sql_params)
+                        "SELECT items.itemid, scans.scanid, servers.serverid "
+                        "FROM items, scans, servers "
+                        "WHERE items.itemname = ? "
+                        "AND scans.scantime = ? "
+                        "AND servers.servername = ? "
+                        ") sub;", sql_params)
     
     con.commit()
-    
+
     # Info to report
-    cur.execute('SELECT count(price) FROM LOR_H_prices;')
+    cur.execute('SELECT count(price) FROM prices;')
     nr_prices = cur.fetchone()[0]
-    cur.execute('SELECT count(itemid) FROM LOR_H_items;')
+    cur.execute('SELECT count(itemid) FROM items;')
     nr_items = cur.fetchone()[0]
     
     # Finish
