@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, request
+from flask import render_template, request
 from app import app
 import plotly.offline as plotly
 import plotly.graph_objs as plotgo
@@ -7,7 +7,7 @@ import datetime
 import sqlite3 as sqlite
 import numpy as np
 
-con = sqlite.connect('import/AH_history.db') #db path
+con = sqlite.connect('import/auctionhistory.db') #db path
 cur = con.cursor()
 
 def copper_to_price(copper): # Converts copper int to a normal price
@@ -29,20 +29,35 @@ def get_date(unix_time):# Converts unix time dd-mm-yy
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', title='Home')
+    return render_template('index.html', title='Warmane Auction House History')
 
-@app.route('/Lordaeron_Horde', methods=['GET'])
-def login():
-    search_q = request.args.get('search', '')
-    if search_q:
+@app.route('/server/<server_arg>', methods=['GET'])
+def search(server_arg):
+    search_arg = request.args.get('search', '')
+    time_arg = request.args.get('time', None)
+    title = '{} Auction House History'.format(server_arg.replace('_', ' '))
+    html_page = 'search.html'
+    time_dir = {'30d' : 2592000, '3m' : 7890000, '1y' : 31536000, 'all' : 0}
+    try: 
+        scantime = int(datetime.datetime.now().timestamp()) - time_dir[time_arg]
+    except KeyError:
+        scantime = None
+    
+    if search_arg and scantime:
+        query = (search_arg, server_arg, scantime)
         # query data
-        cur.execute("SELECT itemname, price, scantime FROM LOR_H_prices "
-                    "INNER JOIN LOR_H_items ON LOR_H_prices.itemid=LOR_H_items.itemid "
-                    "INNER JOIN LOR_H_scans ON LOR_H_prices.scanid=LOR_H_scans.scanid "
-                    "WHERE LOR_H_items.itemname IS ?;",(search_q,))
+        cur.execute("SELECT itemname, price, scantime FROM prices "
+                    "INNER JOIN items ON prices.itemid=items.itemid "
+                    "INNER JOIN scans ON prices.scanid=scans.scanid "
+                    "INNER JOIN servers ON prices.serverid=servers.serverid "
+                    "WHERE items.itemname IS ? "
+                    "AND servers.servername IS ? "
+                    "AND scans.scantime > ?;", query)
         datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
-        if not datapoints: # need to add error message
-            return render_template('Lordaeron_Horde.html', title='Lordaeron Horde', error='Item was not found in the database. Make sure you wrote the exact item name.')
+        
+        if not datapoints:
+            return render_template(html_page, title='Error', error='Item was not found in the database. Make sure you write the exact item name.')
+        
         # prepare query data
         item = datapoints[0][0]
         time_list = []
@@ -114,8 +129,8 @@ def login():
 
         chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
         
-        return render_template('Lordaeron_Horde.html', title='Lordaeron Horde', chart=chart)
+        return render_template(html_page, title=title, chart=chart)
     
-    return render_template('Lordaeron_Horde.html', title='Lordaeron Horde')
+    return render_template(html_page, title=title)
 
 

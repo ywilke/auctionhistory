@@ -79,6 +79,8 @@ def main(auctionator_path):
                     "FOREIGN KEY(scanid) REFERENCES scans(scanid),"
                     "FOREIGN KEY(itemid) REFERENCES items(itemid),"
                     "FOREIGN KEY(serverid) REFERENCES servers(serverid));")
+        
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_item_server ON prices (itemid, serverid);")
 
     # Importing
     with open('{}Auctionator.lua'.format(auctionator_path),'r') as import_file:

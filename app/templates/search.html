@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+<div class="container">
+	<br>
+    <h1>Search the {{title}}</h1>
+    <form action="" method="get">
+		<div class="form-group">
+			<div class="row">
+				<div class="col-lg-6">
+					<input class="form-control" id="search" placeholder="Item" type="text" size="32" name="search">
+				</div>
+				<div class="col-lg-2">
+					<select class="custom-select" name="time">
+						<option value="30d">30 days</option>
+						<option selected value="3m">3 months</option>
+						<option value="1y">1 year</option>
+						<option value="all">All time</option>
+					</select>
+				</div>
+				<div class="col-lg-2">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+			<small id="t2" class="form-text text-muted">Enter the exact item name. (case-insensitive)</small>
+		</div>
+    </form><br>
+	{% if error %}
+	<div class="alert alert-dismissible alert-danger">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>Oops!</strong> {{ error }}
+	</div>
+	{% endif %}
+</div>
+
+
+
+{% if chart %}
+{{ chart|safe }}
+{% endif %}
+
+
+{% endblock %}
