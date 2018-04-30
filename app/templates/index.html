@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<div class="jumbotron">
-  <h1 class="display-3">Welcome</h1>
-  <p class="lead">This is a simple webapp written in python to browse the history of prices for items on the Warmane auction house.</p>
-  <hr class="my-4">
-  <p>Development still in progress. Source code not public yet on github.</p>
-  <p class="lead">
-	<a class="btn btn-primary btn-lg" href="https://github.com/ywilke" role="button">Github</a>
-  </p>
+<div class="container">
+	<div class="jumbotron">
+	  <h1 class="display-3">Warmane Auction House History</h1>
+	  <p class="lead">This is a simple website build using Python and SQLite that keeps track of prices on the auction house. Warmane hosts private World of Warcraft servers for multiple expansions. This website is in no way involved with the official Warmane. The data is imported from auctionator scans and the website is hosted with Flask, uWSGI and NGINX.</p>
+	  <hr class="my-4">
+	  <p>Development is still in progress. Source code will be made public on GitHub eventually. </p>
+	  <p class="lead">
+		<a class="btn btn-primary btn-lg" href="https://github.com/ywilke" role="button">Github</a>
+	  </p>
+	</div>
 </div>
 {% endblock %}
