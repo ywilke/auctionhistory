@@ -1,8 +1,10 @@
 {% extends "bootstrap/base.html" %}
 
 {% block styles %}
-<link rel="stylesheet"
-      href="{{url_for('.static', filename='bootstrap.min.css')}}">
+<link rel="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/popper.min.js"></script>
 {% endblock %}
 
 {% block title %}
@@ -10,33 +12,29 @@
 {% endblock %}
 
 {% block navbar %}
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	  <a class="navbar-brand" href="/index">Warmane Auction House History</a>
-	  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
-		<span class="navbar-toggler-icon"></span>
-	  </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="/index">Warmane Auction House History</a>
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+	<span class="navbar-toggler-icon"></span>
+  </button>
 
-	  <div class="navbar-collapse collapse" id="navbarColor01" style="">
-		<ul class="navbar-nav mr-auto">
-
-		  <li class="nav-item">
-			<a class="nav-link" href="/server/Lordaeron_Alliance">Lordaeron Alliance</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="/server/Lordaeron_Horde">Lordaeron Horde</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="/server/Icecrown_Alliance">Icecrown Alliance</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="/server/Icecrown_Horde">Icecrown Horde</a>
-		  </li>
-		</ul>
-	  </div>
-	</nav>
-	<script src="{{url_for('.static', filename='jquery.min.js')}}"></script>
-	<script src="{{url_for('.static', filename='bootstrap.min.js')}}"></script>
-	<script src="{{url_for('.static', filename='popper.min.js')}}"></script>
+  <div class="navbar-collapse collapse" id="navbarColor01" style="">
+	<ul class="navbar-nav mr-auto">
+	  <li class="nav-item">
+		<a class="nav-link" href="/server/Lordaeron_Alliance">Lordaeron Alliance</a>
+	  </li>
+	  <li class="nav-item">
+		<a class="nav-link" href="/server/Lordaeron_Horde">Lordaeron Horde</a>
+	  </li>
+	  <li class="nav-item">
+		<a class="nav-link" href="/server/Icecrown_Alliance">Icecrown Alliance</a>
+	  </li>
+	  <li class="nav-item">
+		<a class="nav-link" href="/server/Icecrown_Horde">Icecrown Horde</a>
+	  </li>
+	</ul>
+  </div>
+</nav>
 {% endblock %}
 
 
