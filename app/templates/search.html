@@ -32,13 +32,23 @@
 		<strong>Oops!</strong> {{ error }}
 	</div>
 	{% endif %}
+	
+	{% if suggestions %}
+	<h2>Did you mean:</h2>
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="list-group">
+				{% for suggestion in suggestions %}
+				<a href="{{suggestion[1]}}" class="list-group-item list-group-item-action">{{suggestion[0]}}</a>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	{% endif %}
 </div>
-
-
 
 {% if chart %}
 {{ chart|safe }}
 {% endif %}
-
 
 {% endblock %}

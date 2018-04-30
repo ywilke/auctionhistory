@@ -45,7 +45,7 @@ def search(server_arg):
     
     if search_arg and scantime:
         query = (search_arg, server_arg, scantime)
-        # query data
+        # Execute query
         cur.execute("SELECT itemname, price, scantime FROM prices "
                     "INNER JOIN items ON prices.itemid=items.itemid "
                     "INNER JOIN scans ON prices.scanid=scans.scanid "
@@ -56,21 +56,37 @@ def search(server_arg):
         datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
         
         if not datapoints:
-            return render_template(html_page, title='Error', error='Item was not found in the database. Make sure you write the exact item name.')
+            if len(search_arg) < 3:
+                return render_template(html_page, title='Item not found', error='Type at least 3 characters.')
+            cur.execute("SELECT itemname FROM items WHERE itemname LIKE ?;",
+                       ('{0}{search}{0}'.format('%', search=query[0]),))
+            item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
+            if item_matches:
+                item_suggestions = []
+                for match in item_matches:
+                    href_display = match[0]
+                    href_item = match[0].replace(' ', '+')
+                    href = '/server/{server_arg}?search={item}&time={time}'.format(
+                            server_arg=server_arg, item=href_item, time=time_arg )
+                    item_suggestions.append((href_display, href))
+                return render_template(html_page, title=title, suggestions=item_suggestions)
+            
+            else:
+                return render_template(html_page, title='Item not found', error='Item was not found in the database.')
         
-        # prepare query data
+        # Format data from query
         item = datapoints[0][0]
         time_list = []
         price_list = []
         for i in datapoints:
             time_list.append(i[2])
             price_list.append(i[1])
-        # generate moving average
+        # Generate moving average
         window = '5D'
         index = pd.to_datetime(time_list, unit = 's')
         df = pd.DataFrame({'prices': price_list}, index)
         dfr = df.rolling('5D').mean()
-        # set traces
+        # Create traces
         trace_price = plotgo.Scattergl(
         x = index,
         y = price_list,
@@ -91,7 +107,7 @@ def search(server_arg):
         
         plotdata = [trace_price, trace_avg]
 
-        # layout
+        # Layout
         max_val = max(price_list)
         nr_ticks = 6
         y_val = 0
@@ -108,8 +124,7 @@ def search(server_arg):
         layout = plotgo.Layout(
             title = "{item}'s price history".format(item = item),
             font = dict(
-                color = '#ffffff'
-                
+                color = '#ffffff'    
             ),
             yaxis=dict(
                 gridcolor='rgba(26, 26, 26, 0.6)',
@@ -122,15 +137,13 @@ def search(server_arg):
             ),
             paper_bgcolor='#263238',
             plot_bgcolor='#263238'
-            
         )
 
         fig = dict(data=plotdata, layout=layout)
-
         chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
-        
         return render_template(html_page, title=title, chart=chart)
     
-    return render_template(html_page, title=title)
+    else:
+        return render_template(html_page, title=title)
 
 
