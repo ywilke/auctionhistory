@@ -37,30 +37,37 @@ def search(server_arg):
     time_arg = request.args.get('time', None)
     title = '{} Auction House History'.format(server_arg.replace('_', ' '))
     html_page = 'search.html'
-    time_dir = {'30d' : 2592000, '3m' : 7890000, '1y' : 31536000, 'all' : 0}
+    epoch_now = int(datetime.datetime.now().timestamp())
+    time_dir = {'30d' : 2592000, '3m' : 7890000, '1y' : 31536000, 'all' : epoch_now}
     try: 
-        scantime = int(datetime.datetime.now().timestamp()) - time_dir[time_arg]
+        scantime = epoch_now - time_dir[time_arg]
     except KeyError:
         scantime = None
     
     if search_arg and scantime:
         query = (search_arg, server_arg, scantime)
-        # Execute query
-        cur.execute("SELECT itemname, price, scantime FROM prices "
-                    "INNER JOIN items ON prices.itemid=items.itemid "
-                    "INNER JOIN scans ON prices.scanid=scans.scanid "
-                    "INNER JOIN servers ON prices.serverid=servers.serverid "
-                    "WHERE items.itemname IS ? "
-                    "AND servers.servername IS ? "
-                    "AND scans.scantime > ?;", query)
-        datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
+        cur.execute("SELECT itemid FROM items "
+                    "WHERE itemname IS ? ;", (search_arg,))
         
-        if not datapoints:
+        if cur.fetchone():
+            cur.execute("SELECT itemname, price, scantime FROM prices "
+                        "INNER JOIN items ON prices.itemid=items.itemid "
+                        "INNER JOIN scans ON prices.scanid=scans.scanid "
+                        "INNER JOIN servers ON prices.serverid=servers.serverid "
+                        "WHERE items.itemname IS ? "
+                        "AND servers.servername IS ? "
+                        "AND scans.scantime > ?;", query)
+            datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
+            if not datapoints:
+                return render_template(html_page, title='No prices available',
+                                       error='This item has not been listed in the selected time range.')
+        else:
             if len(search_arg) < 3:
                 return render_template(html_page, title='Item not found', error='Type at least 3 characters.')
             cur.execute("SELECT itemname FROM items WHERE itemname LIKE ?;",
                        ('{0}{search}{0}'.format('%', search=query[0]),))
             item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
+            
             if item_matches:
                 item_suggestions = []
                 for match in item_matches:
