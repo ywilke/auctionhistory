@@ -35,7 +35,7 @@ def index():
 def search(server_arg):
     search_arg = request.args.get('search', '')
     time_arg = request.args.get('time', None)
-    title = '{} Auction House History'.format(server_arg.replace('_', ' '))
+    AH_title = '{} Auction House History'.format(server_arg.replace('_', ' '))
     html_page = 'search.html'
     epoch_now = int(datetime.datetime.now().timestamp())
     time_dir = {'30d' : 2592000, '3m' : 7890000, '1y' : 31536000, 'all' : epoch_now}
@@ -60,10 +60,13 @@ def search(server_arg):
             datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
             if not datapoints:
                 return render_template(html_page, title='No prices available',
+                                       AH_title=AH_title,
                                        error='This item has not been listed in the selected time range.')
         else:
             if len(search_arg) < 3:
-                return render_template(html_page, title='Item not found', error='Type at least 3 characters.')
+                return render_template(html_page, title='Item not found',
+                                       AH_title=AH_title,
+                                       error='Type at least 3 characters.')
             cur.execute("SELECT itemname FROM items WHERE itemname LIKE ?;",
                        ('{0}{search}{0}'.format('%', search=query[0]),))
             item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
@@ -76,10 +79,14 @@ def search(server_arg):
                     href = '/server/{server_arg}?search={item}&time={time}'.format(
                             server_arg=server_arg, item=href_item, time=time_arg )
                     item_suggestions.append((href_display, href))
-                return render_template(html_page, title=title, suggestions=item_suggestions)
+                return render_template(html_page, title=AH_title,
+                                       AH_title=AH_title,
+                                       suggestions=item_suggestions)
             
             else:
-                return render_template(html_page, title='Item not found', error='Item was not found in the database.')
+                return render_template(html_page, title='Item not found',
+                                       AH_title=AH_title,
+                                       error='Item was not found in the database.')
         
         # Format data from query
         item = datapoints[0][0]
@@ -148,9 +155,14 @@ def search(server_arg):
 
         fig = dict(data=plotdata, layout=layout)
         chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
-        return render_template(html_page, title=title, chart=chart)
+        return render_template(html_page,
+                               title=AH_title,
+                               AH_title=AH_title,
+                               chart=chart)
     
     else:
-        return render_template(html_page, title=title)
+        return render_template(html_page,
+                               title=AH_title,
+                               AH_title=AH_title)
 
 
