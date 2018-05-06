@@ -59,14 +59,21 @@ def search(server_arg):
                         "AND scans.scantime > ?;", query)
             datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
             if not datapoints:
-                return render_template(html_page, title='No prices available',
+                return render_template(html_page,
+                                       title='No prices available',
                                        AH_title=AH_title,
-                                       error='This item has not been listed in the selected time range.')
+                                       error='This item has not been listed in the selected time range.',
+                                       value=search_arg,
+                                       tvalue=time_arg)
         else:
             if len(search_arg) < 3:
-                return render_template(html_page, title='Item not found',
+                return render_template(html_page,
+                                       title='Item not found',
                                        AH_title=AH_title,
-                                       error='Type at least 3 characters.')
+                                       error='Type at least 3 characters.',
+                                       value=search_arg,
+                                       tvalue=time_arg)
+            
             cur.execute("SELECT itemname FROM items WHERE itemname LIKE ?;",
                        ('{0}{search}{0}'.format('%', search=query[0]),))
             item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
@@ -79,14 +86,20 @@ def search(server_arg):
                     href = '/server/{server_arg}?search={item}&time={time}'.format(
                             server_arg=server_arg, item=href_item, time=time_arg )
                     item_suggestions.append((href_display, href))
-                return render_template(html_page, title=AH_title,
+                return render_template(html_page,
+                                       title=AH_title,
                                        AH_title=AH_title,
-                                       suggestions=item_suggestions)
+                                       suggestions=item_suggestions,
+                                       value=search_arg,
+                                       tvalue=time_arg)
             
             else:
-                return render_template(html_page, title='Item not found',
+                return render_template(html_page,
+                                       title='Item not found',
                                        AH_title=AH_title,
-                                       error='Item was not found in the database.')
+                                       error='Item was not found in the database.',
+                                       value=search_arg,
+                                       tvalue=time_arg)
         
         # Format data from query
         item = datapoints[0][0]
@@ -158,11 +171,14 @@ def search(server_arg):
         return render_template(html_page,
                                title=AH_title,
                                AH_title=AH_title,
-                               chart=chart)
+                               chart=chart,
+                               value=search_arg,
+                               tvalue=time_arg)
     
     else:
         return render_template(html_page,
                                title=AH_title,
-                               AH_title=AH_title)
+                               AH_title=AH_title,
+                               tvalue='3m')
 
 
