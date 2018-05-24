@@ -7,17 +7,9 @@ import time
 import sqlite3 as sqlite
 import configparser
 import random
+from pathlib import Path
 
 # Functions
-def fix_path(path):
-    py_path = path.replace('\\','/')
-    try:
-        if py_path[(len(py_path))-1] != '/':
-            py_path += '/'
-            return py_path
-    except IndexError:
-        return None
-
 def get_date(unix_time):# Converts unix time to ISO 8601 date.
     return datetime.datetime.fromtimestamp(int(unix_time)).strftime('%Y-%m-%d %H:%M:%S')
 
@@ -30,7 +22,7 @@ def quit_script(print_message, con):
     sys.exit(1)
 
 def count_auctions(server, auctionator_path):
-    with open('{}Auctionator.lua'.format(auctionator_path),'r') as auc_file:
+    with open(auctionator_path / 'Auctionator.lua', 'r') as auc_file:
             counting = False
             count = 0
             for line in auc_file:
@@ -41,9 +33,10 @@ def count_auctions(server, auctionator_path):
                         counting = True # Starts count at first item
                 elif counting == True:
                     if line == "	},":
-                        return count
+                        break
                     else:
                         count += 1
+            return count
 
 def main(auctionator_path):
     
@@ -83,7 +76,7 @@ def main(auctionator_path):
         cur.execute("CREATE INDEX IF NOT EXISTS idx_item_server ON prices (itemid, serverid);")
 
     # Importing
-    with open('{}Auctionator.lua'.format(auctionator_path),'r') as import_file:
+    with open(auctionator_path / 'Auctionator.lua', 'r') as import_file:
         for line in import_file:
             line = line.rstrip()
             
@@ -104,7 +97,7 @@ def main(auctionator_path):
                     
                 break
             
-    with open('{}Auctionator.lua'.format(auctionator_path),'r') as import_file:
+    with open(auctionator_path / 'Auctionator.lua', 'r') as import_file:
         importing = False
         sql_params = []
         for line in import_file:
@@ -125,7 +118,7 @@ def main(auctionator_path):
                     price = int(itemmatch.group(2))
                     sql_params.append((price, item, insert_scantime, server))
     '''    # Auctioneer TBC import (disabled: 0 prices)            
-    with open('{}Auc-ScanData.lua'.format(auctioneer_path),'r') as import_file:
+    with open(auctionator_path / 'Auctionator.lua', 'r') as import_file:
         lowest_price = {
                 'Outland_Alliance' : {},
                 'Outland_Horde' : {}
@@ -192,8 +185,8 @@ def main(auctionator_path):
 if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read('import.cfg')
-    auctionator_path = fix_path(config['DEFAULT']['auctionator_path'])
-    auctioneer_path = fix_path(config['DEFAULT']['auctioneer_path'])
+    auctionator_path = Path(config['DEFAULT']['auctionator_path'])
+    auctioneer_path = Path(config['DEFAULT']['auctioneer_path'])
     if not auctionator_path or not auctioneer_path:
         print ('Fill out auc path into import.cfg')
         sys.exit(1)
