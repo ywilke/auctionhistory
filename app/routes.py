@@ -133,22 +133,22 @@ def search(server_arg):
     dfr = df.rolling(window).mean()
     # Create traces
     trace_price = plotgo.Scattergl(
-    x = index,
-    y = price_list,
-    text = list(map(copper_to_price, price_list)),
-    hoverinfo = 'text+x',
-    name = item,
-    mode = 'markers',
-    )
+        x = index,
+        y = price_list,
+        text = list(map(copper_to_price, price_list)),
+        hoverinfo = 'text+x',
+        name = item,
+        mode = 'markers',)
     
     trace_avg = plotgo.Scattergl(
-    x = dfr.axes[0],
-    y = dfr['prices'],
-    text = list(map(copper_to_price, dfr['prices'])),
-    hoverinfo = 'text+x',
-    name = 'average ({window})'.format(window = window),
-    mode = 'lines',
-    )
+        x = dfr.axes[0],
+        y = dfr['prices'],
+        text = list(map(copper_to_price, dfr['prices'])),
+        hoverinfo = 'text+x',
+        hoverlabel = dict(bordercolor = '#ffffff',
+            font = dict(color = '#ffffff')),
+        name = 'average ({window})'.format(window = window),
+        mode = 'lines',)
     plotdata = [trace_price, trace_avg]
     # Layout
     max_val = max(price_list)
