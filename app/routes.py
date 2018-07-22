@@ -53,7 +53,7 @@ def search(server_arg):
     except KeyError:
         scantime = None
     
-    if not search_arg or not scantime:
+    if not search_arg or scantime is None:
         return render_template(html_page, title=AH_title, AH_title=AH_title,
                                tvalue='3m')
     query = (search_arg, server_arg, scantime)
