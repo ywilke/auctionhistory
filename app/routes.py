@@ -32,10 +32,19 @@ def get_date(unix_time):
     '''Return date in dd-mm-yyyy.'''
     return datetime.datetime.fromtimestamp(unix_time).strftime('%d-%m-%y')
 
+
+def write_log(server, search, reply):
+    ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    with open('log.csv', 'a') as log:
+        log.write(f'{time},{ip},{server},{search},{reply}\n')
+
+
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html', title='Warmane Auction House History')
+
 
 @app.route('/server/<server_arg>', methods=['GET'])
 def search(server_arg):
@@ -71,6 +80,7 @@ def search(server_arg):
                    ('{0}{search}{0}'.format('%', search=query[0]),))
         item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
         if item_matches:
+            write_log(server_arg, search_arg, 'suggest')
             item_suggestions = []
             for match in item_matches:
                 href_display = match[0]
@@ -212,6 +222,7 @@ def search(server_arg):
 
     fig = dict(data=plotdata, layout=layout)
     chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
+    write_log(server_arg, item, 'graph')
     return render_template(html_page, title=AH_title, AH_title=AH_title,
                            chart=chart, value=search_arg, tvalue=time_arg)
 
