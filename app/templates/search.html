@@ -1,53 +1,53 @@
 {% extends "base.html" %}
 
-{% block content %}
-<script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
-<div class="container">
-	<br>
-    <h1>Search the {{AH_title}}</h1>
-    <form action="" method="get">
-		<div class="form-group">
+{% block app_content %}
+	<script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+	<div class="container">
+		<br>
+		<h1>Search the {{AH_title}}</h1>
+		<form action="" method="get">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-6">
+						<input class="form-control" id="search" placeholder="Item" type="text" size="32" name="search" {% if value %}value="{{value}}"{% endif %} autofocus>
+					</div>
+					<div class="col-lg-2">
+						<select class="custom-select" name="time">
+							<option {% if tvalue=="30d" %}selected {% endif %}value="30d">30 days</option>
+							<option {% if tvalue=="3m" %}selected {% endif %}value="3m">3 months</option>
+							<option {% if tvalue=="1y" %}selected {% endif %}value="1y">1 year</option>
+							<option {% if tvalue=="all" %}selected {% endif %}value="all">All time</option>
+						</select>
+					</div>
+					<div class="col-lg-2">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+			</div>
+		</form><br>
+		{% if error %}
+			<div class="alert alert-dismissible alert-danger">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Oops!</strong> {{ error }}
+			</div>
+		{% endif %}
+		
+		{% if suggestions %}
+			<h2>Did you mean:</h2>
 			<div class="row">
 				<div class="col-lg-6">
-					<input class="form-control" id="search" placeholder="Item" type="text" size="32" name="search" {% if value %}value="{{value}}"{% endif %} autofocus>
-				</div>
-				<div class="col-lg-2">
-					<select class="custom-select" name="time">
-						<option {% if tvalue=="30d" %}selected {% endif %}value="30d">30 days</option>
-						<option {% if tvalue=="3m" %}selected {% endif %}value="3m">3 months</option>
-						<option {% if tvalue=="1y" %}selected {% endif %}value="1y">1 year</option>
-						<option {% if tvalue=="all" %}selected {% endif %}value="all">All time</option>
-					</select>
-				</div>
-				<div class="col-lg-2">
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<div class="list-group">
+						{% for suggestion in suggestions %}
+						<a href="{{suggestion[1]}}" class="list-group-item list-group-item-action">{{suggestion[0]}}</a>
+						{% endfor %}
+					</div>
 				</div>
 			</div>
-		</div>
-    </form><br>
-	{% if error %}
-	<div class="alert alert-dismissible alert-danger">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<strong>Oops!</strong> {{ error }}
+		{% endif %}
 	</div>
-	{% endif %}
-	
-	{% if suggestions %}
-	<h2>Did you mean:</h2>
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="list-group">
-				{% for suggestion in suggestions %}
-				<a href="{{suggestion[1]}}" class="list-group-item list-group-item-action">{{suggestion[0]}}</a>
-				{% endfor %}
-			</div>
-		</div>
-	</div>
-	{% endif %}
-</div>
 
-{% if chart %}
-{{ chart|safe }}
-{% endif %}
+	{% if chart %}
+		{{ chart|safe }}
+	{% endif %}
 
-{% endblock %}
+{% endblock app_content %}
