@@ -101,7 +101,7 @@ def search(server_arg):
         return render_template(html_page, title='No prices available',
                                AH_title=AH_title, error=not_found,
                                value=search_arg, tvalue=time_arg)
-
+    '''
     # Calculate MAD and remove outliers
     if len(datapoints) > 21:
         outliers = []
@@ -121,12 +121,31 @@ def search(server_arg):
             for _price in prices:
                 diffs_median.append(abs(_price-median_price))
             mad = (median(diffs_median))
+            #print('MAD: '+str(mad)) # debug
+            #print('MED: '+str(median_price))
+            #print('price: '+str(price))
+            #print('prices: '+str(prices))
             if mad == 0:
                 continue
             if abs(price-median_price) / mad > 20:
                 outliers.append(i)
         for index in sorted(outliers, reverse=True):
             del datapoints[index]
+    '''
+    
+    # Remove outliers
+    prices = []
+    outliers = []
+    for i in datapoints:
+        prices.append(i[1])
+    prices.sort()
+    high_price = 2 * prices[int(0.95 * len(prices))]
+    for i, point in enumerate(datapoints):
+        price = point[1]
+        if price > high_price:
+            outliers.append(i)
+    for index in sorted(outliers, reverse=True):
+        del datapoints[index]
     
     # Format data from query
     item = datapoints[0][0]
