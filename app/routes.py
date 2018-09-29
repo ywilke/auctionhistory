@@ -1,17 +1,15 @@
 import datetime
 import sqlite3 as sqlite
+import re
 from statistics import median
 
-from flask import render_template, request
+from flask import render_template, request, redirect, abort
 import plotly.offline as plotly
 import plotly.graph_objs as plotgo
 import pandas as pd
 import numpy as np
 
 from app import app
-
-con = sqlite.connect('import/auctionhistory.db') #db path
-cur = con.cursor()
 
 
 def copper_to_price(copper):
@@ -33,24 +31,56 @@ def get_date(unix_time):
     return datetime.datetime.fromtimestamp(unix_time).strftime('%d-%m-%y')
 
 
-def write_log(server, search, reply):
+def write_log(realm, search, reply, range=None):
+    '''Logs user searches'''
     ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     with open('log.csv', 'a') as log:
-        log.write(f'{time},{ip},{server},{search},{reply}\n')
+        log.write(f'{time},{ip},{realm},{search},{range},{reply}\n')
 
+con = sqlite.connect('file:import/auctionhistory.db?mode=ro', uri=True) #db path
+cur = con.cursor()
+
+REALMS = {
+        "warmane": [
+            "Lordaeron_Alliance",
+            "Lordaeron_Horde",
+            "Icecrown_Alliance",
+            "Icecrown_Horde"
+        ],
+        "gamerdistrict": [
+            "Echoes_1x_Alliance",
+            "Echoes_1x_Horde"
+        ]
+}
+
+CAP = {"warmane": "Warmane",
+       "gamerdistrict": "GamerDistrict"
+}
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', title='Warmane Auction House History')
+    return render_template('index.html', title='Warmane & Gamer District')
 
 
-@app.route('/server/<server_arg>', methods=['GET'])
-def search(server_arg):
+@app.route('/server/<_i>')
+def legacy(_i):
+    url = (request.full_path).replace('server', 'warmane')
+    return redirect(url, code=301)
+
+
+@app.route('/<server_arg>/<realm_arg>', methods=['GET'])
+def search(server_arg, realm_arg):
+    try:
+        if realm_arg in REALMS[server_arg]:
+            pass
+    except KeyError:
+        abort(404)
     search_arg = request.args.get('search', '')
     time_arg = request.args.get('time', None)
-    AH_title = '{} Auction House History'.format(server_arg.replace('_', ' '))
+    AH_title = f"{realm_arg.replace('_', ' ')} Auction House Price History"
+    tab = f"{CAP[server_arg]}: {realm_arg.replace('_', ' ')}"
     html_page = 'search.html'
     epoch_now = int(datetime.datetime.now().timestamp())
     time_dir = {'30d': 2592000,
@@ -62,54 +92,54 @@ def search(server_arg):
     except KeyError:
         scantime = None
     
-    if not search_arg or scantime is None:
-        return render_template(html_page, title=AH_title, AH_title=AH_title,
+    if not search_arg or scantime == None:
+        return render_template(html_page, title=tab, AH_title=AH_title,
                                tvalue='3m')
-    query = (search_arg, server_arg, scantime)
-    cur.execute("SELECT itemid FROM items "
+    query = (search_arg, scantime)
+    cur.execute("SELECT itemid FROM WOTLK_items "
                 "WHERE itemname IS ? ;", (search_arg,))
     
     if not cur.fetchone():  # no direct match
         if len(search_arg) < 3:
             return render_template(html_page, title='Item not found',
                                    AH_title=AH_title, 
-                                   error='Type at least 3 characters.',
+                                   error='Type at least 3 characters',
                                    value=search_arg, tvalue=time_arg)
         
-        cur.execute("SELECT itemname FROM items WHERE itemname LIKE ?;",
+        cur.execute("SELECT itemname FROM WOTLK_items WHERE itemname LIKE ?;",
                    ('{0}{search}{0}'.format('%', search=query[0]),))
         item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
         if item_matches:
-            write_log(server_arg, search_arg, 'suggest')
+            write_log(realm_arg, search_arg, 'suggest')
             item_suggestions = []
             for match in item_matches:
                 href_display = match[0]
                 href_item = match[0].replace(' ', '+')
-                href = '/server/{server_arg}?search={item}&time={time}'.format(
-                        server_arg=server_arg, item=href_item, time=time_arg)
+                href = f'/{server_arg}/{realm_arg}?search={href_item}&time={time_arg}'
                 item_suggestions.append((href_display, href))
-            return render_template(html_page, title=AH_title,
+            return render_template(html_page, title=tab,
                                    AH_title=AH_title,
                                    suggestions=item_suggestions,
                                    value=search_arg, tvalue=time_arg)
         else:
             return render_template(html_page, title='Item not found',
                                    AH_title=AH_title,
-                                   error='Item was not found in the database.',
+                                   error='Item was not found in the database',
                                    value=search_arg, tvalue=time_arg)
-        
-    cur.execute("SELECT itemname, price, scantime FROM prices "
-                "INNER JOIN items ON prices.itemid=items.itemid "
-                "INNER JOIN scans ON prices.scanid=scans.scanid "
-                "INNER JOIN servers ON prices.serverid=servers.serverid "
-                "WHERE items.itemname IS ? "
-                "AND servers.servername IS ? "
-                "AND scans.scantime > ?;", query)
+    
+    match = re.match('((.+?_(A|H))).+', realm_arg)
+    short = match.group(1)
+    sql = (f"""SELECT itemname, price, scantime FROM {short}_prices
+        INNER JOIN WOTLK_items ON {short}_prices.itemid=WOTLK_items.itemid 
+        INNER JOIN WOTLK_scans ON {short}_prices.scanid=WOTLK_scans.scanid 
+        WHERE WOTLK_items.itemname IS ? 
+        AND WOTLK_scans.scantime > ?;""")
+    cur.execute(sql, query)
     datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
     if not datapoints:
-        not_found = "This item has not been listed in the selected time range."
+        msg = "This item has not been listed on the auction house in the selected time range."
         return render_template(html_page, title='No prices available',
-                               AH_title=AH_title, error=not_found,
+                               AH_title=AH_title, error=msg,
                                value=search_arg, tvalue=time_arg)
     '''
     # Calculate MAD and remove outliers
@@ -149,7 +179,7 @@ def search(server_arg):
     for i in datapoints:
         prices.append(i[1])
     prices.sort()
-    high_price = 2 * prices[int(0.95 * len(prices))]
+    high_price = 1.5 * prices[int(0.95 * len(prices))]
     for i, point in enumerate(datapoints):
         price = point[1]
         if price > high_price:
@@ -222,8 +252,8 @@ def search(server_arg):
 
     fig = dict(data=plotdata, layout=layout)
     chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
-    write_log(server_arg, item, 'graph')
-    return render_template(html_page, title=AH_title, AH_title=AH_title,
+    write_log(realm_arg, item, 'graph', time_arg)
+    return render_template(html_page, title=tab, AH_title=AH_title,
                            chart=chart, value=search_arg, tvalue=time_arg)
 
 

@@ -5,14 +5,20 @@ def generate_import_cfg():
     if not os.path.exists("import.cfg"):
         config = configparser.ConfigParser()
         config['DEFAULT'] = {'wotlk_path': '',
-                             'tbc_path': '',
-                             'auctionator_path': '',
-                             'auctioneer_path': ''}
+                             'tbc_path': ''}
+
+        config['warmane'] = {'auctionator': '',
+                             'auctioneer': '',
+                             'user': '',
+                             'pass': ''}
         
+        config['gamerdistrict'] = {'auctionator': '',
+                                   'auctioneer': '',
+                                   'user': '',
+                                   'pass': ''}
+       
         config['scan'] = {'prompt_timeout': '120',
-                          'prompt_delay': '3600',
-                          'wow_username': '',
-                          'wow_password': ''}
+                          'prompt_delay': '3600'}
         
         config['sftp'] = {'known_hosts_path': '',
                           'sftp_user': '',
