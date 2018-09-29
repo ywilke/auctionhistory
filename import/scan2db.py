@@ -57,11 +57,16 @@ def get_date(unix_time):# Converts unix time to ISO 8601 date.
     return datetime.datetime.fromtimestamp(int(unix_time)).strftime('%Y-%m-%d %H:%M:%S')
 
 
-def quit_script(print_message, con):
+def write_debug(message):
+    with open('debug.log','a') as debug_f:
+        time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        debug_f.write(f"{time} {message}\n")
+
+
+def quit_script(message, con):
     con.rollback()
     con.close()
-    print (print_message) #TODO write debug
-    print ('Aborting in 5 seconds')
+    write_debug(message)
     time.sleep(5)
     sys.exit(1)
 
@@ -214,16 +219,14 @@ def main():
     for server in SERVER_LIST:
         time_check = check_scantime(server, con, cur)
         if time_check == False: # Scan did not happen or it was a old scan
-            #TODO write debug
+            write_debug(f"No valid scan found for {server['server']}")
             continue # Move on to next sever
         if time_check > scantime: # Latest scantime will be written in db
             scantime = time_check
         # parse file
         sql_vars.update(parse_auctionator(server))
     if scantime == False: # No valid scans
-        print('scantime false')
-        #TODO write debug
-        sys.exit(1)
+        quit_script('No valid scans(already imported)', con)
     scantime = scantime + random.randint(-1800,1800)
     # Insert into DB
     cur.execute("INSERT INTO WOTLK_scans (scantime) VALUES (?);",
