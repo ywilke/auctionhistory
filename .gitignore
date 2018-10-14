@@ -2,7 +2,6 @@
 /import/*.log
 /import/*.db
 /import/*.cfg
-/import/automatic_scan.py
 **/__pycache__/
 /debug/*
 *.csv
