@@ -4,6 +4,7 @@ import re
 from statistics import median
 
 from flask import render_template, request, redirect, abort
+from flask_limiter import Limiter
 import plotly.offline as plotly
 import plotly.graph_objs as plotgo
 import pandas as pd
@@ -31,12 +32,25 @@ def get_date(unix_time):
     return datetime.datetime.fromtimestamp(unix_time).strftime('%d-%m-%y')
 
 
-def write_log(realm, search, reply, range=None):
-    '''Logs user searches'''
+def get_ip():
+    '''Returns ip of user'''
     ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-    time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    return ip
+
+
+def write_log(realm=None, search=None, reply=None, time=None):
+    '''Logs user searches'''
+    time_stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     with open('log.csv', 'a') as log:
-        log.write(f'{time},{ip},{realm},{search},{range},{reply}\n')
+        log.write(f'{time_stamp},{get_ip()},{realm},{search},{time},{reply}\n')
+
+
+limiter = Limiter(
+    app,
+    key_func=get_ip,
+    default_limits=["200 per day", "80 per hour"],
+    strategy='fixed-window-elastic-expiry'
+)
 
 con = sqlite.connect('file:import/auctionhistory.db?mode=ro', uri=True) #db path
 cur = con.cursor()
@@ -257,3 +271,7 @@ def search(server_arg, realm_arg):
                            chart=chart, value=search_arg, tvalue=time_arg)
 
 
+@app.errorhandler(429)
+def ratelimit_handler(e):
+    write_log(reply='429')
+    return render_template('429.html', title='Too Many Requests')
