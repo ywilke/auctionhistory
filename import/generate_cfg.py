@@ -4,18 +4,33 @@ import configparser
 def generate_import_cfg():
     if not os.path.exists("import.cfg"):
         config = configparser.ConfigParser()
-        config['DEFAULT'] = {'wotlk_path': '',
+        config['DEFAULT'] = {'clas_path': '',
+                             'wotlk_path': '',
                              'tbc_path': ''}
 
-        config['warmane'] = {'auctionator': '',
-                             'auctioneer': '',
+        config['warmane'] = {'savedvar_clas': '',
+                             'savedvar_tbc': '',
+                             'savedvar_wotlk': '',
                              'user': '',
                              'pass': ''}
         
-        config['gamerdistrict'] = {'auctionator': '',
-                                   'auctioneer': '',
+        config['gamerdistrict'] = {'savedvar_clas': '',
+                                   'savedvar_tbc': '',
+                                   'savedvar_wotlk': '',
                                    'user': '',
                                    'pass': ''}
+        
+        config['sunwell'] = {'savedvar_clas': '',
+                             'savedvar_tbc': '',
+                             'savedvar_wotlk': '',
+                             'user': '',
+                             'pass': ''}
+        
+        config['dalaran-wow'] = {'savedvar_clas': '',
+                                 'savedvar_tbc': '',
+                                 'savedvar_wotlk': '',
+                                 'user': '',
+                                 'pass': ''}
        
         config['scan'] = {'prompt_timeout': '120',
                           'prompt_delay': '3600'}

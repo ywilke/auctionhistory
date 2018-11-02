@@ -2,6 +2,7 @@ import datetime
 import sqlite3 as sqlite
 import re
 from statistics import median
+import pickle
 
 from flask import render_template, request, redirect, abort
 from flask_limiter import Limiter
@@ -33,7 +34,7 @@ def get_date(unix_time):
 
 
 def get_ip():
-    '''Returns ip of user'''
+    '''Return ip of user'''
     ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     return ip
 
@@ -56,22 +57,8 @@ limiter = Limiter(
 con = sqlite.connect('file:import/auctionhistory.db?mode=ro', uri=True) #db path
 cur = con.cursor()
 
-REALMS = {
-        "warmane": [
-            "Lordaeron_Alliance",
-            "Lordaeron_Horde",
-            "Icecrown_Alliance",
-            "Icecrown_Horde"
-        ],
-        "gamerdistrict": [
-            "Echoes_1x_Alliance",
-            "Echoes_1x_Horde"
-        ]
-}
-
-CAP = {"warmane": "Warmane",
-       "gamerdistrict": "GamerDistrict"
-}
+REALMS = pickle.load(open('REALMS.p', 'rb'))
+CAP = pickle.load(open('CAP.p', 'rb'))
 
 @app.route('/')
 @app.route('/index')
@@ -87,12 +74,12 @@ def legacy(_i):
 
 @app.route('/<server_arg>/<realm_arg>', methods=['GET'])
 def search(server_arg, realm_arg):
-    start_time = datetime.datetime.now()
-    try:
-        if realm_arg in REALMS[server_arg]:
-            pass
+    try:  # Check if url is oke and set expansion
+        expan = REALMS[server_arg][realm_arg]
     except KeyError:
         abort(404)
+    
+    start_time = datetime.datetime.now()
     search_arg = request.args.get('search', '')
     time_arg = request.args.get('time', None)
     AH_title = f"{realm_arg.replace('_', ' ')} Auction House Price History"
@@ -108,14 +95,13 @@ def search(server_arg, realm_arg):
     except KeyError:
         scantime = None
     
-    if not search_arg or scantime == None:
+    if search_arg == None or scantime == None:
         return render_template(html_page, title=tab, AH_title=AH_title,
                                tvalue='3m')
-    query = (search_arg, scantime)
+
     cur.execute("SELECT itemid FROM WOTLK_items "
                 "WHERE itemname IS ? ;", (search_arg,))
-    
-    if not cur.fetchone():  # no direct match
+    if not cur.fetchone():  # No direct match
         if len(search_arg) < 3:
             return render_template(html_page, title='Item not found',
                                    AH_title=AH_title, 
@@ -123,7 +109,7 @@ def search(server_arg, realm_arg):
                                    value=search_arg, tvalue=time_arg)
         
         cur.execute("SELECT itemname FROM WOTLK_items WHERE itemname LIKE ?;",
-                   ('{0}{search}{0}'.format('%', search=query[0]),))
+                   (f'%{search_arg}%',))
         item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
         if item_matches:
             item_suggestions = []
@@ -144,51 +130,19 @@ def search(server_arg, realm_arg):
                                    error='Item was not found in the database',
                                    value=search_arg, tvalue=time_arg)
     
-    match = re.match('((.+?_(A|H))).+', realm_arg)
-    short = match.group(1)
+    short = f"{realm_arg.split('_')[0]}_{realm_arg.split('_')[1][0]}"
     sql = (f"""SELECT itemname, price, scantime FROM {short}_prices
-        INNER JOIN WOTLK_items ON {short}_prices.itemid=WOTLK_items.itemid 
-        INNER JOIN WOTLK_scans ON {short}_prices.scanid=WOTLK_scans.scanid 
-        WHERE WOTLK_items.itemname IS ? 
-        AND WOTLK_scans.scantime > ?;""")
-    cur.execute(sql, query)
+        INNER JOIN {expan}_items ON {short}_prices.itemid={expan}_items.itemid 
+        INNER JOIN scans ON {short}_prices.scanid=scans.scanid 
+        WHERE {expan}_items.itemname IS ? 
+        AND scans.scantime > ?;""")
+    cur.execute(sql, (search_arg, scantime))
     datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
     if not datapoints:
         msg = "This item has not been listed on the auction house in the selected time range."
         return render_template(html_page, title='No prices available',
                                AH_title=AH_title, error=msg,
                                value=search_arg, tvalue=time_arg)
-    '''
-    # Calculate MAD and remove outliers
-    if len(datapoints) > 21:
-        outliers = []
-        imax = len(datapoints) - 1
-        for i, point in enumerate(datapoints):
-            price = point[1]
-            if i - 10 < 0:
-                indexes = range(21)
-            elif i + 10 > imax:
-                indexes = range(imax-20, imax+1)
-            else:
-                indexes = range(i-10, i+11)
-            prices = [datapoints[i][1] for i in indexes]
-            
-            median_price = (median(prices))
-            diffs_median = []
-            for _price in prices:
-                diffs_median.append(abs(_price-median_price))
-            mad = (median(diffs_median))
-            #print('MAD: '+str(mad)) # debug
-            #print('MED: '+str(median_price))
-            #print('price: '+str(price))
-            #print('prices: '+str(prices))
-            if mad == 0:
-                continue
-            if abs(price-median_price) / mad > 20:
-                outliers.append(i)
-        for index in sorted(outliers, reverse=True):
-            del datapoints[index]
-    '''
     
     # Remove outliers
     prices = []
@@ -279,3 +233,35 @@ def search(server_arg, realm_arg):
 def ratelimit_handler(e):
     write_log(reply='429')
     return render_template('429.html', title='Too Many Requests')
+
+'''
+# Calculate MAD and remove outliers
+if len(datapoints) > 21:
+    outliers = []
+    imax = len(datapoints) - 1
+    for i, point in enumerate(datapoints):
+        price = point[1]
+        if i - 10 < 0:
+            indexes = range(21)
+        elif i + 10 > imax:
+            indexes = range(imax-20, imax+1)
+        else:
+            indexes = range(i-10, i+11)
+        prices = [datapoints[i][1] for i in indexes]
+        
+        median_price = (median(prices))
+        diffs_median = []
+        for _price in prices:
+            diffs_median.append(abs(_price-median_price))
+        mad = (median(diffs_median))
+        #print('MAD: '+str(mad)) # debug
+        #print('MED: '+str(median_price))
+        #print('price: '+str(price))
+        #print('prices: '+str(prices))
+        if mad == 0:
+            continue
+        if abs(price-median_price) / mad > 20:
+            outliers.append(i)
+    for index in sorted(outliers, reverse=True):
+        del datapoints[index]
+'''

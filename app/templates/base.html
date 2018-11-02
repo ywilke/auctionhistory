@@ -1,6 +1,7 @@
 {% extends "bootstrap/base.html" %}
 
 {% block styles %}
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 	<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -21,20 +22,37 @@
 		  <div class="navbar-collapse collapse" id="navbarColor01" style="">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="warmane" aria-expanded="false">Warmane Servers<span class="caret"></span></a>
+				  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="warmane" aria-expanded="false">Warmane Realms<span class="caret"></span></a>
 				  <div class="dropdown-menu" aria-labelledby="warmane">
-					<a class="dropdown-item" href="/warmane/Lordaeron_Alliance">Lordaeron Alliance</a>
-					<a class="dropdown-item" href="/warmane/Lordaeron_Horde">Lordaeron Horde</a>
+					<a class="dropdown-item" href="/warmane/Outland_Alliance">Outland Alliance</a>
+					<a class="dropdown-item" href="/warmane/Outland_Horde">Outland Horde</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/warmane/Icecrown_Alliance">Icecrown Alliance</a>
 					<a class="dropdown-item" href="/warmane/Icecrown_Horde">Icecrown Horde</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/warmane/Lordaeron_Alliance">Lordaeron Alliance</a>
+					<a class="dropdown-item" href="/warmane/Lordaeron_Horde">Lordaeron Horde</a>
 				  </div>
 				</li>
 				<li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="gamerdistrict" aria-expanded="false">Gamer District Servers (New!)<span class="caret"></span></a>
+				  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="gamerdistrict" aria-expanded="false">Gamer District Realms<span class="caret"></span></a>
 				  <div class="dropdown-menu" aria-labelledby="gamerdistrict">
 					<a class="dropdown-item" href="/gamerdistrict/Echoes_Alliance">Echoes Alliance</a>
 					<a class="dropdown-item" href="/gamerdistrict/Echoes_Horde">Echoes Horde</a>
+				  </div>
+				</li>
+				<li class="nav-item dropdown">
+				  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="sunwell" aria-expanded="false">Sunwell Realms<span class="caret"></span></a>
+				  <div class="dropdown-menu" aria-labelledby="sunwell">
+					<a class="dropdown-item" href="/sunwell/Angrathar_Alliance">Angrathar Alliance</a>
+					<a class="dropdown-item" href="/sunwell/Angrathar_Horde">Angrathar Horde</a>
+				  </div>
+				</li>
+				<li class="nav-item dropdown">
+				  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="sunwell" aria-expanded="false">Dalaran-WoW<span class="caret"></span></a>
+				  <div class="dropdown-menu" aria-labelledby="sunwell">
+					<a class="dropdown-item" href="/dalaran-wow/Algalon_Alliance">Algalon Alliance</a>
+					<a class="dropdown-item" href="/dalaran-wow/Algalon_Horde">Algalon Horde</a>
 				  </div>
 				</li>
 			</ul>
