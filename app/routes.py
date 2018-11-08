@@ -63,7 +63,7 @@ CAP = pickle.load(open('CAP.p', 'rb'))
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', title='Warmane & Gamer District')
+    return render_template('index.html', title='Legacy Servers')
 
 
 @app.route('/server/<_i>')
@@ -77,7 +77,11 @@ def search(server_arg, realm_arg):
     try:  # Check if url is oke and set expansion
         expan = REALMS[server_arg][realm_arg]
     except KeyError:
-        abort(404)
+        if f"{realm_arg}_Alliance" in REALMS[server_arg] or f"{realm_arg}_Horde" in REALMS[server_arg]:
+            return render_template('realms.html',server=server_arg,
+                realm=realm_arg, title=f"{CAP[server_arg]}: {realm_arg}")
+        else:
+            abort(404)
     
     start_time = datetime.datetime.now()
     search_arg = request.args.get('search', '')
@@ -98,18 +102,16 @@ def search(server_arg, realm_arg):
     if search_arg == None or scantime == None:
         return render_template(html_page, title=tab, AH_title=AH_title,
                                tvalue='3m')
-
-    cur.execute("SELECT itemid FROM WOTLK_items "
-                "WHERE itemname IS ? ;", (search_arg,))
+    temp_sql = f"SELECT itemid FROM {expan}_items WHERE itemname IS ? ;"
+    cur.execute(temp_sql, (search_arg,))
     if not cur.fetchone():  # No direct match
         if len(search_arg) < 3:
             return render_template(html_page, title='Item not found',
                                    AH_title=AH_title, 
                                    error='Type at least 3 characters',
                                    value=search_arg, tvalue=time_arg)
-        
-        cur.execute("SELECT itemname FROM WOTLK_items WHERE itemname LIKE ?;",
-                   (f'%{search_arg}%',))
+        temp_sql = f"SELECT itemname FROM {expan}_items WHERE itemname LIKE ?;"
+        cur.execute(temp_sql, (f'%{search_arg}%',))
         item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
         if item_matches:
             item_suggestions = []
@@ -131,12 +133,12 @@ def search(server_arg, realm_arg):
                                    value=search_arg, tvalue=time_arg)
     
     short = f"{realm_arg.split('_')[0]}_{realm_arg.split('_')[1][0]}"
-    sql = (f"""SELECT itemname, price, scantime FROM {short}_prices
+    temp_sql = (f"""SELECT itemname, price, scantime FROM {short}_prices
         INNER JOIN {expan}_items ON {short}_prices.itemid={expan}_items.itemid 
         INNER JOIN scans ON {short}_prices.scanid=scans.scanid 
         WHERE {expan}_items.itemname IS ? 
         AND scans.scantime > ?;""")
-    cur.execute(sql, (search_arg, scantime))
+    cur.execute(temp_sql, (search_arg, scantime))
     datapoints = sorted(cur.fetchall(), key=lambda x: x[2])
     if not datapoints:
         msg = "This item has not been listed on the auction house in the selected time range."
@@ -233,6 +235,10 @@ def search(server_arg, realm_arg):
 def ratelimit_handler(e):
     write_log(reply='429')
     return render_template('429.html', title='Too Many Requests')
+
+@app.errorhandler(404)
+def notfound_handler(e):
+    return render_template('404.html', title='Page Not Found')
 
 '''
 # Calculate MAD and remove outliers

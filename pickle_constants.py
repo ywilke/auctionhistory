@@ -211,7 +211,10 @@ for server_obj in SERVER_LIST:
             REALMS[server][f'{realm}_{faction}'] = expan
 pickle.dump(REALMS, open('REALMS.p', 'wb'))
 
-CAP = {"gamerdistrict": 'GamerDistrict',
+CAP = {"clas": 'Vanilla',
+       "tbc": 'TBC',
+       "wotlk": 'WotLK',
+       "gamerdistrict": 'GamerDistrict',
        "warmane": 'Warmane',
        "sunwell": 'Sunwell',
        "dalaran-wow": 'Dalaran-WoW',
