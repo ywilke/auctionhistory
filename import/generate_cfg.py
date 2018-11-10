@@ -33,7 +33,8 @@ def generate_import_cfg():
                                  'pass': ''}
        
         config['scan'] = {'prompt_timeout': '120',
-                          'prompt_delay': '3600'}
+                          'prompt_delay': '3600',
+                          'img': ''}
         
         config['sftp'] = {'known_hosts_path': '',
                           'sftp_user': '',

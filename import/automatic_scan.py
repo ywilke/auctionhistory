@@ -81,7 +81,7 @@ def img_check(state, server, realm_obj=None):
         realm = None
     i = 0
     if task == 'match':
-        im1 = Image.open(f'img1080/{image}.png')
+        im1 = Image.open(f"img/{cfg['scan']['img']}/{image}.png")
         im1 = np.array(im1)
         im2 = ImageGrab.grab(box)
         im2 = np.array(im2)
@@ -140,20 +140,21 @@ def scan_auction(server, realm_obj, faction):
     pyautogui.click(EXP[expan][f'char_{faction}'], duration=2, tween=pyautogui.easeOutQuad) # Select character
     pyautogui.press('enter') # Enter world
     img_check('ss_spawn', server, realm_obj) # Wait for world to load
-    time.sleep(5)
+    time.sleep(15)
     pyautogui.click(realm_obj[f'auc_pos_{faction}'], duration=1, tween=pyautogui.easeOutQuad, button='right') # Click auctioneer
+    time.sleep(5)
     if server['scan'] == 'auctioneer_tbc' or server['scan'] == 'auctioneer_wotlk':
-        pyautogui.click(EXP[expan]['auctioneer'], duration=3, tween=pyautogui.easeOutQuad) # Start scan
+        pyautogui.click(EXP[expan]['auctioneer'], duration=1, tween=pyautogui.easeOutQuad) # Start scan
         img_check('ss_auctioneer', server, realm_obj)
     elif server['scan'] == 'auctionator_wotlk':
-        pyautogui.click(EXP[expan]['auctionator'], duration=3, tween=pyautogui.easeOutQuad) # Open scan
-        pyautogui.click(EXP[expan]['auctionator_start'], duration=2, tween=pyautogui.easeOutQuad) # Start scan
+        pyautogui.click(EXP[expan]['auctionator'], duration=1, tween=pyautogui.easeOutQuad) # Open scan
+        pyautogui.click(EXP[expan]['auctionator_start'], duration=4, tween=pyautogui.easeOutQuad) # Start scan
         img_check('ss_auctionator', server, realm_obj) # Wait for scan to complete      
     pyautogui.press('esc', 3, 0.2)
     pyautogui.press('enter') # Open chat
     pyautogui.typewrite('/logout') # Logout
     pyautogui.press('enter')
-    time.sleep(5)
+    time.sleep(10)
     return
 
 
@@ -161,8 +162,8 @@ def change_realm(server, realm_obj):
     '''Change realm in-game'''
     expan = server['expansion']
     pyautogui.click(EXP[expan]['change_realm'], duration=2, tween=pyautogui.easeOutQuad) # Open realm select
-    pyautogui.click(realm_obj['realmpos'], clicks=2, interval=0.2, duration=5, tween=pyautogui.easeOutQuad) # Select realm
-    time.sleep(7)
+    pyautogui.click(realm_obj['realmpos'], clicks=2, interval=0.2, duration=7, tween=pyautogui.easeOutQuad) # Select realm
+    time.sleep(10)
     return
 
 

@@ -130,7 +130,7 @@ EXP = {
         },
         "ss_home": {
             "image": 'tbc_home',
-            "tries": 5,
+            "tries": 10,
             "task": 'match',
             "box": (930, 1045, 933, 1048),
         },
@@ -142,7 +142,7 @@ EXP = {
         },
         "ss_auctioneer": {
             "image": None,
-            "tries": 500,
+            "tries": 600,
             "task": 'diff',
             "box": (526, 278, 752, 320),
         },
@@ -167,7 +167,7 @@ EXP = {
         },
         "ss_home": {
             "image": 'wotlk_home',
-            "tries": 5,
+            "tries": 10,
             "task": 'match',
             "box": (930, 1045, 933, 1048),
         },
