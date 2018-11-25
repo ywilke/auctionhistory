@@ -133,7 +133,7 @@ def search(server_arg, realm_arg):
                                    error='Item was not found in the database',
                                    value=search_arg, tvalue=time_arg)
     
-    short = f"{realm_arg.rsplit('_')[0]}_{realm_arg.rsplit('_')[1][0]}"
+    short = f"{realm_arg.rsplit('_', 1)[0]}_{realm_arg.rsplit('_', 1)[1][0]}"
     temp_sql = (f"""SELECT itemname, price, scantime FROM {short}_prices
         INNER JOIN {expan}_items ON {short}_prices.itemid={expan}_items.itemid 
         INNER JOIN scans ON {short}_prices.scanid=scans.scanid 
