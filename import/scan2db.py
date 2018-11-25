@@ -37,8 +37,9 @@ def quit_script(message, con):
 
 def check_scantime(server, con, cur):
     '''Return time of scan but returns False if it was not a new scan'''
-    max_diff = 7200
+    min_diff = 7200
     cur.execute("SELECT MAX(scantime) FROM scans;")
+    current_scantime = 0
     last_scantime = cur.fetchone()[0]
     if not last_scantime:
         last_scantime = 0  
@@ -49,7 +50,7 @@ def check_scantime(server, con, cur):
             for line in import_file:
                 if line.split(' ')[0] == 'AUCTIONATOR_LAST_SCAN_TIME': # Gets the time of last scan
                     current_scantime = int(line.split(' ')[2])
-                    if current_scantime - last_scantime <= max_diff: 
+                    if current_scantime - last_scantime <= min_diff: 
                         return False
                     else:
                         return current_scantime
@@ -67,7 +68,20 @@ def check_scantime(server, con, cur):
                 current_scantime = min(scantimes)
             except ValueError:
                 return False
-            if current_scantime - last_scantime <= max_diff: 
+            if current_scantime - last_scantime <= min_diff: 
+                return False
+            else:
+                return current_scantime
+
+    elif server['scan'] == 'auctioneer_clas':
+        if not os.path.exists(server['savedvar'] / 'Auctioneer.lua'):
+            return False
+        with open(server['savedvar'] / 'Auctioneer.lua', 'r') as import_file:
+            for line in import_file:
+                if line.split(' ', 1)[0] == 'scantime':
+                    current_scantime = int(line.split(' ')[2])
+                    break
+            if current_scantime - last_scantime <= min_diff: 
                 return False
             else:
                 return current_scantime
@@ -110,6 +124,7 @@ def parse_scandata(server):
                 price = int(itemmatch.group(2))
                 data[realm].append((price, item))
         return data
+    
     elif server['scan'] == 'auctioneer_tbc' or server['scan'] == 'auctioneer_wotlk':
         first = True
         low_price = {}
@@ -152,7 +167,6 @@ def parse_scandata(server):
                     for entry in line:
                         values = entry.split(',')
                         if len(values) != 28:
-                            write_debug(f"Abnormal entry in {realm}: {entry}")
                             continue
                         if len(values) == 28:
                             item = re.search('h\[(.+)\]', values[0]).group(1)
@@ -166,6 +180,66 @@ def parse_scandata(server):
                             elif price < low_price[realm][item]:
                                 low_price[realm][item] = price
                                 
+        for realm in low_price:
+            data[realm] = []
+            for item in low_price[realm]:
+                price = low_price[realm][item]
+                data[realm].append((price, item))
+        return data
+
+    elif server['scan'] == 'auctioneer_clas':
+        low_price = {}
+        for i in server['realms']:
+            low_price[f"{i['name']}_Alliance"] = {}
+            low_price[f"{i['name']}_Horde"] = {}
+        first = True
+        pattern = '\t\t\["('
+        for i in server['realms']:
+            if first == True:
+                pattern += f"{i['realm']}-Alliance|{i['realm']}-Horde"
+                first = False
+            else:
+                pattern += f"|{i['realm']}-Alliance|{i['realm']}-Horde"
+        pattern += ')"\] = {'
+        with open(server['savedvar'] / 'Auctioneer.lua', 'r') as import_file:
+            importing = False
+            realm = None
+            data = {}
+            for line in import_file:
+                line = line.rstrip()
+                if importing == False:
+                    if line == '\t["snap"] = {':
+                        importing = True
+                    continue
+
+                realmmatch = re.match(pattern, line)
+                if realmmatch != None:
+                    realm = realmmatch.group(1).replace('-', '_')
+                    realm = realm.replace(' ', '_')
+                    for realm_obj in server['realms']:  # Reformat realm name
+                        if realm_obj['name'] in realm:
+                            realm = realm.replace(realm_obj['realm'], realm_obj['name'])
+                    realmmatch = None
+                    continue
+
+                if line[0:4] == '\t\t\t\t':
+                    values = (line.split('] = ', 1)[0]).split(':')
+                    if len(values) == 8:
+                        item = values[3]
+                    elif len(values) == 9:
+                        item = f"{values[3]}:{values[4]}"
+                    else:
+                        write_debug(f'Error: Abnormal value len:{len(values)} for {realm}. {line}')
+                    buyout = int(values[len(values) - 2])
+                    stack = int(values[len(values) - 4])
+                    price = int(buyout / stack)
+                    if price == 0: # Bid only, no buyout
+                        continue
+                    if item not in low_price[realm]:
+                        low_price[realm][item] = price
+                    elif price < low_price[realm][item]:
+                        low_price[realm][item] = price
+
         for realm in low_price:
             data[realm] = []
             for item in low_price[realm]:
@@ -209,6 +283,7 @@ def main():
     scantime = False
     sql_vars = {}
     for server in SERVER_LIST:
+        
         time_check = check_scantime(server, con, cur)
         if time_check == False: # Scan did not happen or it was a old scan
             write_debug(f"No valid scan found for {server['server']}")
@@ -218,7 +293,7 @@ def main():
         # parse file
         sql_vars.update(parse_scandata(server))
     if scantime == False: # No valid scans
-        quit_script('No valid scans(already imported)', con)
+        quit_script('No valid scans(already imported?)', con)
     scantime = scantime + random.randint(-1800,1800)
     # Insert into DB
     cur.execute("INSERT INTO scans (scantime) VALUES (?);", (scantime,))

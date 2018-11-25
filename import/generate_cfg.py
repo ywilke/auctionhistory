@@ -31,6 +31,18 @@ def generate_import_cfg():
                                  'savedvar_wotlk': '',
                                  'user': '',
                                  'pass': ''}
+        
+        config['lights_hope'] = {'savedvar_clas': '',
+                                 'savedvar_tbc': '',
+                                 'savedvar_wotlk': '',
+                                 'user': '',
+                                 'pass': ''}
+        
+        config['kronos'] = {'savedvar_clas': '',
+                                 'savedvar_tbc': '',
+                                 'savedvar_wotlk': '',
+                                 'user': '',
+                                 'pass': ''}
        
         config['scan'] = {'prompt_timeout': '120',
                           'prompt_delay': '3600',

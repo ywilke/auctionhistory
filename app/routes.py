@@ -1,4 +1,5 @@
 import datetime
+import math
 import sqlite3 as sqlite
 import re
 from statistics import median
@@ -132,7 +133,7 @@ def search(server_arg, realm_arg):
                                    error='Item was not found in the database',
                                    value=search_arg, tvalue=time_arg)
     
-    short = f"{realm_arg.split('_')[0]}_{realm_arg.split('_')[1][0]}"
+    short = f"{realm_arg.rsplit('_')[0]}_{realm_arg.rsplit('_')[1][0]}"
     temp_sql = (f"""SELECT itemname, price, scantime FROM {short}_prices
         INNER JOIN {expan}_items ON {short}_prices.itemid={expan}_items.itemid 
         INNER JOIN scans ON {short}_prices.scanid=scans.scanid 
@@ -191,19 +192,27 @@ def search(server_arg, realm_arg):
         name = 'average ({window})'.format(window = window),
         mode = 'lines',)
     plotdata = [trace_price, trace_avg]
-    # Layout
-    max_val = max(price_list)
-    nr_ticks = 6
-    y_val = 0
+    # Layout    
+    nr_ticks = 10
     y_vals = []
-    
-    _t1 = (max_val / nr_ticks)
-    _t2 = int(np.log10(_t1))
-    _t3 = int(_t1 / (10**_t2)) + 1
-    step = _t3 * 10**_t2
+    p_range = max(price_list) - min(price_list)
+    t_range = p_range / (nr_ticks - 1)
+    x = math.ceil(np.log10(t_range))
+    t1 = t_range / (10 ** x)
+    if t1 == 0.1:
+        pass
+    elif t1 <= 0.25:
+        t1 = 0.25
+    elif t1 <= 0.50:
+        t1 = 0.50
+    elif t1 <= 1.0:
+        t1 = 1.0
+    tick_step = t1 * (10 ** x)
+    tick_start = int(min(price_list) / tick_step)
+    y_start = tick_start * tick_step
     for i in range(nr_ticks):
-        y_val += step
-        y_vals.append(y_val)
+        y_start += tick_step
+        y_vals.append(y_start)
     
     layout = plotgo.Layout(
         title = "{item}'s price history".format(item=item),

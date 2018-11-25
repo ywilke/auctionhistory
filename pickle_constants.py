@@ -15,14 +15,12 @@ SERVER_LIST = [
             {
                 "realm": 'Lordaeron',
                 "name": 'Lordaeron',
-                "realmpos": (944, 267),
                 "auc_pos_A": (1009, 441),
                 "auc_pos_H": (958, 311),
             },
             {
                 "realm": 'Icecrown',
                 "name": 'Icecrown',
-                "realmpos": (949, 296),
                 "auc_pos_A": (1009, 251),
                 "auc_pos_H": (966, 326),
             }
@@ -40,7 +38,6 @@ SERVER_LIST = [
             {
                 "realm": 'Echoes 1x',
                 "name": 'Echoes',
-                "realmpos": (953, 269),
                 "auc_pos_A": (930, 446),
                 "auc_pos_H": (983, 274),
             }
@@ -58,7 +55,6 @@ SERVER_LIST = [
             {
                 "realm": 'Angrathar',
                 "name": 'Angrathar',
-                "realmpos": (961, 266),
                 "auc_pos_A": (919, 462),
                 "auc_pos_H": (798, 339),
             }
@@ -76,7 +72,6 @@ SERVER_LIST = [
             {
                 "realm": 'Algalon - Main Realm',
                 "name": 'Algalon',
-                "realmpos": (979, 268),
                 "auc_pos_A": (870, 501),
                 "auc_pos_H": (944, 311),
             }
@@ -94,7 +89,6 @@ SERVER_LIST = [
             {
                 "realm": 'Outland',
                 "name": 'Outland',
-                "realmpos": (992, 266),
                 "auc_pos_A": (965, 345),
                 "auc_pos_H": (925, 288),
             }
@@ -103,14 +97,78 @@ SERVER_LIST = [
         "pass": cfg['warmane']['pass'],
         "savedvar": Path(cfg['warmane']['savedvar_tbc']),
     },
+    {
+        "server": 'lights_hope',
+        "expansion": 'clas',
+        "scan": 'auctioneer_clas',
+        "realmlist": 'logon.lightshope.org',
+        "realms": [
+            {
+                "realm": 'Northdale',
+                "name": 'Northdale',
+                "auc_pos_A": (1008, 446),
+                "auc_pos_H": (881, 310),
+            }
+        ],
+        "user": cfg['lights_hope']['user'],
+        "pass": cfg['lights_hope']['pass'],
+        "savedvar": Path(cfg['lights_hope']['savedvar_clas']),
+    },
+    {
+        "server": 'kronos',
+        "expansion": 'clas',
+        "scan": 'auctioneer_clas',
+        "realmlist": 'login.kronos-wow.com',
+        "realms": [
+            {
+                "realm": 'Kronos III',
+                "name": 'Kronos_III',
+                "auc_pos_A": (1006, 335),
+                "auc_pos_H": (684, 476),
+            }
+        ],
+        "user": cfg['kronos']['user'],
+        "pass": cfg['kronos']['pass'],
+        "savedvar": Path(cfg['kronos']['savedvar_clas']),
+    },
 ]
 pickle.dump(SERVER_LIST, open('SERVER_LIST.p', 'wb'))
 
 EXP = {
     "clas": {
-        "path": '',
-        "realm_path": '',
-        "cfg_path": '',
+        "path": Path(cfg['DEFAULT']['clas_path']),
+        "realm_path": Path(''),
+        "cfg_path": Path('WTF'),
+        "user": (943, 565),
+        "change_realm": (1734, 72),
+        "char_A": (1687, 146), # char1
+        "char_H": (1657, 228), # char2
+        "auctioneer": (286, 668),
+        "quit": (1812, 1010),
+        "ss_game": {
+            "image": 'clas_game',
+            "tries": 10,
+            "task": 'match',
+            "box": (138, 73, 203, 120),
+        },
+        "ss_home": {
+            "image": 'clas_home',
+            "tries": 10,
+            "task": 'match',
+            "box": (930, 1045, 933, 1048),
+        },
+        "ss_spawn": {
+            "image": 'clas_spawn',
+            "tries": 15,
+            "task": 'match',
+            "box": (1351, 1042, 1373, 1065),
+        },
+        "ss_auctioneer": {
+            "image": None,
+            "tries": 900,
+            "task": 'diff',
+            "box": (460, 279, 794, 300),
+        },
     },
     "tbc": {
         "path": Path(cfg['DEFAULT']['tbc_path']),
@@ -218,6 +276,7 @@ CAP = {"clas": 'Vanilla',
        "warmane": 'Warmane',
        "sunwell": 'Sunwell',
        "dalaran-wow": 'Dalaran-WoW',
-       "lights hope": "Light's Hope",
+       "lights_hope": "Light's Hope",
+       "kronos": "Kronos",
 }
 pickle.dump(CAP, open('CAP.p', 'wb'))
