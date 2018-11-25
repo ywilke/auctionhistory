@@ -196,6 +196,8 @@ def search(server_arg, realm_arg):
     nr_ticks = 10
     y_vals = []
     p_range = max(price_list) - min(price_list)
+    if p_range == 0:
+        p_range = 2 * min(price_list)
     t_range = p_range / (nr_ticks - 1)
     x = math.ceil(np.log10(t_range))
     t1 = t_range / (10 ** x)
