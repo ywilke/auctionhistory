@@ -140,7 +140,7 @@ SERVER_LIST = [
             {
                 "realm": 'Kronos III',
                 "name": 'Kronos_III',
-                "auc_pos_A": (648, 605),
+                "auc_pos_A": (1391, 535),
                 "auc_pos_H": (684, 476),
             }
         ],
