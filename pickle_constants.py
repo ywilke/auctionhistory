@@ -98,6 +98,23 @@ SERVER_LIST = [
         "savedvar": Path(cfg['warmane']['savedvar_tbc']),
     },
     {
+        "server": 'sunwell',
+        "expansion": 'tbc',
+        "scan": 'auctioneer_tbc',
+        "realmlist": 'logon.sunwell.pl',
+        "realms": [
+            {
+                "realm": 'Nightbane',
+                "name": 'Nightbane',
+                "auc_pos_A": (1296, 553),
+                "auc_pos_H": (1278, 511),
+            }
+        ],
+        "user": cfg['sunwell']['user'],
+        "pass": cfg['sunwell']['pass'],
+        "savedvar": Path(cfg['sunwell']['savedvar_tbc']),
+    },
+    {
         "server": 'lights_hope',
         "expansion": 'clas',
         "scan": 'auctioneer_clas',
@@ -123,7 +140,7 @@ SERVER_LIST = [
             {
                 "realm": 'Kronos III',
                 "name": 'Kronos_III',
-                "auc_pos_A": (1006, 335),
+                "auc_pos_A": (648, 605),
                 "auc_pos_H": (684, 476),
             }
         ],

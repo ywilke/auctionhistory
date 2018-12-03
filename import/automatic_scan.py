@@ -65,11 +65,14 @@ def start_wow(server_obj):
     return
 
 
-def login_wow(server_obj):
+def login_wow(server_obj, fac):
     '''Login on the wow client'''
     expan = server_obj['expansion']
     pyautogui.click(EXP[expan]['user'], duration=1, tween=pyautogui.easeOutQuad) # Click username
-    pyautogui.typewrite(server_obj['user']) # Type username
+    username = server_obj['user']
+    if server_obj['realms'][0]['name'] == 'Nightbane' and fac == 'H':
+        username = username.replace('1', '2')
+    pyautogui.typewrite(username) # Type username
     pyautogui.press('tab')
     time.sleep(1)
     pyautogui.typewrite(server_obj['pass']) # Type password
@@ -79,7 +82,7 @@ def login_wow(server_obj):
     time.sleep(2)
 
 
-def img_check(state, server_obj, realm_obj=None):
+def img_check(state, server_obj, realm_obj=None, fac=None):
     '''Checks a part of screen for a known image or difference'''
     expan = server_obj['expansion']
     data = EXP[expan][state]
@@ -91,7 +94,7 @@ def img_check(state, server_obj, realm_obj=None):
         realm = realm_obj['name']
     else:
         realm = None
-    print (f'img check {state} for {server_obj["server"]}:{realm}')
+    print (f'img check {state} for {server_obj["server"]}:{realm}:{fac}')
     i = 0
     if task == 'match':
         im1 = np.array(Image.open(f"img/{cfg['scan']['img']}/{image}.png"))
@@ -116,11 +119,11 @@ def img_check(state, server_obj, realm_obj=None):
             im4 = np.array(ImageGrab.grab(spawn_box))
             pyautogui.press('space')
             if np.array_equal(im3, im4) != True:
-                write_debug(f'ERROR: {state} on {server_obj["server"]}:{realm} failed spawn img check')
+                write_debug(f'ERROR: {state} on {server_obj["server"]}:{realm}:{fac} failed spawn img check')
                 return False
         time.sleep(15) # Time to process
     if i > tries:
-        write_debug(f'ERROR: {state} on {server_obj["server"]}:{realm} took too long to complete')
+        write_debug(f'ERROR: {state} on {server_obj["server"]}:{realm}:{fac} took too long to complete')
         return False
     return True
 
@@ -148,6 +151,12 @@ def clean_scandata(server_obj):
     elif server_obj['scan'] == 'auctioneer_wotlk' or server_obj['scan'] == 'auctioneer_tbc':
         with open(server_obj['savedvar'] / 'Auc-ScanData.lua', 'w') as f:
             f.write('')
+        if server_obj['realms'][0]['name'] == 'Nightbane':
+            path = Path(str(server_obj['savedvar'] / 'Auc-ScanData.lua').replace('1', '2'))
+            print (path)
+            with open(path, 'w') as f:
+                f.write('')
+            
         return
     
     elif server_obj['scan'] == 'auctioneer_clas':
@@ -162,17 +171,17 @@ def scan_auction(server_obj, realm_obj, faction):
     expan = server_obj['expansion']
     pyautogui.click(EXP[expan][f'char_{faction}'], duration=2, tween=pyautogui.easeOutQuad) # Select character
     pyautogui.press('enter') # Enter world
-    img_check('ss_spawn', server_obj, realm_obj) # Wait for world to load
+    img_check('ss_spawn', server_obj, realm_obj, faction) # Wait for world to load
     time.sleep(15)
     pyautogui.click(realm_obj[f'auc_pos_{faction}'], duration=1, tween=pyautogui.easeOutQuad, button='right', clicks=5, interval=1) # Click auctioneer
     time.sleep(5)
     if server_obj['scan'] == 'auctioneer_clas' or server_obj['scan'] == 'auctioneer_tbc' or server_obj['scan'] == 'auctioneer_wotlk':
         pyautogui.click(EXP[expan]['auctioneer'], duration=1, tween=pyautogui.easeOutQuad) # Start scan
-        success = img_check('ss_auctioneer', server_obj, realm_obj)
+        success = img_check('ss_auctioneer', server_obj, realm_obj, faction)
     elif server_obj['scan'] == 'auctionator_wotlk':
         pyautogui.click(EXP[expan]['auctionator'], duration=1, tween=pyautogui.easeOutQuad) # Open scan
         pyautogui.click(EXP[expan]['auctionator_start'], duration=4, tween=pyautogui.easeOutQuad) # Start scan
-        success = img_check('ss_auctionator', server_obj, realm_obj) # Wait for scan to complete
+        success = img_check('ss_auctionator', server_obj, realm_obj, faction) # Wait for scan to complete
     pyautogui.press('esc', 3, 0.2)
     pyautogui.press('enter') # Open chat
     pyautogui.typewrite('/logout') # Logout
@@ -251,6 +260,16 @@ def upload_auc_file(server_obj):
         except IOError as e:
             write_debug(f"IOError: {str(e)} {server_obj['server']}")
 
+
+def merge_scandata(server_obj):
+    try:
+        with open(server_obj['savedvar'] / 'Auc-ScanData.lua', 'a') as scan_file_1, \
+                open(str(server_obj['savedvar'] / 'Auc-ScanData.lua').replace('1', '2'), 'r') as scan_file_2:
+            scan_data_2 = scan_file_2.read()
+            scan_file_1.write(scan_data_2)
+    except Exception as e:
+        write_debug(f'{e}: while merging scan data files')
+
     
 def main():
     failed = {'A': [], 'H': []}
@@ -261,7 +280,7 @@ def main():
             change_realm(server_obj, realm_obj)
             for fac in ['A', 'H']:
                 start_wow(server_obj)
-                login_wow(server_obj)
+                login_wow(server_obj, fac)
                 success = scan_auction(server_obj, realm_obj, fac)
                 if success == False:
                     failed[fac].append(realm_obj['name'])
@@ -274,10 +293,12 @@ def main():
                     change_realmlist(server_obj)
                     change_realm(server_obj, realm_obj)
                     start_wow(server_obj)
-                    login_wow(server_obj)
+                    login_wow(server_obj, fac)
                     success = scan_auction(server_obj, realm_obj, fac)
                     write_debug(f'Rescan of {realm_obj["name"]}:{fac} returned {success}')
                     stop_wow(server_obj)
+        if server_obj['realms'][0]['name'] == 'Nightbane':
+            merge_scandata(server_obj)
         upload_auc_file(server_obj)
     change_realmlist(SERVER_LIST[0]) # Change realmlist back
     change_realm(SERVER_LIST[0], SERVER_LIST[0]['realms'][0]) # Change back realm
@@ -289,5 +310,15 @@ if __name__ == "__main__":
     prompt_delay = int(cfg['scan']['prompt_delay'])
     if start_scan_prompt(prompt_timeout,prompt_delay) == True:
         main()
+
+def debug():
+    server_obj = SERVER_LIST[5]
+    change_realmlist(server_obj)
+    realm_obj = SERVER_LIST[5]['realms'][0]
+    print (realm_obj)
+    change_realm(server_obj, realm_obj)
+    start_wow(server_obj)
+    #login_wow(server_obj)
+#debug()
 
     
