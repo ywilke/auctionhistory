@@ -219,6 +219,7 @@ def parse_scandata(server):
                     for realm_obj in server['realms']:  # Reformat realm name
                         if realm_obj['name'] in realm:
                             realm = realm.replace(realm_obj['realm'], realm_obj['name'])
+                            print(realm)
                     realmmatch = None
                     continue
 

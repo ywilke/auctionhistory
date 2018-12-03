@@ -233,6 +233,7 @@ def stop_wow(server_obj):
 
 def upload_auc_file(server_obj):
     '''Upload scan files to remote server'''
+    expan = server_obj['expansion']
     known_hosts_path = Path(cfg['sftp']['known_hosts_path'])
     sftp_user = cfg['sftp']['sftp_user']
     sftp_pass = cfg['sftp']['sftp_password']
@@ -241,7 +242,7 @@ def upload_auc_file(server_obj):
     cnopts = pysftp.CnOpts(knownhosts=known_hosts_path)
     cnopts.log = 'sftp.log'
     with pysftp.Connection(host=sftp_ip, username=sftp_user, password=sftp_pass, cnopts=cnopts) as sftp_server:
-        cwd_path = str(sftp_dir / f"{server_obj['server']}")
+        cwd_path = str(sftp_dir / f"{server_obj['server']}/{expan}")
         try:
             sftp_server.cwd(cwd_path)
             if server_obj['scan'] == 'auctioneer_tbc' or server_obj['scan'] == 'auctioneer_wotlk':
@@ -310,15 +311,5 @@ if __name__ == "__main__":
     prompt_delay = int(cfg['scan']['prompt_delay'])
     if start_scan_prompt(prompt_timeout,prompt_delay) == True:
         main()
-
-def debug():
-    server_obj = SERVER_LIST[5]
-    change_realmlist(server_obj)
-    realm_obj = SERVER_LIST[5]['realms'][0]
-    print (realm_obj)
-    change_realm(server_obj, realm_obj)
-    start_wow(server_obj)
-    #login_wow(server_obj)
-#debug()
 
     
