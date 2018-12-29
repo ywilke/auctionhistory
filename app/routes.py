@@ -67,6 +67,11 @@ def index():
     return render_template('index.html', title='Legacy Servers')
 
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html', title='Contact')
+
+
 @app.route('/server/<_i>')
 def legacy(_i):
     url = (request.full_path).replace('server', 'warmane')

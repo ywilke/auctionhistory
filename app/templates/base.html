@@ -81,26 +81,21 @@
 
 {% block content %}
 	{% block app_content %}{% endblock app_content %}
-	<!-- <div class="container">
-		<footer style="position:absolute;bottom:0;width:100%;height:60px;" id="footer">
-			<div class="row">
-			  <div class="col-lg-12">
+ <style>
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #375a7f;
+    color: white;
+    text-align: center;
+}
+</style>
 
-				<ul class="list-unstyled">
-				  <li class="float-lg-right"><a href="#top">Back to top</a></li>
-				  <li><a href="http://blog.bootswatch.com" onclick="pageTracker._link(this.href); return false;">Blog</a></li>
-				  <li><a href="https://feeds.feedburner.com/bootswatch">RSS</a></li>
-				  <li><a href="https://twitter.com/bootswatch">Twitter</a></li>
-				  <li><a href="https://github.com/thomaspark/bootswatch/">GitHub</a></li>
-				  <li><a href="../help/#api">API</a></li>
-				  <li><a href="../help/#donate">Donate</a></li>
-				</ul>
-				<p>Made by <a href="http://thomaspark.co">Thomas Park</a>.</p>
-				<p>Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>.</p>
-				<p>Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a>. Web fonts from <a href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
-
-			  </div>
-			</div>
-		</footer>
-	</div> -->
+<div class="footer">
+  <p></p>
+  <p>| <a href="https://legacy-wow.com/">Legacy WoW Addons and Guides</a> | <a href="/contact">Contact</a> |</p>
+  <p></p>
+</div> 
 {% endblock content %}
