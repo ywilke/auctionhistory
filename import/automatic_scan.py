@@ -70,7 +70,7 @@ def login_wow(server_obj, fac):
     expan = server_obj['expansion']
     pyautogui.click(EXP[expan]['user'], duration=1, tween=pyautogui.easeOutQuad) # Click username
     username = server_obj['user']
-    if server_obj['realms'][0]['name'] == 'Nightbane' and fac == 'H':
+    if server_obj['realms'][0]['name'] in ['Nightbane', 'Netherwing'] and fac == 'H':
         username = username.replace('1', '2')
     pyautogui.typewrite(username) # Type username
     pyautogui.press('tab')
@@ -151,7 +151,7 @@ def clean_scandata(server_obj):
     elif server_obj['scan'] == 'auctioneer_wotlk' or server_obj['scan'] == 'auctioneer_tbc':
         with open(server_obj['savedvar'] / 'Auc-ScanData.lua', 'w') as f:
             f.write('')
-        if server_obj['realms'][0]['name'] == 'Nightbane':
+        if server_obj['realms'][0]['name'] in ['Nightbane', 'Netherwing']:
             path = Path(str(server_obj['savedvar'] / 'Auc-ScanData.lua').replace('1', '2'))
             print (path)
             with open(path, 'w') as f:
@@ -298,7 +298,7 @@ def main():
                     success = scan_auction(server_obj, realm_obj, fac)
                     write_debug(f'Rescan of {realm_obj["name"]}:{fac} returned {success}')
                     stop_wow(server_obj)
-        if server_obj['realms'][0]['name'] == 'Nightbane':
+        if server_obj['realms'][0]['name'] in ['Nightbane', 'Netherwing']:
             merge_scandata(server_obj)
         upload_auc_file(server_obj)
     change_realmlist(SERVER_LIST[0]) # Change realmlist back

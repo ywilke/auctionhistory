@@ -115,6 +115,23 @@ SERVER_LIST = [
         "savedvar": Path(cfg['sunwell']['savedvar_tbc']),
     },
     {
+        "server": 'atlantiss',
+        "expansion": 'tbc',
+        "scan": 'auctioneer_tbc',
+        "realmlist": 'play.netherwing.eu',
+        "realms": [
+            {
+                "realm": 'Netherwing',
+                "name": 'Netherwing',
+                "auc_pos_A": (1229, 715),
+                "auc_pos_H": (608, 376),
+            }
+        ],
+        "user": cfg['atlantiss']['user'],
+        "pass": cfg['atlantiss']['pass'],
+        "savedvar": Path(cfg['atlantiss']['savedvar_tbc']),
+    },
+    {
         "server": 'lights_hope',
         "expansion": 'clas',
         "scan": 'auctioneer_clas',
@@ -295,5 +312,6 @@ CAP = {"clas": 'Vanilla',
        "dalaran-wow": 'Dalaran-WoW',
        "lights_hope": "Light's Hope",
        "kronos": "Kronos",
+       "atlantiss": "Atlantiss",
 }
 pickle.dump(CAP, open('CAP.p', 'wb'))

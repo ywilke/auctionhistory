@@ -25,6 +25,12 @@ def generate_import_cfg():
                              'savedvar_wotlk': '',
                              'user': '',
                              'pass': ''}
+
+        config['atlantiss'] = {'savedvar_clas': '',
+                             'savedvar_tbc': '',
+                             'savedvar_wotlk': '',
+                             'user': '',
+                             'pass': ''}
         
         config['dalaran-wow'] = {'savedvar_clas': '',
                                  'savedvar_tbc': '',
