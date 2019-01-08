@@ -225,7 +225,7 @@ def stop_wow(server_obj):
     pyautogui.click(EXP[expan]['quit'], duration=2, clicks=2, interval=5) # Quit WoW
     time.sleep(5)
     for proc in psutil.process_iter(): # Stop wow if still running
-        if proc.name() == 'Wow.exe':
+        if proc.name() in ['Wow.exe', 'WoW.exe']:
             proc.kill()
             time.sleep(10)   
     return
