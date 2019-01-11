@@ -118,7 +118,7 @@ SERVER_LIST = [
         "server": 'atlantiss',
         "expansion": 'tbc',
         "scan": 'auctioneer_tbc',
-        "realmlist": 'play.netherwing.eu',
+        "realmlist": 'play.atlantiss.eu',
         "realms": [
             {
                 "realm": 'Netherwing',
