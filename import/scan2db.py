@@ -4,7 +4,6 @@ import re
 import datetime
 import sqlite3 as sqlite
 import configparser
-import random
 from pathlib import Path  # Don't remove
 import pickle
 
@@ -37,7 +36,7 @@ def quit_script(message, con):
 
 def check_scantime(server, con, cur):
     '''Return time of scan but returns False if it was not a new scan'''
-    min_diff = 7200
+    min_diff = 1800
     cur.execute("SELECT MAX(scantime) FROM scans;")
     current_scantime = 0
     last_scantime = cur.fetchone()[0]
@@ -295,7 +294,6 @@ def main():
         sql_vars.update(parse_scandata(server))
     if scantime == False: # No valid scans
         quit_script('No valid scans(already imported?)', con)
-    scantime = scantime + random.randint(-1800,1800)
     # Insert into DB
     cur.execute("INSERT INTO scans (scantime) VALUES (?);", (scantime,))
 
