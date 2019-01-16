@@ -43,7 +43,6 @@ def get_ip():
 def write_log(realm=None, search=None, reply=None, time=None, r_time=None):
     '''Logs user searches'''
     time_stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    r_time = int(r_time)
     with open('log.csv', 'a') as log:
         log.write(f'{time_stamp},{get_ip()},{realm},{search},{time},{reply},{r_time}ms\n')
 
@@ -126,7 +125,7 @@ def search(server_arg, realm_arg):
                 href_item = match[0].replace(' ', '+')
                 href = f'/{server_arg}/{realm_arg}?search={href_item}&time={time_arg}'
                 item_suggestions.append((href_display, href))
-            r_time = (datetime.datetime.now() - start_time).total_seconds() * 1000
+            r_time = int((datetime.datetime.now() - start_time).total_seconds() * 1000)
             write_log(realm_arg, search_arg, 'suggest', None, r_time)
             return render_template(html_page, title=tab,
                                    AH_title=AH_title,
@@ -241,7 +240,7 @@ def search(server_arg, realm_arg):
 
     fig = dict(data=plotdata, layout=layout)
     chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
-    r_time = (datetime.datetime.now() - start_time).total_seconds() * 1000
+    r_time = int((datetime.datetime.now() - start_time).total_seconds() * 1000)
     write_log(realm_arg, item, 'graph', time_arg, r_time)
     return render_template(html_page, title=tab, AH_title=AH_title,
                            chart=chart, value=search_arg, tvalue=time_arg)
