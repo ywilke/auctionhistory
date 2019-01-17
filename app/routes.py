@@ -249,11 +249,11 @@ def search(server_arg, realm_arg):
 @app.errorhandler(429)
 def ratelimit_handler(e):
     write_log(reply='429')
-    return render_template('429.html', title='Too Many Requests')
+    return render_template('429.html', title='Too Many Requests'), 429
 
 @app.errorhandler(404)
 def notfound_handler(e):
-    return render_template('404.html', title='Page Not Found')
+    return render_template('404.html', title='Page Not Found'), 404
 
 '''
 # Calculate MAD and remove outliers
