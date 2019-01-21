@@ -212,7 +212,7 @@ EXP = {
         "change_realm": (1734, 72),
         "char_A": (1687, 146), # char1
         "char_H": (1657, 228), # char2
-        "auctioneer": (299, 168),
+        "auctioneer": (286, 668),
         "quit": (1812, 1010),
         "ss_game": {
             "image": 'tbc_game',
