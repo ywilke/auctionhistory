@@ -36,7 +36,7 @@ SERVER_LIST = [
         "realmlist": 'wotlk.gamer-district.org',
         "realms": [
             {
-                "realm": 'Echoes 1x',
+                "realm": 'Echoes 2x',
                 "name": 'Echoes',
                 "auc_pos_A": (930, 446),
                 "auc_pos_H": (983, 274),
