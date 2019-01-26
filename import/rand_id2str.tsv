@@ -1,0 +1,2464 @@
+-5	of the Monkey
+-6	of the Eagle
+-7	of the Bear
+-8	of the Whale
+-9	of the Owl
+-10	of the Gorilla
+-11	of the Falcon
+-12	of the Boar
+-13	of the Wolf
+-14	of the Tiger
+-15	of Spirit
+-16	of Stamina
+-17	of Strength
+-18	of Agility
+-19	of Intellect
+-20	of Power
+-21	of Intellect
+-22	of Intellect
+-23	of Intellect
+-24	of Intellect
+-25	of Intellect
+-26	of Intellect
+-27	of Nimbleness
+-28	of Stamina
+-29	of Eluding
+-30	of Spirit
+-31	of Arcane Protection
+-32	of Fire Protection
+-33	of Frost Protection
+-34	of Nature Protection
+-35	of Shadow Protection
+-36	of the Sorcerer
+-37	of the Seer
+-38	of the Prophet
+-39	of the Invoker
+-40	of the Bandit
+-41	of the Beast
+-42	of the Elder
+-43	of the Soldier
+-44	of the Elder
+-45	of the Champion
+-46	of the Test
+-47	of Blocking
+-48	of Paladin Testing
+-49	of the Grove
+-50	of the Hunt
+-51	of the Mind
+-52	of the Crusade
+-53	of the Vision
+-54	of the Ancestor
+-55	of the Nightmare
+-56	of the Battle
+-57	of the Shadow
+-58	of the Sun
+-59	of the Moon
+-60	of the Wild
+-61	of Intellect
+-62	of Strength
+-63	of Agility
+-64	of Power
+-65	of Magic
+-66	of the Knight
+-67	of the Seer
+-68	of the Bear
+-69	of the Eagle
+-70	of the Ancestor
+-71	of the Bandit
+-72	of the Battle
+-73	of the Elder
+-74	of the Beast
+-75	of the Champion
+-76	of the Grove
+-77	of the Knight
+-78	of the Monkey
+-79	of the Moon
+-80	of the Wild
+-81	of the Whale
+-82	of the Vision
+-83	of the Sun
+-84	of Stamina
+-85	of the Sorcerer
+-86	of the Soldier
+-87	of the Shadow
+-88	of the Foreseer
+-89	of the Thief
+-90	of the Necromancer
+-91	of the Marksman
+-92	of the Squire
+-93	of Restoration
+-94	
+-95	
+-96	
+-97	
+-98	
+-99	of Speed
+-100	of the Principle
+-101	of the Sentinel
+-102	of the Hero
+-103	of the Avatar
+-104	of the Embodiment
+-105	of the Guardian
+-106	of the Defender
+-107	of the Exemplar
+-108	of the Curator
+-109	of the Preserver
+-110	of the Elements
+-111	of the Paradigm
+-112	of the Pattern
+-113	of the Essence
+-114	of the Flameblaze
+-115	of the Archetype
+-116	of the Manifestation
+-117	of the Incarnation
+-118	of the Faultline
+-119	of the Ideal
+-120	of the Earthshaker
+-121	of the Landslide
+-122	of the Earthfall
+-123	of the Earthbreaker
+-124	of the Mountainbed
+-125	of the Bedrock
+-126	of the Substratum
+-127	of the Bouldercrag
+-128	of the Rockslab
+-129	of the Wildfire
+-130	of the Fireflash
+-131	of the Undertow
+-132	of the Wavecrest
+-133	of the Stormblast
+-134	of the Galeburst
+-135	of the Windflurry
+-136	of the Zephyr
+-137	of the Windstorm
+-138	of the Feverflare
+-139	of the Mercenary
+-140	of the Wraith
+-141	of the Wind
+-142	of the Master
+-143	of the Scorpion
+-144	of the Shark
+-145	of the Panther
+-146	Crit/Mastery (40/60)
+-147	of the Shark
+-148	Crit/Spirit (40/60)
+-149	of the Scorpion
+-150	of the Panther
+-151	of the Wind
+-152	of the Master
+-153	of the Wraith
+-154	of the Shark
+-155	of the Scorpion
+-156	of the Wraith
+-157	of the Panther
+-158	of the Wind
+-159	of the Master
+-160	of the Mongoose
+-161	of Storms
+-162	of Flames
+-163	of the Mongoose
+-164	of Storms
+-165	of Flames
+-166	of the Mongoose
+-167	of Storms
+-168	of Flames
+-169	of the Landslide
+-170	of the Earthshaker
+-171	of the Earthfall
+-172	of the Faultline
+-173	of the Earthshaker
+-174	of the Landslide
+-175	of the Earthfall
+-176	of the Faultline
+-177	of the Bedrock
+-178	of the Bouldercrag
+-179	of the Rockslab
+-180	of the Bedrock
+-181	of the Bouldercrag
+-182	of the Rockslab
+-183	of the Wildfire
+-184	of the Flameblaze
+-185	of the Fireflash
+-186	of the Feverflare
+-187	of the Undertow
+-188	of the Wavecrest
+-189	of the Wildfire
+-190	of the Flameblaze
+-191	of the Fireflash
+-192	of the Feverflare
+-193	of the Undertow
+-194	of the Wavecrest
+-195	of the Stormblast
+-196	of the Windflurry
+-197	of the Windstorm
+-198	of the Zephyr
+-199	of the Stormblast
+-200	of the Windflurry
+-201	of the Windstorm
+-202	of the Zephyr
+-203	of the Earthshaker
+-204	of the Landslide
+-205	of the Earthfall
+-206	of the Faultline
+-207	of the Bedrock
+-208	of the Bouldercrag
+-209	of the Rockslab
+-210	of the Wildfire
+-211	of the Flameblaze
+-212	of the Fireflash
+-213	of the Feverflare
+-214	of the Undertow
+-215	of the Wavecrest
+-216	of the Stormblast
+-217	of the Windflurry
+-218	of the Windstorm
+-219	of the Zephyr
+-220	of the Earthshaker
+-221	of the Landslide
+-222	of the Earthfall
+-223	of the Faultline
+-224	of the Bedrock
+-225	of the Bouldercrag
+-226	of the Rockslab
+-227	of the Wildfire
+-228	of the Flameblaze
+-229	of the Fireflash
+-230	of the Feverflare
+-231	of the Undertow
+-232	of the Wavecrest
+-233	of the Stormblast
+-234	of the Windflurry
+-235	of the Windstorm
+-236	of the Zephyr
+-260	of the Wildfire
+-261	of the Flameblaze
+-262	of the Feverflare
+-263	of the Undertow
+-264	of the Wavecrest
+-265	of the Wildfire
+-266	of the Flameblaze
+-267	of the Fireflash
+-268	of the Feverflare
+-269	of the Undertow
+-270	of the Wavecrest
+-271	of the Fireflash
+-272	of the Bedrock
+-273	of the Bouldercrag
+-274	of the Rockslab
+-275	of the Bedrock
+-276	of the Bouldercrag
+-277	of the Rockslab
+-278	of the Wildfire
+-279	of the Flameblaze
+-280	of the Fireflash
+-281	of the Feverflare
+-282	of the Undertow
+-283	of the Wavecrest
+-284	of the Fireflash
+-285	of the Feverflare
+-286	of the Undertow
+-287	of the Wavecrest
+-288	of the Stormblast
+-289	of the Windflurry
+-290	of the Windstorm
+-291	of the Zephyr
+-292	of the Stormblast
+-293	of the Windflurry
+-294	of the Windstorm
+-295	of the Zephyr
+-296	TMP of Hit
+-297	TMP of Crit
+-298	TMP of Str/Hit
+-299	TMP of Agi/Hit
+-300	TMP of Int/Hit
+-301	TMP of Stam/Hit
+-302	TMP of Str/Crit
+-303	TMP of Agi/Crit
+-304	TMP of Stam/Crit
+-305	TMP of Str/Dodge
+-306	TMP of Str/Haste
+-307	TMP of Agi/Haste
+-308	TMP of Int/Haste
+-309	TMP of Stam/Haste
+-310	TMP of Parry
+-311	TMP of Expertise
+-312	TMP of Str/Exp
+-313	TMP of Dodge/Parry
+-314	TMP of Agi/Exp
+-315	TMP of Stam/Exp
+-316	TMP of Str/Parry
+-317	of Nature Protection
+-318	of Arcane Protection
+-319	of Fire Protection
+-320	of Frost Protection
+-321	of Shadow Protection
+-324	of Arcane Resistance
+-325	of Dodge
+-326	of Fire Resistance
+-327	of Frost Resistance
+-328	of Nature Resistance
+-329	of Shadow Resistance
+-330	of Restoration
+-331	of Striking
+-332	of Sorcery
+-333	
+-336	
+-337	
+-338	
+-339	
+-340	
+-341	
+-342	
+-343	
+-344	of the Decimator
+-345	of the Unerring
+-346	of the Adroit
+-347	of the Savant
+-348	of the Impatient
+-349	of the Bladewall
+-350	of the Untouchable
+-351	of the Pious
+-352	of the Landslide
+-353	of the Stormblast
+-354	of the Galeburst
+-355	of the Windflurry
+-356	of the Windstorm
+-357	of the Zephyr
+-358	of the Wildfire
+-359	of the Flameblaze
+-360	of the Fireflash
+-361	of the Feverflare
+-362	of the Undertow
+-363	of the Wavecrest
+-364	of the Earthbreaker
+-365	of the Faultline
+-366	of the Mountainbed
+-367	of the Bedrock
+-368	of the Bouldercrag
+-369	of the Rockslab
+-370	of the Earthshaker
+-371	of the Earthfall
+-377	of the Decimator
+-378	of the Unerring
+-379	of the Adroit
+-380	of the Savant
+-381	of the Impatient
+-382	of the Bladewall
+-383	of the Untouchable
+-384	of the Pious
+-385	of the Landslide
+-386	of the Stormblast
+-387	of the Galeburst
+-388	of the Windflurry
+-389	of the Windstorm
+-390	of the Zephyr
+-391	of the Wildfire
+-392	of the Flameblaze
+-393	of the Fireflash
+-394	of the Feverflare
+-395	of the Undertow
+-396	of the Wavecrest
+-397	of the Earthbreaker
+-398	of the Faultline
+-399	of the Mountainbed
+-400	of the Bedrock
+-401	of the Bouldercrag
+-402	of the Rockslab
+-403	of the Earthshaker
+-404	of the Earthfall
+-405	of the Decimator
+-406	of the Unerring
+-407	of the Adroit
+-408	of the Savant
+-409	of the Impatient
+-410	of the Bladewall
+-411	of the Untouchable
+-412	of the Pious
+-413	of the Landslide
+-414	of the Stormblast
+-415	of the Galeburst
+-416	of the Windflurry
+-417	of the Windstorm
+-418	of the Zephyr
+-419	of the Wildfire
+-420	of the Flameblaze
+-421	of the Fireflash
+-422	of the Feverflare
+-423	of the Undertow
+-424	of the Wavecrest
+-425	of the Earthbreaker
+-426	of the Faultline
+-427	of the Mountainbed
+-428	of the Bedrock
+-429	of the Bouldercrag
+-430	of the Rockslab
+-431	of the Earthshaker
+-432	of the Earthfall
+-433	of the Decimator
+-434	of the Unerring
+-435	of the Adroit
+-436	of the Savant
+-437	of the Impatient
+-438	of the Bladewall
+-439	of the Untouchable
+-440	of the Pious
+-441	of the Landslide
+-442	of the Stormblast
+-443	of the Galeburst
+-444	of the Windflurry
+-445	of the Windstorm
+-446	of the Zephyr
+-447	of the Wildfire
+-448	of the Flameblaze
+-449	of the Fireflash
+-450	of the Feverflare
+-451	of the Undertow
+-452	of the Wavecrest
+-453	of the Earthbreaker
+-454	of the Faultline
+-455	of the Mountainbed
+-456	of the Bedrock
+-457	of the Bouldercrag
+-458	of the Rockslab
+-459	of the Earthshaker
+-460	of the Earthfall
+-461	of the Decimator
+-462	of the Unerring
+-463	of the Adroit
+-464	of the Savant
+-465	of the Impatient
+-466	of the Bladewall
+-467	of the Untouchable
+-468	of the Pious
+-469	of the Landslide
+-470	of the Stormblast
+-471	of the Galeburst
+-472	of the Windflurry
+-473	of the Windstorm
+-474	of the Zephyr
+-475	of the Wildfire
+-476	of the Flameblaze
+-477	of the Fireflash
+-478	of the Feverflare
+-479	of the Undertow
+-480	of the Wavecrest
+-481	of the Earthbreaker
+-482	of the Faultline
+-483	of the Mountainbed
+-484	of the Bedrock
+-485	of the Bouldercrag
+-486	of the Rockslab
+-487	of the Earthshaker
+-488	of the Earthfall
+5	of Intellect
+6	of Strength
+14	of Agility
+15	of Stamina
+16	of Spirit
+17	of Agility
+18	of Agility
+19	of Stamina
+22	of Stamina
+23	of Strength
+24	of Strength
+25	of Intellect
+26	of Intellect
+27	of Spirit
+28	of Spirit
+29	of Toughness
+30	of Toughness
+31	of Toughness
+32	of Quality
+33	of Quality
+34	of Quality
+39	of Proficiency
+40	of Proficiency
+41	of Proficiency
+42	of Proficiency
+43	of Proficiency
+44	of Proficiency
+45	of Proficiency
+46	of Proficiency
+47	of Proficiency
+48	of Defense
+49	of Beast Slaying
+50	of Retaliation
+51	of Critical Strike
+52	of Proficiency
+53	of Proficiency
+54	of Proficiency
+56	of Proficiency
+57	of Proficiency
+58	of Proficiency
+59	of Proficiency
+60	of Proficiency
+62	of Defense
+63	of Proficiency
+64	of Beast Slaying
+65	of Retaliation
+66	of Proficiency
+67	of Proficiency
+68	of Proficiency
+69	of Proficiency
+70	of Proficiency
+71	of Proficiency
+72	of Proficiency
+73	of Proficiency
+74	of Defense
+75	of Proficiency
+76	of Beast Slaying
+77	of Retaliation
+78	of Critical Strike
+79	of Toughness
+80	of Quality
+81	of Proficiency
+82	of Proficiency
+83	of Proficiency
+84	of Proficiency
+85	of Proficiency
+86	of Proficiency
+87	of Proficiency
+88	of Proficiency
+89	of Defense
+90	of Proficiency
+91	of Beast Slaying
+92	of Retaliation
+93	of Agility
+94	of Intellect
+95	of Spirit
+96	of Stamina
+97	of Strength
+98	of Toughness
+99	of Quality
+100	of Proficiency
+101	of Proficiency
+102	of Proficiency
+103	of Proficiency
+104	of Proficiency
+105	of Proficiency
+106	of Proficiency
+107	of Proficiency
+108	of Defense
+109	of Proficiency
+110	of Beast Slaying
+111	of Agility
+112	of Intellect
+113	of Spirit
+114	of Stamina
+115	of Strength
+116	of Critical Strike
+117	of Twain
+118	of Toughness
+119	of Quality
+120	of Proficiency
+121	of Proficiency
+122	of Proficiency
+123	of Proficiency
+124	of Proficiency
+125	of Proficiency
+126	of Proficiency
+127	of Proficiency
+128	of Defense
+129	of Proficiency
+130	of Beast Slaying
+131	of Retaliation
+132	of Agility
+133	of Intellect
+134	of Spirit
+135	of Stamina
+136	of Strength
+137	of Toughness
+138	of Quality
+139	of Proficiency
+140	of Proficiency
+141	of Proficiency
+142	of Proficiency
+143	of Proficiency
+144	of Proficiency
+145	of Proficiency
+146	of Proficiency
+147	of Proficiency
+148	of Proficiency
+149	of Beast Slaying
+150	of Retaliation
+151	of Agility
+152	of Intellect
+153	of Spirit
+154	of Stamina
+155	of Strength
+156	of Critical Strike
+167	
+168	
+171	
+172	
+173	
+174	
+175	
+176	
+177	
+178	
+179	
+180	
+181	
+182	
+183	
+184	
+185	
+186	
+187	
+188	
+189	
+190	
+191	
+192	
+193	
+194	
+195	
+196	
+197	
+198	
+207	
+210	
+211	
+212	
+213	
+214	
+215	
+216	
+217	
+218	
+219	
+220	
+227	
+228	
+229	
+231	
+232	
+233	
+234	
+235	
+236	
+237	
+238	
+247	
+248	
+249	
+250	
+251	
+252	
+253	
+254	
+255	
+256	
+267	
+287	of Stamina
+307	of Strength
+308	of Strength
+309	of Strength
+310	of Strength
+311	of Strength
+312	of Strength
+313	of Strength
+314	of Strength
+315	of Strength
+316	of Strength
+317	of Strength
+318	of Strength
+319	of Strength
+320	of Strength
+321	of Strength
+322	of Strength
+323	of Strength
+324	of Strength
+325	of Strength
+326	of Strength
+327	of Strength
+328	of Strength
+329	of Strength
+330	of Strength
+331	of Strength
+332	of Strength
+333	of Stamina
+334	of Stamina
+335	of Stamina
+336	of Stamina
+337	of Stamina
+338	of Stamina
+339	of Stamina
+340	of Stamina
+341	of Stamina
+342	of Stamina
+343	of Stamina
+344	of Stamina
+345	of Stamina
+346	of Stamina
+347	of Stamina
+348	of Stamina
+349	of Stamina
+350	of Stamina
+351	of Stamina
+352	of Stamina
+353	of Stamina
+354	of Stamina
+355	of Stamina
+356	of Stamina
+357	of Stamina
+358	of Agility
+359	of Agility
+360	of Agility
+361	of Agility
+362	of Agility
+363	of Agility
+364	of Agility
+365	of Agility
+366	of Agility
+367	of Agility
+368	of Agility
+369	of Agility
+370	of Agility
+371	of Agility
+372	of Agility
+373	of Agility
+374	of Agility
+375	of Agility
+376	of Agility
+377	of Agility
+378	of Agility
+379	of Agility
+380	of Agility
+381	of Agility
+382	of Agility
+383	of Intellect
+384	of Intellect
+385	of Intellect
+386	of Intellect
+387	of Intellect
+388	of Intellect
+389	of Intellect
+390	of Intellect
+391	of Intellect
+392	of Intellect
+393	of Intellect
+394	of Intellect
+395	of Intellect
+396	of Intellect
+397	of Intellect
+398	of Intellect
+399	of Intellect
+400	of Intellect
+401	of Intellect
+402	of Intellect
+403	of Intellect
+404	of Intellect
+405	of Intellect
+406	of Intellect
+407	of Intellect
+408	of Intellect
+409	of Spirit
+410	of Spirit
+411	of Spirit
+412	of Spirit
+413	of Spirit
+414	of Spirit
+415	of Spirit
+416	of Spirit
+417	of Spirit
+418	of Spirit
+419	of Spirit
+420	of Spirit
+421	of Spirit
+422	of Spirit
+423	of Spirit
+424	of Spirit
+425	of Spirit
+426	of Spirit
+427	of Spirit
+428	of Spirit
+429	of Spirit
+430	of Spirit
+431	of Spirit
+432	of Spirit
+433	of Spirit
+434	of Spirit
+435	of the Falcon
+436	of the Falcon
+437	of the Falcon
+438	of the Falcon
+439	of the Falcon
+440	of the Falcon
+441	of the Falcon
+442	of the Falcon
+443	of the Falcon
+444	of the Falcon
+445	of the Falcon
+446	of the Falcon
+447	of the Falcon
+448	of the Falcon
+449	of the Falcon
+450	of the Falcon
+451	of the Falcon
+452	of the Falcon
+453	of the Falcon
+454	of the Falcon
+455	of the Falcon
+456	of the Falcon
+457	of the Falcon
+458	of the Falcon
+459	of the Falcon
+460	of the Falcon
+461	of the Falcon
+462	of the Falcon
+463	of the Falcon
+464	of the Falcon
+465	of the Falcon
+466	of the Falcon
+467	of the Falcon
+468	of the Falcon
+469	of the Falcon
+470	of the Falcon
+471	of the Falcon
+472	of the Falcon
+473	of the Falcon
+474	of the Falcon
+475	of the Falcon
+476	of the Falcon
+477	of the Falcon
+478	of the Falcon
+479	of the Falcon
+480	of the Falcon
+481	of the Falcon
+482	of the Falcon
+483	of the Falcon
+484	of the Falcon
+485	of the Falcon
+486	of the Falcon
+487	of the Falcon
+488	of the Falcon
+489	of the Falcon
+490	of the Falcon
+491	of the Falcon
+492	of the Falcon
+493	of the Falcon
+494	of the Falcon
+495	of the Falcon
+496	of the Falcon
+497	of the Falcon
+498	of the Falcon
+499	of the Falcon
+500	of the Falcon
+501	of the Wolf
+502	of the Wolf
+503	of the Wolf
+504	of the Wolf
+505	of the Wolf
+506	of the Wolf
+507	of the Wolf
+508	of the Wolf
+509	of the Wolf
+510	of the Wolf
+511	of the Wolf
+512	of the Wolf
+513	of the Wolf
+514	of the Wolf
+515	of the Wolf
+516	of the Wolf
+517	of the Wolf
+518	of the Wolf
+519	of the Wolf
+520	of the Wolf
+521	of the Wolf
+522	of the Wolf
+523	of the Wolf
+524	of the Wolf
+525	of the Wolf
+526	of the Wolf
+527	of the Wolf
+528	of the Wolf
+529	of the Wolf
+530	of the Wolf
+531	of the Wolf
+532	of the Wolf
+533	of the Wolf
+534	of the Wolf
+535	of the Wolf
+536	of the Wolf
+537	of the Wolf
+538	of the Wolf
+539	of the Wolf
+540	of the Wolf
+541	of the Wolf
+542	of the Wolf
+543	of the Wolf
+544	of the Wolf
+545	of the Wolf
+546	of the Wolf
+547	of the Wolf
+548	of the Wolf
+549	of the Wolf
+550	of the Wolf
+551	of the Wolf
+552	of the Wolf
+553	of the Wolf
+554	of the Wolf
+555	of the Wolf
+556	of the Wolf
+557	of the Wolf
+558	of the Wolf
+559	of the Wolf
+560	of the Wolf
+561	of the Wolf
+562	of the Wolf
+563	of the Wolf
+564	of the Wolf
+565	of the Wolf
+566	of the Wolf
+567	of the Wolf
+568	of the Wolf
+569	of the Wolf
+570	of the Wolf
+571	of the Wolf
+572	of the Wolf
+573	of the Wolf
+574	of the Wolf
+575	of the Wolf
+576	of the Wolf
+577	of the Wolf
+578	of the Wolf
+579	of the Wolf
+580	of the Wolf
+581	of the Wolf
+582	of the Wolf
+583	of the Wolf
+584	of the Monkey
+585	of the Monkey
+586	of the Monkey
+587	of the Monkey
+588	of the Monkey
+589	of the Monkey
+590	of the Monkey
+591	of the Monkey
+592	of the Monkey
+593	of the Monkey
+594	of the Monkey
+595	of the Monkey
+596	of the Monkey
+597	of the Monkey
+598	of the Monkey
+599	of the Monkey
+600	of the Monkey
+601	of the Monkey
+602	of the Monkey
+603	of the Monkey
+604	of the Monkey
+605	of the Monkey
+606	of the Monkey
+607	of the Monkey
+608	of the Monkey
+609	of the Monkey
+610	of the Monkey
+611	of the Monkey
+612	of the Monkey
+613	of the Monkey
+614	of the Monkey
+615	of the Monkey
+616	of the Monkey
+617	of the Monkey
+618	of the Monkey
+619	of the Monkey
+620	of the Monkey
+621	of the Monkey
+622	of the Monkey
+623	of the Monkey
+624	of the Monkey
+625	of the Monkey
+626	of the Monkey
+627	of the Monkey
+628	of the Monkey
+629	of the Monkey
+630	of the Monkey
+631	of the Monkey
+632	of the Monkey
+633	of the Monkey
+634	of the Monkey
+635	of the Monkey
+636	of the Monkey
+637	of the Monkey
+638	of the Monkey
+639	of the Monkey
+640	of the Monkey
+641	of the Monkey
+642	of the Monkey
+643	of the Monkey
+644	of the Monkey
+645	of the Monkey
+646	of the Monkey
+647	of the Monkey
+648	of the Monkey
+649	of the Monkey
+650	of the Monkey
+651	of the Monkey
+652	of the Monkey
+653	of the Monkey
+654	of the Monkey
+655	of the Monkey
+656	of the Monkey
+657	of the Monkey
+658	of the Monkey
+659	of the Monkey
+660	of the Monkey
+661	of the Monkey
+662	of the Monkey
+663	of the Monkey
+664	of the Monkey
+665	of the Monkey
+666	of the Monkey
+667	of the Monkey
+668	of the Monkey
+669	of the Tiger
+670	of the Tiger
+671	of the Tiger
+672	of the Tiger
+673	of the Tiger
+674	of the Tiger
+675	of the Tiger
+676	of the Tiger
+677	of the Tiger
+678	of the Tiger
+679	of the Tiger
+680	of the Tiger
+681	of the Tiger
+682	of the Tiger
+683	of the Tiger
+684	of the Tiger
+685	of the Tiger
+686	of the Tiger
+687	of the Tiger
+688	of the Tiger
+689	of the Tiger
+690	of the Tiger
+691	of the Tiger
+692	of the Tiger
+693	of the Tiger
+694	of the Tiger
+695	of the Tiger
+696	of the Tiger
+697	of the Tiger
+698	of the Tiger
+699	of the Tiger
+700	of the Tiger
+701	of the Tiger
+702	of the Tiger
+703	of the Tiger
+704	of the Tiger
+705	of the Tiger
+706	of the Tiger
+707	of the Tiger
+708	of the Tiger
+709	of the Tiger
+710	of the Tiger
+711	of the Tiger
+712	of the Tiger
+713	of the Tiger
+714	of the Tiger
+715	of the Tiger
+716	of the Tiger
+717	of the Tiger
+718	of the Tiger
+719	of the Tiger
+720	of the Tiger
+721	of the Tiger
+722	of the Tiger
+723	of the Tiger
+724	of the Tiger
+725	of the Tiger
+726	of the Tiger
+727	of the Tiger
+728	of the Tiger
+729	of the Tiger
+730	of the Tiger
+731	of the Tiger
+732	of the Tiger
+733	of the Tiger
+734	of the Tiger
+735	of the Tiger
+736	of the Tiger
+737	of the Tiger
+738	of the Tiger
+739	of the Tiger
+740	of the Tiger
+741	of the Tiger
+742	of the Tiger
+743	of the Tiger
+744	of the Tiger
+745	of the Tiger
+746	of the Tiger
+747	of the Tiger
+748	of the Tiger
+749	of the Tiger
+750	of the Tiger
+751	of the Tiger
+752	of the Tiger
+753	of the Tiger
+754	of the Owl
+755	of the Owl
+756	of the Owl
+757	of the Owl
+758	of the Owl
+759	of the Owl
+760	of the Owl
+761	of the Owl
+762	of the Owl
+763	of the Owl
+764	of the Owl
+765	of the Owl
+766	of the Owl
+767	of the Owl
+768	of the Owl
+769	of the Owl
+770	of the Owl
+771	of the Owl
+772	of the Owl
+773	of the Owl
+774	of the Owl
+775	of the Owl
+776	of the Owl
+777	of the Owl
+778	of the Owl
+779	of the Owl
+780	of the Owl
+781	of the Owl
+782	of the Owl
+783	of the Owl
+784	of the Owl
+785	of the Owl
+786	of the Owl
+787	of the Owl
+788	of the Owl
+789	of the Owl
+790	of the Owl
+791	of the Owl
+792	of the Owl
+793	of the Owl
+794	of the Owl
+795	of the Owl
+796	of the Owl
+797	of the Owl
+798	of the Owl
+799	of the Owl
+800	of the Owl
+801	of the Owl
+802	of the Owl
+803	of the Owl
+804	of the Owl
+805	of the Owl
+806	of the Owl
+807	of the Owl
+808	of the Owl
+809	of the Owl
+810	of the Owl
+811	of the Owl
+812	of the Owl
+813	of the Owl
+814	of the Owl
+815	of the Owl
+816	of the Owl
+817	of the Owl
+818	of the Owl
+819	of the Owl
+820	of the Owl
+821	of the Owl
+822	of the Owl
+823	of the Owl
+824	of the Owl
+825	of the Owl
+826	of the Owl
+827	of the Owl
+828	of the Owl
+829	of the Owl
+830	of the Owl
+831	of the Owl
+832	of the Owl
+833	of the Owl
+834	of the Owl
+835	of the Owl
+836	of the Owl
+837	of the Owl
+838	of the Owl
+839	of the Eagle
+840	of the Eagle
+841	of the Eagle
+842	of the Eagle
+843	of the Eagle
+844	of the Eagle
+845	of the Eagle
+846	of the Eagle
+847	of the Eagle
+848	of the Eagle
+849	of the Eagle
+850	of the Eagle
+851	of the Eagle
+852	of the Eagle
+853	of the Eagle
+854	of the Eagle
+855	of the Eagle
+856	of the Eagle
+857	of the Eagle
+858	of the Eagle
+859	of the Eagle
+860	of the Eagle
+861	of the Eagle
+862	of the Eagle
+863	of the Eagle
+864	of the Eagle
+865	of the Eagle
+866	of the Eagle
+867	of the Eagle
+868	of the Eagle
+869	of the Eagle
+870	of the Eagle
+871	of the Eagle
+872	of the Eagle
+873	of the Eagle
+874	of the Eagle
+875	of the Eagle
+876	of the Eagle
+877	of the Eagle
+878	of the Eagle
+879	of the Eagle
+880	of the Eagle
+881	of the Eagle
+882	of the Eagle
+883	of the Eagle
+884	of the Eagle
+885	of the Eagle
+886	of the Eagle
+887	of the Eagle
+888	of the Eagle
+889	of the Eagle
+890	of the Eagle
+891	of the Eagle
+892	of the Eagle
+893	of the Eagle
+894	of the Eagle
+895	of the Eagle
+896	of the Eagle
+897	of the Eagle
+898	of the Eagle
+899	of the Eagle
+900	of the Eagle
+901	of the Eagle
+902	of the Eagle
+903	of the Eagle
+904	of the Eagle
+905	of the Eagle
+906	of the Eagle
+907	of the Eagle
+908	of the Eagle
+909	of the Eagle
+910	of the Eagle
+911	of the Eagle
+912	of the Eagle
+913	of the Eagle
+914	of the Eagle
+915	of the Eagle
+916	of the Eagle
+917	of the Eagle
+918	of the Eagle
+919	of the Eagle
+920	of the Eagle
+921	of the Eagle
+922	of the Eagle
+923	of the Eagle
+924	of the Gorilla
+925	of the Gorilla
+926	of the Gorilla
+927	of the Gorilla
+928	of the Gorilla
+929	of the Gorilla
+930	of the Gorilla
+931	of the Gorilla
+932	of the Gorilla
+933	of the Gorilla
+934	of the Gorilla
+935	of the Gorilla
+936	of the Gorilla
+937	of the Gorilla
+938	of the Gorilla
+939	of the Gorilla
+940	of the Gorilla
+941	of the Gorilla
+942	of the Gorilla
+943	of the Gorilla
+944	of the Gorilla
+945	of the Gorilla
+946	of the Gorilla
+947	of the Gorilla
+948	of the Gorilla
+949	of the Gorilla
+950	of the Gorilla
+951	of the Gorilla
+952	of the Gorilla
+953	of the Gorilla
+954	of the Gorilla
+955	of the Gorilla
+956	of the Gorilla
+957	of the Gorilla
+958	of the Gorilla
+959	of the Gorilla
+960	of the Gorilla
+961	of the Gorilla
+962	of the Gorilla
+963	of the Gorilla
+964	of the Gorilla
+965	of the Gorilla
+966	of the Gorilla
+967	of the Gorilla
+968	of the Gorilla
+969	of the Gorilla
+970	of the Gorilla
+971	of the Gorilla
+972	of the Gorilla
+973	of the Gorilla
+974	of the Gorilla
+975	of the Gorilla
+976	of the Gorilla
+977	of the Gorilla
+978	of the Gorilla
+979	of the Gorilla
+980	of the Gorilla
+981	of the Gorilla
+982	of the Gorilla
+983	of the Gorilla
+984	of the Gorilla
+985	of the Gorilla
+986	of the Gorilla
+987	of the Gorilla
+988	of the Gorilla
+989	of the Gorilla
+990	of the Gorilla
+991	of the Gorilla
+992	of the Gorilla
+993	of the Gorilla
+994	of the Gorilla
+995	of the Gorilla
+996	of the Gorilla
+997	of the Gorilla
+998	of the Gorilla
+999	of the Gorilla
+1000	of the Gorilla
+1001	of the Gorilla
+1002	of the Gorilla
+1003	of the Gorilla
+1004	of the Gorilla
+1005	of the Gorilla
+1006	of the Gorilla
+1007	of the Gorilla
+1008	of the Gorilla
+1009	of the Whale
+1010	of the Whale
+1011	of the Whale
+1012	of the Whale
+1013	of the Whale
+1014	of the Whale
+1015	of the Whale
+1016	of the Whale
+1017	of the Whale
+1018	of the Whale
+1019	of the Whale
+1020	of the Whale
+1021	of the Whale
+1022	of the Whale
+1023	of the Whale
+1024	of the Whale
+1025	of the Whale
+1026	of the Whale
+1027	of the Whale
+1028	of the Whale
+1029	of the Whale
+1030	of the Whale
+1031	of the Whale
+1032	of the Whale
+1033	of the Whale
+1034	of the Whale
+1035	of the Whale
+1036	of the Whale
+1037	of the Whale
+1038	of the Whale
+1039	of the Whale
+1040	of the Whale
+1041	of the Whale
+1042	of the Whale
+1043	of the Whale
+1044	of the Whale
+1045	of the Whale
+1046	of the Whale
+1047	of the Whale
+1048	of the Whale
+1049	of the Whale
+1050	of the Whale
+1051	of the Whale
+1052	of the Whale
+1053	of the Whale
+1054	of the Whale
+1055	of the Whale
+1056	of the Whale
+1057	of the Whale
+1058	of the Whale
+1059	of the Whale
+1060	of the Whale
+1061	of the Whale
+1062	of the Whale
+1063	of the Whale
+1064	of the Whale
+1065	of the Whale
+1066	of the Whale
+1067	of the Whale
+1068	of the Whale
+1069	of the Whale
+1070	of the Whale
+1071	of the Whale
+1072	of the Whale
+1073	of the Whale
+1074	of the Whale
+1075	of the Whale
+1076	of the Whale
+1077	of the Whale
+1078	of the Whale
+1079	of the Whale
+1080	of the Whale
+1081	of the Whale
+1082	of the Whale
+1083	of the Whale
+1084	of the Whale
+1085	of the Whale
+1086	of the Whale
+1087	of the Whale
+1088	of the Whale
+1089	of the Whale
+1090	of the Whale
+1091	of the Whale
+1092	of the Whale
+1093	of the Whale
+1094	of the Boar
+1095	of the Boar
+1096	of the Boar
+1097	of the Boar
+1098	of the Boar
+1099	of the Boar
+1100	of the Boar
+1101	of the Boar
+1102	of the Boar
+1103	of the Boar
+1104	of the Boar
+1105	of the Boar
+1106	of the Boar
+1107	of the Boar
+1108	of the Boar
+1109	of the Boar
+1110	of the Boar
+1111	of the Boar
+1112	of the Boar
+1113	of the Boar
+1114	of the Boar
+1115	of the Boar
+1116	of the Boar
+1117	of the Boar
+1118	of the Boar
+1119	of the Boar
+1120	of the Boar
+1121	of the Boar
+1122	of the Boar
+1123	of the Boar
+1124	of the Boar
+1125	of the Boar
+1126	of the Boar
+1127	of the Boar
+1128	of the Boar
+1129	of the Boar
+1130	of the Boar
+1131	of the Boar
+1132	of the Boar
+1133	of the Boar
+1134	of the Boar
+1135	of the Boar
+1136	of the Boar
+1137	of the Boar
+1138	of the Boar
+1139	of the Boar
+1140	of the Boar
+1141	of the Boar
+1142	of the Boar
+1143	of the Boar
+1144	of the Boar
+1145	of the Boar
+1146	of the Boar
+1147	of the Boar
+1148	of the Boar
+1149	of the Boar
+1150	of the Boar
+1151	of the Boar
+1152	of the Boar
+1153	of the Boar
+1154	of the Boar
+1155	of the Boar
+1156	of the Boar
+1157	of the Boar
+1158	of the Boar
+1159	of the Boar
+1160	of the Boar
+1161	of the Boar
+1162	of the Boar
+1163	of the Boar
+1164	of the Boar
+1165	of the Boar
+1166	of the Boar
+1167	of the Boar
+1168	of the Boar
+1169	of the Boar
+1170	of the Boar
+1171	of the Boar
+1172	of the Boar
+1173	of the Boar
+1174	of the Boar
+1175	of the Boar
+1176	of the Boar
+1177	of the Boar
+1178	of the Boar
+1179	of the Bear
+1180	of the Bear
+1181	of the Bear
+1182	of the Bear
+1183	of the Bear
+1184	of the Bear
+1185	of the Bear
+1186	of the Bear
+1187	of the Bear
+1188	of the Bear
+1189	of the Bear
+1190	of the Bear
+1191	of the Bear
+1192	of the Bear
+1193	of the Bear
+1194	of the Bear
+1195	of the Bear
+1196	of the Bear
+1197	of the Bear
+1198	of the Bear
+1199	of the Bear
+1200	of the Bear
+1201	of the Bear
+1202	of the Bear
+1203	of the Bear
+1204	of the Bear
+1205	of the Bear
+1206	of the Bear
+1207	of the Bear
+1208	of the Bear
+1209	of the Bear
+1210	of the Bear
+1211	of the Bear
+1212	of the Bear
+1213	of the Bear
+1214	of the Bear
+1215	of the Bear
+1216	of the Bear
+1217	of the Bear
+1218	of the Bear
+1219	of the Bear
+1220	of the Bear
+1221	of the Bear
+1222	of the Bear
+1223	of the Bear
+1224	of the Bear
+1225	of the Bear
+1226	of the Bear
+1227	of the Bear
+1228	of the Bear
+1229	of the Bear
+1230	of the Bear
+1231	of the Bear
+1232	of the Bear
+1233	of the Bear
+1234	of the Bear
+1235	of the Bear
+1236	of the Bear
+1237	of the Bear
+1238	of the Bear
+1239	of the Bear
+1240	of the Bear
+1241	of the Bear
+1242	of the Bear
+1243	of the Bear
+1244	of the Bear
+1245	of the Bear
+1246	of the Bear
+1247	of the Bear
+1248	of the Bear
+1249	of the Bear
+1250	of the Bear
+1251	of the Bear
+1252	of the Bear
+1253	of the Bear
+1254	of the Bear
+1255	of the Bear
+1256	of the Bear
+1257	of the Bear
+1258	of the Bear
+1259	of the Bear
+1260	of the Bear
+1261	of the Bear
+1262	of the Bear
+1263	of the Bear
+1267	of Stamina
+1268	of Stamina
+1269	of Stamina
+1270	of Stamina
+1271	of Stamina
+1272	of Stamina
+1273	of Strength
+1274	of Strength
+1275	of Strength
+1276	of Strength
+1277	of Strength
+1278	of Strength
+1279	of Agility
+1280	of Agility
+1281	of Agility
+1282	of Agility
+1283	of Agility
+1284	of Agility
+1285	of Intellect
+1286	of Intellect
+1287	of Intellect
+1288	of Intellect
+1289	of Intellect
+1290	of Intellect
+1291	of Spirit
+1292	of Spirit
+1293	of Spirit
+1294	of Spirit
+1295	of Spirit
+1296	of Spirit
+1307	of Arcane Resistance
+1308	of Arcane Resistance
+1309	of Arcane Resistance
+1310	of Arcane Resistance
+1311	of Arcane Resistance
+1312	of Arcane Resistance
+1313	of Arcane Resistance
+1314	of Arcane Resistance
+1315	of Arcane Resistance
+1316	of Arcane Resistance
+1317	of Arcane Resistance
+1318	of Arcane Resistance
+1319	of Arcane Resistance
+1320	of Arcane Resistance
+1321	of Arcane Resistance
+1322	of Arcane Resistance
+1323	of Arcane Resistance
+1324	of Arcane Resistance
+1325	of Arcane Resistance
+1326	of Arcane Resistance
+1327	of Arcane Resistance
+1328	of Arcane Resistance
+1329	of Arcane Resistance
+1330	of Arcane Resistance
+1331	of Arcane Resistance
+1332	of Arcane Resistance
+1333	of Arcane Resistance
+1334	of Arcane Resistance
+1335	of Arcane Resistance
+1336	of Arcane Resistance
+1337	of Arcane Resistance
+1338	of Arcane Resistance
+1339	of Arcane Resistance
+1340	of Arcane Resistance
+1341	of Arcane Resistance
+1342	of Arcane Resistance
+1343	of Arcane Resistance
+1344	of Arcane Resistance
+1345	of Arcane Resistance
+1346	of Arcane Resistance
+1347	of Arcane Resistance
+1348	of Arcane Resistance
+1349	of Arcane Resistance
+1350	of Arcane Resistance
+1351	of Arcane Resistance
+1352	of Arcane Resistance
+1353	of Frost Resistance
+1354	of Frost Resistance
+1355	of Frost Resistance
+1356	of Frost Resistance
+1357	of Frost Resistance
+1358	of Frost Resistance
+1359	of Frost Resistance
+1360	of Frost Resistance
+1361	of Frost Resistance
+1362	of Frost Resistance
+1363	of Frost Resistance
+1364	of Frost Resistance
+1365	of Frost Resistance
+1366	of Frost Resistance
+1367	of Frost Resistance
+1368	of Frost Resistance
+1369	of Frost Resistance
+1370	of Frost Resistance
+1371	of Frost Resistance
+1372	of Frost Resistance
+1373	of Frost Resistance
+1374	of Frost Resistance
+1375	of Frost Resistance
+1376	of Frost Resistance
+1377	of Frost Resistance
+1378	of Frost Resistance
+1379	of Frost Resistance
+1380	of Frost Resistance
+1381	of Frost Resistance
+1382	of Frost Resistance
+1383	of Frost Resistance
+1384	of Frost Resistance
+1385	of Frost Resistance
+1386	of Frost Resistance
+1387	of Frost Resistance
+1388	of Frost Resistance
+1389	of Frost Resistance
+1390	of Frost Resistance
+1391	of Frost Resistance
+1392	of Frost Resistance
+1393	of Frost Resistance
+1394	of Frost Resistance
+1395	of Frost Resistance
+1396	of Frost Resistance
+1397	of Frost Resistance
+1398	of Frost Resistance
+1399	of Fire Resistance
+1400	of Fire Resistance
+1401	of Fire Resistance
+1402	of Fire Resistance
+1403	of Fire Resistance
+1404	of Fire Resistance
+1405	of Fire Resistance
+1406	of Fire Resistance
+1407	of Fire Resistance
+1408	of Fire Resistance
+1409	of Fire Resistance
+1410	of Fire Resistance
+1411	of Fire Resistance
+1412	of Fire Resistance
+1413	of Fire Resistance
+1414	of Fire Resistance
+1415	of Fire Resistance
+1416	of Fire Resistance
+1417	of Fire Resistance
+1418	of Fire Resistance
+1419	of Fire Resistance
+1420	of Fire Resistance
+1421	of Fire Resistance
+1422	of Fire Resistance
+1423	of Fire Resistance
+1424	of Fire Resistance
+1425	of Fire Resistance
+1426	of Fire Resistance
+1427	of Fire Resistance
+1428	of Fire Resistance
+1429	of Fire Resistance
+1430	of Fire Resistance
+1431	of Fire Resistance
+1432	of Fire Resistance
+1433	of Fire Resistance
+1434	of Fire Resistance
+1435	of Fire Resistance
+1436	of Fire Resistance
+1437	of Fire Resistance
+1438	of Fire Resistance
+1439	of Fire Resistance
+1440	of Fire Resistance
+1441	of Fire Resistance
+1442	of Fire Resistance
+1443	of Fire Resistance
+1444	of Fire Resistance
+1445	of Shadow Resistance
+1446	of Shadow Resistance
+1447	of Shadow Resistance
+1448	of Shadow Resistance
+1449	of Shadow Resistance
+1450	of Shadow Resistance
+1451	of Shadow Resistance
+1452	of Shadow Resistance
+1453	of Shadow Resistance
+1454	of Shadow Resistance
+1455	of Shadow Resistance
+1456	of Shadow Resistance
+1457	of Shadow Resistance
+1458	of Shadow Resistance
+1459	of Shadow Resistance
+1460	of Shadow Resistance
+1461	of Shadow Resistance
+1462	of Shadow Resistance
+1463	of Shadow Resistance
+1464	of Shadow Resistance
+1465	of Shadow Resistance
+1466	of Shadow Resistance
+1467	of Shadow Resistance
+1468	of Shadow Resistance
+1469	of Shadow Resistance
+1470	of Shadow Resistance
+1471	of Shadow Resistance
+1472	of Shadow Resistance
+1473	of Shadow Resistance
+1474	of Shadow Resistance
+1475	of Shadow Resistance
+1476	of Shadow Resistance
+1477	of Shadow Resistance
+1478	of Shadow Resistance
+1479	of Shadow Resistance
+1480	of Shadow Resistance
+1481	of Shadow Resistance
+1482	of Shadow Resistance
+1483	of Shadow Resistance
+1484	of Shadow Resistance
+1485	of Shadow Resistance
+1486	of Shadow Resistance
+1487	of Shadow Resistance
+1488	of Shadow Resistance
+1489	of Shadow Resistance
+1490	of Shadow Resistance
+1491	of Nature Resistance
+1492	of Nature Resistance
+1493	of Nature Resistance
+1494	of Nature Resistance
+1495	of Nature Resistance
+1496	of Nature Resistance
+1497	of Nature Resistance
+1498	of Nature Resistance
+1499	of Nature Resistance
+1500	of Nature Resistance
+1501	of Nature Resistance
+1502	of Nature Resistance
+1503	of Nature Resistance
+1504	of Nature Resistance
+1505	of Nature Resistance
+1506	of Nature Resistance
+1507	of Nature Resistance
+1508	of Nature Resistance
+1509	of Nature Resistance
+1510	of Nature Resistance
+1511	of Nature Resistance
+1512	of Nature Resistance
+1513	of Nature Resistance
+1514	of Nature Resistance
+1515	of Nature Resistance
+1516	of Nature Resistance
+1517	of Nature Resistance
+1518	of Nature Resistance
+1519	of Nature Resistance
+1520	of Nature Resistance
+1521	of Nature Resistance
+1522	of Nature Resistance
+1523	of Nature Resistance
+1524	of Nature Resistance
+1525	of Nature Resistance
+1526	of Nature Resistance
+1527	of Nature Resistance
+1528	of Nature Resistance
+1529	of Nature Resistance
+1530	of Nature Resistance
+1531	of Nature Resistance
+1532	of Nature Resistance
+1533	of Nature Resistance
+1534	of Nature Resistance
+1535	of Nature Resistance
+1536	of Nature Resistance
+1547	of Power
+1548	of Power
+1549	of Power
+1550	of Power
+1551	of Power
+1552	of Power
+1553	of Power
+1554	of Power
+1555	of Power
+1556	of Power
+1557	of Power
+1558	of Power
+1559	of Power
+1560	of Power
+1561	of Power
+1562	of Power
+1563	of Power
+1564	of Power
+1565	of Power
+1566	of Power
+1567	of Power
+1568	of Power
+1569	of Power
+1570	of Power
+1571	of Power
+1572	of Power
+1573	of Power
+1574	of Power
+1575	of Power
+1576	of Power
+1577	of Power
+1578	of Power
+1579	of Power
+1580	of Power
+1581	of Power
+1582	of Power
+1583	of Power
+1584	of Power
+1585	of Power
+1586	of Power
+1587	of Power
+1588	of Power
+1589	of Power
+1590	of Power
+1591	of Power
+1592	of Power
+1607	
+1608	of Defense
+1609	of Defense
+1610	of Defense
+1611	of Defense
+1612	of Defense
+1613	of Defense
+1614	of Defense
+1615	of Defense
+1616	of Defense
+1617	of Defense
+1618	of Defense
+1619	of Defense
+1620	of Defense
+1621	of Defense
+1622	of Defense
+1623	of Defense
+1624	of Defense
+1625	of Defense
+1626	of Defense
+1627	of Defense
+1628	of Defense
+1629	of Defense
+1630	of Defense
+1631	of Defense
+1632	of Defense
+1633	of Defense
+1634	of Defense
+1635	of Defense
+1636	of Defense
+1637	of Defense
+1647	of Blocking
+1648	of Blocking
+1649	of Blocking
+1650	of Blocking
+1651	of Blocking
+1652	of Blocking
+1653	of Blocking
+1654	of Blocking
+1655	of Blocking
+1656	of Blocking
+1657	of Blocking
+1658	of Blocking
+1659	of Blocking
+1660	of Blocking
+1661	of Blocking
+1662	of Blocking
+1663	of Blocking
+1664	of Blocking
+1665	of Blocking
+1666	of Blocking
+1667	of Blocking
+1668	of Blocking
+1669	of Blocking
+1670	of Blocking
+1671	of Blocking
+1672	of Blocking
+1673	of Blocking
+1674	of Blocking
+1675	of Blocking
+1676	of Blocking
+1677	of Blocking
+1678	of Blocking
+1679	of Blocking
+1680	of Blocking
+1681	of Blocking
+1682	of Blocking
+1683	of Blocking
+1684	of Blocking
+1685	of Blocking
+1686	of Blocking
+1687	of Blocking
+1688	of Blocking
+1689	of Blocking
+1690	of Blocking
+1691	of Blocking
+1692	of Blocking
+1693	of Blocking
+1694	of Blocking
+1695	of Blocking
+1696	of Blocking
+1697	of Blocking
+1698	of Blocking
+1699	of Blocking
+1700	of Blocking
+1701	of Blocking
+1702	of Blocking
+1703	of Blocking
+1704	of Marksmanship
+1705	of Marksmanship
+1706	of Marksmanship
+1707	of Marksmanship
+1708	of Marksmanship
+1709	of Marksmanship
+1710	of Marksmanship
+1711	of Marksmanship
+1712	of Marksmanship
+1713	of Marksmanship
+1714	of Marksmanship
+1715	of Marksmanship
+1716	of Marksmanship
+1717	of Marksmanship
+1718	of Marksmanship
+1719	of Marksmanship
+1720	of Marksmanship
+1721	of Marksmanship
+1722	of Marksmanship
+1723	of Marksmanship
+1724	of Marksmanship
+1725	of Marksmanship
+1726	of Marksmanship
+1727	of Marksmanship
+1728	of Marksmanship
+1729	of Marksmanship
+1730	of Marksmanship
+1731	of Marksmanship
+1732	of Marksmanship
+1733	of Marksmanship
+1734	of Marksmanship
+1735	of Marksmanship
+1736	of Marksmanship
+1737	of Marksmanship
+1738	of Marksmanship
+1739	of Marksmanship
+1740	of Marksmanship
+1741	of Marksmanship
+1742	of Eluding
+1743	of Eluding
+1744	of Eluding
+1745	of Eluding
+1746	of Eluding
+1747	of Eluding
+1748	of Eluding
+1749	of Eluding
+1750	of Eluding
+1751	of Eluding
+1752	of Eluding
+1753	of Eluding
+1754	of Eluding
+1755	of Eluding
+1756	of Eluding
+1757	of Eluding
+1758	of Eluding
+1759	of Eluding
+1760	of Eluding
+1761	of Eluding
+1762	of Eluding
+1763	of Eluding
+1764	of Eluding
+1765	of Eluding
+1766	of Eluding
+1767	of Eluding
+1768	of Eluding
+1769	of Eluding
+1770	of Eluding
+1771	of Eluding
+1772	of Eluding
+1773	of Eluding
+1774	of Eluding
+1775	of Eluding
+1776	of Eluding
+1777	of Eluding
+1778	of Eluding
+1779	of Eluding
+1780	of Eluding
+1781	of Eluding
+1782	of Eluding
+1783	of Eluding
+1784	of Eluding
+1785	of Eluding
+1786	of Eluding
+1787	of Eluding
+1788	of Eluding
+1789	of Eluding
+1790	of Eluding
+1791	of Eluding
+1792	of Eluding
+1793	of Eluding
+1794	of Eluding
+1795	of Eluding
+1796	of Eluding
+1797	of Eluding
+1798	of Eluding
+1799	of Arcane Wrath
+1800	of Arcane Wrath
+1801	of Arcane Wrath
+1802	of Arcane Wrath
+1803	of Arcane Wrath
+1804	of Arcane Wrath
+1805	of Arcane Wrath
+1806	of Arcane Wrath
+1807	of Arcane Wrath
+1808	of Arcane Wrath
+1809	of Arcane Wrath
+1810	of Arcane Wrath
+1811	of Arcane Wrath
+1812	of Arcane Wrath
+1813	of Arcane Wrath
+1814	of Arcane Wrath
+1815	of Arcane Wrath
+1816	of Arcane Wrath
+1817	of Arcane Wrath
+1818	of Arcane Wrath
+1819	of Arcane Wrath
+1820	of Arcane Wrath
+1821	of Arcane Wrath
+1822	of Arcane Wrath
+1823	of Arcane Wrath
+1824	of Arcane Wrath
+1825	of Arcane Wrath
+1826	of Arcane Wrath
+1827	of Arcane Wrath
+1828	of Arcane Wrath
+1829	of Arcane Wrath
+1830	of Arcane Wrath
+1831	of Arcane Wrath
+1832	of Arcane Wrath
+1833	of Arcane Wrath
+1834	of Arcane Wrath
+1835	of Arcane Wrath
+1836	of Arcane Wrath
+1837	of Shadow Wrath
+1838	of Shadow Wrath
+1839	of Shadow Wrath
+1840	of Shadow Wrath
+1841	of Shadow Wrath
+1842	of Shadow Wrath
+1843	of Shadow Wrath
+1844	of Shadow Wrath
+1845	of Shadow Wrath
+1846	of Shadow Wrath
+1847	of Shadow Wrath
+1848	of Shadow Wrath
+1849	of Shadow Wrath
+1850	of Shadow Wrath
+1851	of Shadow Wrath
+1852	of Shadow Wrath
+1853	of Shadow Wrath
+1854	of Shadow Wrath
+1855	of Shadow Wrath
+1856	of Shadow Wrath
+1857	of Shadow Wrath
+1858	of Shadow Wrath
+1859	of Shadow Wrath
+1860	of Shadow Wrath
+1861	of Shadow Wrath
+1862	of Shadow Wrath
+1863	of Shadow Wrath
+1864	of Shadow Wrath
+1865	of Shadow Wrath
+1866	of Shadow Wrath
+1867	of Shadow Wrath
+1868	of Shadow Wrath
+1869	of Shadow Wrath
+1870	of Shadow Wrath
+1871	of Shadow Wrath
+1872	of Shadow Wrath
+1873	of Shadow Wrath
+1874	of Shadow Wrath
+1875	of Fiery Wrath
+1876	of Fiery Wrath
+1877	of Fiery Wrath
+1878	of Fiery Wrath
+1879	of Fiery Wrath
+1880	of Fiery Wrath
+1881	of Fiery Wrath
+1882	of Fiery Wrath
+1883	of Fiery Wrath
+1884	of Fiery Wrath
+1885	of Fiery Wrath
+1886	of Fiery Wrath
+1887	of Fiery Wrath
+1888	of Fiery Wrath
+1889	of Fiery Wrath
+1890	of Fiery Wrath
+1891	of Fiery Wrath
+1892	of Fiery Wrath
+1893	of Fiery Wrath
+1894	of Fiery Wrath
+1895	of Fiery Wrath
+1896	of Fiery Wrath
+1897	of Fiery Wrath
+1898	of Fiery Wrath
+1899	of Fiery Wrath
+1900	of Fiery Wrath
+1901	of Fiery Wrath
+1902	of Fiery Wrath
+1903	of Fiery Wrath
+1904	of Fiery Wrath
+1905	of Fiery Wrath
+1906	of Fiery Wrath
+1907	of Fiery Wrath
+1908	of Fiery Wrath
+1909	of Fiery Wrath
+1910	of Fiery Wrath
+1911	of Fiery Wrath
+1912	of Fiery Wrath
+1913	of Holy Wrath
+1914	of Holy Wrath
+1915	of Holy Wrath
+1916	of Holy Wrath
+1917	of Holy Wrath
+1918	of Holy Wrath
+1919	of Holy Wrath
+1920	of Holy Wrath
+1921	of Holy Wrath
+1922	of Holy Wrath
+1923	of Holy Wrath
+1924	of Holy Wrath
+1925	of Holy Wrath
+1926	of Holy Wrath
+1927	of Holy Wrath
+1928	of Holy Wrath
+1929	of Holy Wrath
+1930	of Holy Wrath
+1931	of Holy Wrath
+1932	of Holy Wrath
+1933	of Holy Wrath
+1934	of Holy Wrath
+1935	of Holy Wrath
+1936	of Holy Wrath
+1937	of Holy Wrath
+1938	of Holy Wrath
+1939	of Holy Wrath
+1940	of Holy Wrath
+1941	of Holy Wrath
+1942	of Holy Wrath
+1943	of Holy Wrath
+1944	of Holy Wrath
+1945	of Holy Wrath
+1946	of Holy Wrath
+1947	of Holy Wrath
+1948	of Holy Wrath
+1949	of Holy Wrath
+1950	of Holy Wrath
+1951	of Frozen Wrath
+1952	of Frozen Wrath
+1953	of Frozen Wrath
+1954	of Frozen Wrath
+1955	of Frozen Wrath
+1956	of Frozen Wrath
+1957	of Frozen Wrath
+1958	of Frozen Wrath
+1959	of Frozen Wrath
+1960	of Frozen Wrath
+1961	of Frozen Wrath
+1962	of Frozen Wrath
+1963	of Frozen Wrath
+1964	of Frozen Wrath
+1965	of Frozen Wrath
+1966	of Frozen Wrath
+1967	of Frozen Wrath
+1968	of Frozen Wrath
+1969	of Frozen Wrath
+1970	of Frozen Wrath
+1971	of Frozen Wrath
+1972	of Frozen Wrath
+1973	of Frozen Wrath
+1974	of Frozen Wrath
+1975	of Frozen Wrath
+1976	of Frozen Wrath
+1977	of Frozen Wrath
+1978	of Frozen Wrath
+1979	of Frozen Wrath
+1980	of Frozen Wrath
+1981	of Frozen Wrath
+1982	of Frozen Wrath
+1983	of Frozen Wrath
+1984	of Frozen Wrath
+1985	of Frozen Wrath
+1986	of Frozen Wrath
+1987	of Frozen Wrath
+1988	of Frozen Wrath
+1989	of Natures Wrath
+1990	of Natures Wrath
+1991	of Natures Wrath
+1992	of Natures Wrath
+1993	of Natures Wrath
+1994	of Natures Wrath
+1995	of Natures Wrath
+1996	of Natures Wrath
+1997	of Natures Wrath
+1998	of Natures Wrath
+1999	of Natures Wrath
+2000	of Natures Wrath
+2001	of Natures Wrath
+2002	of Natures Wrath
+2003	of Natures Wrath
+2004	of Natures Wrath
+2005	of Natures Wrath
+2006	of Natures Wrath
+2007	of Natures Wrath
+2008	of Natures Wrath
+2009	of Natures Wrath
+2010	of Natures Wrath
+2011	of Natures Wrath
+2012	of Natures Wrath
+2013	of Natures Wrath
+2014	of Natures Wrath
+2015	of Natures Wrath
+2016	of Natures Wrath
+2017	of Natures Wrath
+2018	of Natures Wrath
+2019	of Natures Wrath
+2020	of Natures Wrath
+2021	of Natures Wrath
+2022	of Natures Wrath
+2023	of Natures Wrath
+2024	of Natures Wrath
+2025	of Natures Wrath
+2026	of Natures Wrath
+2027	of Healing
+2028	of Healing
+2029	of Healing
+2030	of Healing
+2031	of Healing
+2032	of Healing
+2033	of Healing
+2034	of Healing
+2035	of Healing
+2036	of Healing
+2037	of Healing
+2038	of Healing
+2039	of Healing
+2040	of Healing
+2041	of Healing
+2042	of Healing
+2043	of Healing
+2044	of Healing
+2045	of Healing
+2046	of Healing
+2047	of Healing
+2048	of Healing
+2049	of Healing
+2050	of Healing
+2051	of Healing
+2052	of Healing
+2053	of Healing
+2054	of Healing
+2055	of Healing
+2056	of Healing
+2057	of Healing
+2058	of Healing
+2059	of Healing
+2060	of Healing
+2061	of Healing
+2062	of Healing
+2063	of Healing
+2064	of Healing
+2067	of Concentration
+2068	of Concentration
+2069	of Concentration
+2070	of Concentration
+2071	of Concentration
+2072	of Concentration
+2073	of Concentration
+2074	of Concentration
+2075	of Concentration
+2076	of Concentration
+2077	of Concentration
+2078	of Concentration
+2079	of Concentration
+2080	of Concentration
+2081	of Concentration
+2082	of Concentration
+2083	of Concentration
+2084	of Concentration
+2085	of Concentration
+2086	of Concentration
+2087	of Concentration
+2088	of Concentration
+2089	of Concentration
+2090	of Concentration
+2091	of Concentration
+2092	of Concentration
+2093	of Concentration
+2094	of Concentration
+2095	of Concentration
+2096	of Concentration
+2097	of Concentration
+2098	of Concentration
+2099	of Concentration
+2100	of Concentration
+2101	of Concentration
+2102	of Concentration
+2103	of Concentration
+2104	of Concentration
+2105	of Regeneration
+2106	of Regeneration
+2107	of Regeneration
+2108	of Regeneration
+2109	of Regeneration
+2110	of Regeneration
+2111	of Regeneration
+2112	of Regeneration
+2113	of Regeneration
+2114	of Regeneration
+2115	of Regeneration
+2116	of Regeneration
+2117	of Regeneration
+2118	of Regeneration
+2119	of Regeneration
+2120	of Regeneration
+2121	of Regeneration
+2122	of Regeneration
+2123	of Regeneration
+2124	of Regeneration
+2125	of Regeneration
+2126	of Regeneration
+2127	of Regeneration
+2128	of Regeneration
+2129	of Regeneration
+2130	of Regeneration
+2131	of Regeneration
+2132	of Regeneration
+2133	of Regeneration
+2134	of Regeneration
+2135	of Regeneration
+2136	of Regeneration
+2137	of Regeneration
+2138	of Regeneration
+2139	of Regeneration
+2140	of Regeneration
+2141	of Regeneration
+2142	of Regeneration
+2143	
+2144	
+2145	
+2146	
+2147	
+2148	
+2149	
+2150	
+2151	
+2152	
+2153	
+2154	
+2155	
+2156	
+2157	
+2158	
+2159	
+2160	
+2161	
+2162	
+2163	
+2164	

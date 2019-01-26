@@ -6,6 +6,7 @@ import configparser
 from pathlib import Path, PurePosixPath
 from PIL import ImageGrab, Image
 
+import requests
 import win32gui
 import pyautogui
 import psutil
@@ -16,7 +17,6 @@ import pysftp
 import scan2db
 
 
-
 # cfg and variable setup
 ###############################################################################
 cfg = configparser.ConfigParser()
@@ -24,6 +24,7 @@ cfg.read('import.cfg')
 
 SERVER_LIST = pickle.load(open('../SERVER_LIST.p', 'rb'))
 EXP = pickle.load(open('../EXP.p', 'rb'))
+RANDID = pickle.load(open('../RANDID.p', 'rb'))
 ###############################################################################
 def start_scan_prompt(timeout_after: 'Timeout for prompt in sec' = 120,
                       delay: 'Delay between next prompt in sec' = 3600):
@@ -251,6 +252,8 @@ def upload_auc_file(server_obj):
                 data_file = 'Auctionator.lua'
             elif server_obj['scan'] == 'auctioneer_clas':
                 data_file = 'Auctioneer.lua'
+            elif server_obj['scan'] == 'api':
+                data_file = 'scandata.p'
             try:
                 sftp_server.remove(data_file)
             except IOError:
@@ -258,8 +261,8 @@ def upload_auc_file(server_obj):
             sftp_server.put(server_obj['savedvar'] / data_file)
             if sftp_server.isfile(data_file) == False:
                 write_debug(f"ERROR: Uploaded file not found! {server_obj['server']}")
-        except IOError as e:
-            write_debug(f"IOError: {str(e)} {server_obj['server']}")
+        except Exception as e:
+            write_debug(f"Exception during upload: {str(e)} for server {server_obj['server']}")
 
 
 def merge_scandata(server_obj):
@@ -271,10 +274,74 @@ def merge_scandata(server_obj):
     except Exception as e:
         write_debug(f'{e}: while merging scan data files')
 
-    
+
+def api_scan(server_obj):
+    if server_obj['server'] == 'tauri':
+        URL = 'http://chapi.tauri.hu/apiIndex.php'
+        api_param = {'apikey': str(cfg['tauri']['user'])}
+        payload= {
+            'secret': str(cfg['tauri']['pass']),
+            'url': 'auctions-data',
+            'params': {
+                'r': '[HU] Tauri WoW Server',
+            }
+        }
+        r = requests.post(URL, params=api_param, json=payload)
+        if r.status_code != requests.codes.ok:
+            write_debug(f"API request for {server_obj['server']} failed with status code {r.status_code}")
+            return
+        response = r.json()
+        if response['success'] != True:
+            write_debug(f"API resonse contains errorcode {response['errorcode']}: {response['errorstring']}")
+            return
+        realm = server_obj['realms'][0]['name']
+        auc_data = response['response']['auctions']
+        ahs = {"auctioner_2": 'Alliance',
+               "auctioner_6": 'Horde',
+               "auctioner_7": None}
+        data = {}
+        scantime = 0
+        low_price = {}
+        scantime = int(response['response']['lastModified'])
+        for ah in auc_data:
+            if ahs[ah] == None:
+                continue
+            rf = f"{realm}_{ahs[ah]}"
+            data[rf] = []
+            low_price[rf] = {}
+            for auc in auc_data[ah]:
+                raw_name = auc['itemData']['itemName']
+                raw_id = str(auc['item'])
+                rand_id = str(auc['rand'])
+                price = int(auc['buyout'] / auc['stackCount'])
+                if price == 0:
+                    continue
+                if rand_id != '0':
+                    item_name = f"{raw_name} {RANDID[rand_id]}"
+                    item_id = f"{raw_id}:{rand_id}"
+                else:
+                    item_name = raw_name
+                    item_id = f"{raw_id}:0"
+                try:
+                    if price < low_price[rf][item_name][0]:
+                        low_price[rf][item_name] = (price, item_id)
+                except KeyError:
+                    low_price[rf][item_name] = (price, item_id)
+        for rf in low_price:
+            for item in low_price[rf]:
+                data[rf].append((low_price[rf][item][0], item, low_price[rf][item][1]))
+        scandata_obj = {'data': data,
+                         'scantime': scantime}
+        pickle.dump(scandata_obj, open(server_obj['savedvar'] / 'scandata.p', 'wb'))
+        return
+            
+
 def main():
     failed = {'A': [], 'H': []}
     for server_obj in SERVER_LIST:
+        if server_obj['scan'] == 'api':
+            api_scan(server_obj)
+            continue
         change_realmlist(server_obj)
         clean_scandata(server_obj)
         for realm_obj in server_obj['realms']:
@@ -301,11 +368,9 @@ def main():
         if server_obj['realms'][0]['name'] in ['Nightbane', 'Netherwing']:
             merge_scandata(server_obj)
         upload_auc_file(server_obj)
-    change_realmlist(SERVER_LIST[0]) # Change realmlist back
-    change_realm(SERVER_LIST[0], SERVER_LIST[0]['realms'][0]) # Change back realm
     scan2db.main() # Import scandata
 
-   
+
 if __name__ == "__main__":
     prompt_timeout = int(cfg['scan']['prompt_timeout'])
     prompt_delay = int(cfg['scan']['prompt_delay'])

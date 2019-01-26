@@ -49,10 +49,7 @@ def check_scantime(server, con, cur):
             for line in import_file:
                 if line.split(' ')[0] == 'AUCTIONATOR_LAST_SCAN_TIME': # Gets the time of last scan
                     current_scantime = int(line.split(' ')[2])
-                    if current_scantime - last_scantime <= min_diff: 
-                        return False
-                    else:
-                        return current_scantime
+                    break
     
     elif server['scan'] == 'auctioneer_tbc' or server['scan'] == 'auctioneer_wotlk':
         scantimes = []
@@ -67,11 +64,6 @@ def check_scantime(server, con, cur):
                 current_scantime = min(scantimes)
             except ValueError:
                 return False
-            if current_scantime - last_scantime <= min_diff: 
-                return False
-            else:
-                return current_scantime
-
     elif server['scan'] == 'auctioneer_clas':
         if not os.path.exists(server['savedvar'] / 'Auctioneer.lua'):
             return False
@@ -80,11 +72,15 @@ def check_scantime(server, con, cur):
                 if line.split(' ', 1)[0] == 'scantime':
                     current_scantime = int(line.split(' ')[2])
                     break
-            if current_scantime - last_scantime <= min_diff: 
-                return False
-            else:
-                return current_scantime
-
+    elif server['scan'] == 'api':
+        if not os.path.exists(server['savedvar'] / 'scandata.p'):
+            return False
+        scandata_obj = pickle.load(open(server['savedvar'] / 'scandata.p', 'rb'))
+        current_scantime = scandata_obj['scantime']
+    if current_scantime - last_scantime <= min_diff: 
+        return False
+    else:
+        return current_scantime
 
 def parse_scandata(server):
     '''Extract items and their price from scandata'''
@@ -245,6 +241,11 @@ def parse_scandata(server):
             for item in low_price[realm]:
                 price = low_price[realm][item]
                 data[realm].append((price, item))
+        return data
+    
+    elif server['scan'] == 'api':
+        scandata_obj = pickle.load(open(server['savedvar'] / 'scandata.p', 'rb'))
+        data = scandata_obj['data']
         return data
 
 

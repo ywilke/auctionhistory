@@ -178,6 +178,7 @@ def search(server_arg, realm_arg):
     df = pd.DataFrame({'prices': price_list}, index)
     dfr = df.rolling(window).mean()
     # Create traces
+    
     trace_price = plotgo.Scattergl(
         x = index,
         y = price_list,

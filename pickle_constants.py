@@ -165,7 +165,24 @@ SERVER_LIST = [
         "pass": cfg['kronos']['pass'],
         "savedvar": Path(cfg['kronos']['savedvar_clas']),
     },
-]
+    {
+        "server": 'tauri',
+        "expansion": 'mop',
+        "scan": 'api',
+        "realmlist": None,
+        "realms": [
+            {
+                "realm": 'tauri-evermoon',
+                "name": 'Tauri_and_Evermoon',
+                "auc_pos_A": None,
+                "auc_pos_H": None,
+            }
+        ],
+        "user": cfg['tauri']['user'],
+        "pass": cfg['tauri']['pass'],
+        "savedvar": Path(cfg['tauri']['savedvar_api']),
+    },
+]      
 pickle.dump(SERVER_LIST, open('SERVER_LIST.p', 'wb'))
 
 EXP = {
@@ -282,6 +299,9 @@ EXP = {
             "box": (478, 218, 607, 254),
         },
     },
+    "mop": {
+        "clien": None
+        },
 
 }
 pickle.dump(EXP, open('EXP.p', 'wb'))
@@ -311,7 +331,23 @@ CAP = {"clas": 'Vanilla',
        "sunwell": 'Sunwell',
        "dalaran-wow": 'Dalaran-WoW',
        "lights_hope": "Light's Hope",
-       "kronos": "Kronos",
-       "atlantiss": "Atlantiss",
+       "kronos": 'Kronos',
+       "atlantiss": 'Atlantiss',
+       "tauri": 'Tauri',
+       "tauri-evermoon": 'Tauri & Evermoon',
 }
 pickle.dump(CAP, open('CAP.p', 'wb'))
+
+RANDID = {}
+with open('import/rand_id2str.tsv', 'r') as randid_file:
+    for line in randid_file:
+        line = line.strip()
+        values = line.split('\t')
+        rand_id = values[0]
+        try:
+            rand_name = values[1]
+        except IndexError:
+            rand_name = None
+        RANDID[rand_id] = rand_name
+pickle.dump(RANDID, open('RANDID.p', 'wb'))
+

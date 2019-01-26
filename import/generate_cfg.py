@@ -49,6 +49,12 @@ def generate_import_cfg():
                                  'savedvar_wotlk': '',
                                  'user': '',
                                  'pass': ''}
+        
+        config['tauri'] = {'savedvar_clas': '',
+                                 'savedvar_tbc': '',
+                                 'savedvar_wotlk': '',
+                                 'user': '',
+                                 'pass': ''}
        
         config['scan'] = {'prompt_timeout': '120',
                           'prompt_delay': '3600',
