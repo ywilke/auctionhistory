@@ -91,7 +91,7 @@ def search(server_arg, realm_arg):
     except KeyError:
         if f"{realm_arg}_Alliance" in REALMS[server_arg] or f"{realm_arg}_Horde" in REALMS[server_arg]:
             return render_template('realms.html',server=server_arg,
-                realm=realm_arg, title=f"{CAP[server_arg]}: {realm_arg}")
+                realm=realm_arg, title=f"{CAP[server_arg]}: {realm_arg.replace('_', ' ')}")
         else:
             abort(404)
     
