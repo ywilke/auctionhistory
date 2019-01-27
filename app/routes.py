@@ -1,11 +1,10 @@
 import datetime
 import math
 import sqlite3 as sqlite
-import re
-from statistics import median
 import pickle
 
 from flask import render_template, request, redirect, abort
+import limits.errors
 from flask_limiter import Limiter
 import plotly.offline as plotly
 import plotly.graph_objs as plotgo
@@ -46,13 +45,21 @@ def write_log(realm=None, search=None, reply=None, time=None, r_time=None):
     with open('log.csv', 'a') as log:
         log.write(f'{time_stamp},{get_ip()},{realm},{search},{time},{reply},{r_time}ms\n')
 
+def setup_limiter(storage):
+    limiter = Limiter(
+        app,
+        key_func=get_ip,
+        default_limits=["200 per day", "80 per hour"],
+        strategy='fixed-window-elastic-expiry',
+        storage_uri=storage,
+        in_memory_fallback=["200 per day", "80 per hour"],
+    )
+    return limiter
+try:
+    limiter = setup_limiter('redis://127.0.0.1:6379')
+except limits.errors.ConfigurationError:
+    limiter = setup_limiter('memory://')
 
-limiter = Limiter(
-    app,
-    key_func=get_ip,
-    default_limits=["200 per day", "80 per hour"],
-    strategy='fixed-window-elastic-expiry'
-)
 
 con = sqlite.connect('file:import/auctionhistory.db?mode=ro', uri=True) #db path
 cur = con.cursor()
