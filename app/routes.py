@@ -49,10 +49,10 @@ def setup_limiter(storage):
     limiter = Limiter(
         app,
         key_func=get_ip,
-        default_limits=["200 per day", "80 per hour"],
-        strategy='fixed-window-elastic-expiry',
+        default_limits=["5 per second", "200 per day", "80 per hour"],
+        strategy='fixed-window',
         storage_uri=storage,
-        in_memory_fallback=["200 per day", "80 per hour"],
+        in_memory_fallback=["5 per second", "200 per day", "80 per hour"],
     )
     return limiter
 try:
@@ -257,7 +257,7 @@ def search(server_arg, realm_arg):
 @app.errorhandler(429)
 def ratelimit_handler(e):
     write_log(reply='429')
-    return render_template('429.html', title='Too Many Requests'), 429
+    return render_template('429.html', title='Too Many Requests', limit=e.description), 429
 
 @app.errorhandler(404)
 def notfound_handler(e):
