@@ -49,5 +49,16 @@
 	{% if chart %}
 		{{ chart|safe }}
 	{% endif %}
+	<style>
+	.center {
+	  display: block;
+	  margin-left: auto;
+	  margin-right: auto;
+	}
+	</style>
+	<br>
+	<a href="/contact"><img src="{{ url_for('static', filename='promo.png') }}" alt="Promote your server here?" class="center"></a>
+	<br>
+	<br>
 
 {% endblock app_content %}
