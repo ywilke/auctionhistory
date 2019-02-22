@@ -111,7 +111,7 @@ def img_check(state, server_obj, realm_obj=None, fac=None):
         im1 = np.array(1)
         im2 = np.array(2)
         while np.array_equal(im1, im2) != True and i <= tries: # Check if the scan progress stops
-            mult = 50
+            mult = 30
             im1 = np.array(ImageGrab.grab(box))
             print (i)
             time.sleep(6*mult)
