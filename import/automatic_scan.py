@@ -205,11 +205,15 @@ def change_realm(server_obj, realm_obj):
     expan = server_obj['expansion']
     base_path = EXP[expan]['path']
     with open(base_path / EXP[expan]['cfg_path'] / 'Config.wtf', 'r+') as cfg_file:
+        fix = True
         lines = cfg_file.readlines()
         for i, line in enumerate(lines):
             if line.split(' ')[1] == 'realmName':
+                fix = False
                 lines[i] = f'SET realmName "{realm}"\n'
                 break
+        if fix == True:
+            lines.append(f'SET realmName "{realm}"\n')
         cfg_file.seek(0)
         cfg_file.writelines(lines)
     return
