@@ -106,6 +106,7 @@ def img_check(state, server_obj, realm_obj=None, fac=None):
             i += 1
             im2 = np.array(ImageGrab.grab(box))
     elif task == 'diff': # Checks if scan is progressing and if player is still spawned in
+        spawn_fail = 0
         im3 = np.array(Image.open(f"img/{cfg['scan']['img']}/{expan}_spawn.png"))
         spawn_box = EXP[expan]['ss_spawn']['box']
         im1 = np.array(1)
@@ -120,12 +121,17 @@ def img_check(state, server_obj, realm_obj=None, fac=None):
             im4 = np.array(ImageGrab.grab(spawn_box))
             pyautogui.press('space')
             if np.array_equal(im3, im4) != True:
-                write_debug(f'ERROR: {state} on {server_obj["server"]}:{realm}:{fac} failed spawn img check')
-                return False
+                spawn_fail += 1
+                write_debug(f'ERROR: {state} on {server_obj["server"]}:{realm}:{fac} failed spawn img check {spawn_fail} times')
+                if spawn_fail >= 2:
+                    return False
+            else:
+                spawn_fail = 0
         time.sleep(15) # Time to process
     if i > tries:
         write_debug(f'ERROR: {state} on {server_obj["server"]}:{realm}:{fac} took too long to complete')
         return False
+    write_debug(f'SUCCESS: {state} on {server_obj["server"]}:{realm}:{fac}')
     return True
 
 
@@ -157,7 +163,6 @@ def clean_scandata(server_obj):
             print (path)
             with open(path, 'w') as f:
                 f.write('')
-            
         return
     
     elif server_obj['scan'] == 'auctioneer_clas':
