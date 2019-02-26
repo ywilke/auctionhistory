@@ -28,6 +28,23 @@ def copper_to_price(copper):
         return '{}g{}s{}c'.format(g, s, c)
 
 
+def create_card_stats(item, df, epoch_now):
+    card_stats = {}
+    card_stats['item'] = item
+    d7 = pd.Timestamp(epoch_now - 60*60*24*7, unit='s')
+    card_stats['7davg'] = copper_to_price(int(df[d7:].mean()[0]))
+    d30 = pd.Timestamp(epoch_now - 60*60*24*30, unit='s')
+    card_stats['30davg'] = copper_to_price(int(df[d30:].mean()[0]))
+    d14 = pd.Timestamp(epoch_now - 60*60*24*14, unit='s')
+    card_stats['14dmin'] = copper_to_price(int(df[d14:].min()[0]))
+    card_stats['last_p'] = copper_to_price(df["prices"][-1])
+    last_seen = df.index[-1].strftime('%d %b %Y')
+    if last_seen[0] == '0':
+        last_seen = last_seen.replace('0', '', 1)
+    card_stats['last_seen'] = last_seen
+    return card_stats
+
+
 def get_date(unix_time):
     '''Return date in dd-mm-yyyy.'''
     return datetime.datetime.fromtimestamp(unix_time).strftime('%d-%m-%y')
@@ -183,6 +200,7 @@ def search(server_arg, realm_arg):
     window = '5D'
     index = pd.to_datetime(time_list, unit = 's')
     df = pd.DataFrame({'prices': price_list}, index)
+    card_stats = create_card_stats(item, df, epoch_now)
     dfr = df.rolling(window).mean()
     # Create traces
     
@@ -250,8 +268,8 @@ def search(server_arg, realm_arg):
     chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
     r_time = int((datetime.datetime.now() - start_time).total_seconds() * 1000)
     write_log(realm_arg, item, 'graph', time_arg, r_time)
-    return render_template(html_page, title=tab, AH_title=AH_title,
-                           chart=chart, value=search_arg, tvalue=time_arg)
+    return render_template(html_page, title=tab, AH_title=AH_title, chart=chart,
+                           value=search_arg, tvalue=time_arg, card_stats=card_stats)
 
 
 @app.errorhandler(429)

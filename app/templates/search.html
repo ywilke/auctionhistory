@@ -44,6 +44,32 @@
 				</div>
 			</div>
 		{% endif %}
+		
+		{% if card_stats %}
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">{{card_stats["item"]}}</h4>
+				<div class="row">
+					<div class="col-lg-2">
+						<p class="card-text"><b>Last seen: </b>{{card_stats["last_seen"]}}</p>
+					</div>
+					<div class="col-lg-2">
+						<p class="card-text"><b>Last Price: </b>{{card_stats["last_p"]}}</p>
+					</div>
+					<div class="col-lg-2">
+						<p class="card-text"><b>7d avg: </b>{{card_stats["7davg"]}}</p>
+					</div>
+					<div class="col-lg-2">
+						<p class="card-text"><b>30d avg: </b>{{card_stats["30davg"]}}</p>
+					</div>
+					<div class="col-lg-2">
+						<p class="card-text"><b>14d low: </b>{{card_stats["14dmin"]}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		{% endif %}
 	</div>
 
 	{% if chart %}
