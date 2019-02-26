@@ -13,31 +13,51 @@ import numpy as np
 
 from app import app
 
+def o_pad(i):
+    x = str(i)
+    if len(x) == 1:
+        x = f'0{x}'
+    return x
 
-def copper_to_price(copper):
+
+def copper_to_price(copper, as_dic=False):
     '''Return the price in WoW currency.'''
-    copper = int(copper)
+    try:
+        copper = int(copper)
+    except ValueError:
+        if as_dic == True:
+            return dict([('g', 0), ('s', 0), ('c', 0), ('na', 1)])
+        else:
+            return 'NA'
     s, c = divmod(copper, 100)
     g, s = divmod(s, 100)
+    if as_dic == True:
+        p_dic = dict([('g', g), ('s', s), ('c', o_pad(c)), ('na', 0)])
+        if g != 0:
+            p_dic['g'] = o_pad(g)
+        if g != 0 or s != 0:
+            p_dic['s'] = o_pad(s)
+        return p_dic
+        
     if g == 0:
         if s == 0:
-            return '{}c'.format(c)
+            return f'{c}c'
         else:
-            return '{}s{}c'.format(s, c)
+            return f'{s}s{c}c'
     else:
-        return '{}g{}s{}c'.format(g, s, c)
+        return f'{g}g{s}s{c}c'
 
 
 def create_card_stats(item, df, epoch_now):
     card_stats = {}
     card_stats['item'] = item
     d7 = pd.Timestamp(epoch_now - 60*60*24*7, unit='s')
-    card_stats['7davg'] = copper_to_price(int(df[d7:].mean()[0]))
+    card_stats['7davg'] = copper_to_price(df[d7:].mean()[0], as_dic=True)
     d30 = pd.Timestamp(epoch_now - 60*60*24*30, unit='s')
-    card_stats['30davg'] = copper_to_price(int(df[d30:].mean()[0]))
+    card_stats['30davg'] = copper_to_price(df[d30:].mean()[0], as_dic=True)
     d14 = pd.Timestamp(epoch_now - 60*60*24*14, unit='s')
-    card_stats['14dmin'] = copper_to_price(int(df[d14:].min()[0]))
-    card_stats['last_p'] = copper_to_price(df["prices"][-1])
+    card_stats['14dmin'] = copper_to_price(df[d14:].min()[0], as_dic=True)
+    card_stats['last_p'] = copper_to_price(df["prices"][-1], as_dic=True)
     last_seen = df.index[-1].strftime('%d %b %Y')
     if last_seen[0] == '0':
         last_seen = last_seen.replace('0', '', 1)
@@ -115,7 +135,7 @@ def search(server_arg, realm_arg):
     start_time = datetime.datetime.now()
     search_arg = request.args.get('search', '')
     time_arg = request.args.get('time', None)
-    AH_title = f"{realm_arg.replace('_', ' ')} Auction House Price History"
+    AH_title = f"{realm_arg.replace('_', ' ')} Auction House"
     tab = f"{CAP[server_arg]}: {realm_arg.replace('_', ' ')}"
     html_page = 'search.html'
     epoch_now = int(datetime.datetime.now().timestamp())
@@ -269,7 +289,7 @@ def search(server_arg, realm_arg):
     r_time = int((datetime.datetime.now() - start_time).total_seconds() * 1000)
     write_log(realm_arg, item, 'graph', time_arg, r_time)
     return render_template(html_page, title=tab, AH_title=AH_title, chart=chart,
-                           value=search_arg, tvalue=time_arg, card_stats=card_stats)
+                           value=search_arg, tvalue=time_arg, stats=card_stats)
 
 
 @app.errorhandler(429)
