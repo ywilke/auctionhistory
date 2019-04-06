@@ -3,7 +3,7 @@ import math
 import sqlite3 as sqlite
 import pickle
 
-from flask import render_template, request, redirect, abort
+from flask import render_template, request, abort
 import limits.errors
 from flask_limiter import Limiter
 import plotly.offline as plotly
@@ -49,6 +49,7 @@ def copper_to_price(copper, as_dic=False):
 
 
 def create_card_stats(item, df, epoch_now):
+    '''Return stats about the price history'''
     card_stats = {}
     card_stats['item'] = item
     d7 = pd.Timestamp(epoch_now - 60*60*24*7, unit='s')
@@ -76,13 +77,15 @@ def get_ip():
     return ip
 
 
-def write_log(realm=None, search=None, reply=None, time=None, r_time=None):
+def write_log(server="NA", realm="NA", faction="NA", search="NA", resp="NA",
+              time="NA", r_time="NA", info=""):
     '''Logs user searches'''
-    time_stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    with open('log.csv', 'a') as log:
-        log.write(f'{time_stamp},{get_ip()},{realm},{search},{time},{reply},{r_time}ms\n')
+    date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    with open('log.tsv', 'a') as log:
+        log.write(f'{date}\t{get_ip()}\t{server}\t{realm}\t{faction}\t{search}\t{time}\t{resp}\t{r_time}\t{info}\n')
 
 def setup_limiter(storage):
+    '''Create limiter instance'''
     limiter = Limiter(
         app,
         key_func=get_ip,
@@ -92,11 +95,13 @@ def setup_limiter(storage):
         in_memory_fallback=["5 per second", "200 per day", "80 per hour"],
     )
     return limiter
+
+
+# Setup vars
 try:
     limiter = setup_limiter('redis://127.0.0.1:6379')
 except limits.errors.ConfigurationError:
     limiter = setup_limiter('memory://')
-
 
 con = sqlite.connect('file:import/auctionhistory.db?mode=ro', uri=True) #db path
 cur = con.cursor()
@@ -104,61 +109,81 @@ cur = con.cursor()
 REALMS = pickle.load(open('REALMS.p', 'rb'))
 CAP = pickle.load(open('CAP.p', 'rb'))
 
+html_page = 'search.html'
+time_dir = {'30d': 2592000,
+            '3m': 7890000,
+            '1y': 31536000,
+}
+
+# Routing
 @app.route('/')
 @app.route('/index')
 def index():
+    write_log(resp="home")
     return render_template('index.html', title='Legacy Servers')
 
 
 @app.route('/contact')
 def contact():
+    write_log(resp="contact")
     return render_template('contact.html', title='Contact')
-
-
-@app.route('/server/<_i>')
-def legacy(_i):
-    url = (request.full_path).replace('server', 'warmane')
-    return redirect(url, code=301)
 
 
 @app.route('/<server_arg>/<realm_arg>', methods=['GET'])
 def search(server_arg, realm_arg):
-    try:  # Check if url is oke and set expansion
+    # Validate url and set expansion
+    try:
         expan = REALMS[server_arg][realm_arg]
     except KeyError:
         if f"{realm_arg}_Alliance" in REALMS[server_arg] or f"{realm_arg}_Horde" in REALMS[server_arg]:
+            # Return faction select page
+            write_log(server=server_arg, realm=realm_arg, resp="realms")
             return render_template('realms.html',server=server_arg,
                 realm=realm_arg, title=f"{CAP[server_arg]}: {realm_arg.replace('_', ' ')}")
-        else:
+        else: # Invalid url
             abort(404)
     
+    # Setup reuest vars
     start_time = datetime.datetime.now()
     search_arg = request.args.get('search', '')
     time_arg = request.args.get('time', None)
     AH_title = f"{realm_arg.replace('_', ' ')} Auction House"
     tab = f"{CAP[server_arg]}: {realm_arg.replace('_', ' ')}"
-    html_page = 'search.html'
+
     epoch_now = int(datetime.datetime.now().timestamp())
-    time_dir = {'30d': 2592000,
-                '3m': 7890000,
-                '1y': 31536000,
-                'all': epoch_now}
     try: 
         scantime = epoch_now - time_dir[time_arg]
     except KeyError:
-        scantime = None
+        if time_arg == "all":
+            scantime = 0
+        else:
+            scantime = None
     
+    # Return blank search page if no search
     if search_arg == None or scantime == None:
         return render_template(html_page, title=tab, AH_title=AH_title,
                                tvalue='3m')
+    
+    # Validate search argument
+    if len(search_arg) > 80 or "\t" in search_arg:
+        return render_template(html_page, title='Invalid search',
+                           AH_title=AH_title,
+                           error='Invalid search',
+                           value=search_arg, tvalue=time_arg)
+    
+    # Check if item is known
+    log_r, log_f = realm_arg.split("_")
     temp_sql = f"SELECT itemid FROM {expan}_items WHERE itemname IS ? ;"
     cur.execute(temp_sql, (search_arg,))
+    
     if not cur.fetchone():  # No direct match
+        # Search needs to be at least 3 characters
         if len(search_arg) < 3:
             return render_template(html_page, title='Item not found',
                                    AH_title=AH_title, 
                                    error='Type at least 3 characters',
                                    value=search_arg, tvalue=time_arg)
+        # Check for item names that contain the search string
         temp_sql = f"SELECT itemname FROM {expan}_items WHERE itemname LIKE ?;"
         cur.execute(temp_sql, (f'%{search_arg}%',))
         item_matches = sorted(cur.fetchall(), key=lambda x: len(x[0]))
@@ -170,7 +195,8 @@ def search(server_arg, realm_arg):
                 href = f'/{server_arg}/{realm_arg}?search={href_item}&time={time_arg}'
                 item_suggestions.append((href_display, href))
             r_time = int((datetime.datetime.now() - start_time).total_seconds() * 1000)
-            write_log(realm_arg, search_arg, 'suggest', None, r_time)
+            write_log(server=server_arg, realm=log_r, faction=log_f,
+                      search=search_arg, resp='suggest', r_time=r_time)
             return render_template(html_page, title=tab,
                                    AH_title=AH_title,
                                    suggestions=item_suggestions,
@@ -181,6 +207,7 @@ def search(server_arg, realm_arg):
                                    error='Item was not found in the database',
                                    value=search_arg, tvalue=time_arg)
     
+    # Get prices for item in database
     short = f"{realm_arg.rsplit('_', 1)[0]}_{realm_arg.rsplit('_', 1)[1][0]}"
     temp_sql = (f"""SELECT itemname, price, scantime FROM {short}_prices
         INNER JOIN {expan}_items ON {short}_prices.itemid={expan}_items.itemid 
@@ -287,48 +314,18 @@ def search(server_arg, realm_arg):
     fig = dict(data=plotdata, layout=layout)
     chart = plotly.offline.plot(fig, include_plotlyjs=False, output_type="div")
     r_time = int((datetime.datetime.now() - start_time).total_seconds() * 1000)
-    write_log(realm_arg, item, 'graph', time_arg, r_time)
+    write_log(server=server_arg, realm=log_r, faction=log_f, search=search_arg,
+              resp='graph', time=time_arg, r_time=r_time)
     return render_template(html_page, title=tab, AH_title=AH_title, chart=chart,
                            value=search_arg, tvalue=time_arg, stats=card_stats)
 
 
 @app.errorhandler(429)
 def ratelimit_handler(e):
-    write_log(reply='429')
-    return render_template('429.html', title='Too Many Requests', limit=e.description), 429
+    rule = e.description
+    write_log(reply='429', info=rule)
+    return render_template('429.html', title='Too Many Requests', limit=rule), 429
 
 @app.errorhandler(404)
 def notfound_handler(e):
     return render_template('404.html', title='Page Not Found'), 404
-
-'''
-# Calculate MAD and remove outliers
-if len(datapoints) > 21:
-    outliers = []
-    imax = len(datapoints) - 1
-    for i, point in enumerate(datapoints):
-        price = point[1]
-        if i - 10 < 0:
-            indexes = range(21)
-        elif i + 10 > imax:
-            indexes = range(imax-20, imax+1)
-        else:
-            indexes = range(i-10, i+11)
-        prices = [datapoints[i][1] for i in indexes]
-        
-        median_price = (median(prices))
-        diffs_median = []
-        for _price in prices:
-            diffs_median.append(abs(_price-median_price))
-        mad = (median(diffs_median))
-        #print('MAD: '+str(mad)) # debug
-        #print('MED: '+str(median_price))
-        #print('price: '+str(price))
-        #print('prices: '+str(prices))
-        if mad == 0:
-            continue
-        if abs(price-median_price) / mad > 20:
-            outliers.append(i)
-    for index in sorted(outliers, reverse=True):
-        del datapoints[index]
-'''
