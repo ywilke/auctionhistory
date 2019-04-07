@@ -2,10 +2,10 @@ import datetime
 import math
 import sqlite3 as sqlite
 import pickle
+from hashlib import md5
 
 from flask import render_template, request, abort
-import limits.errors
-from flask_limiter import Limiter
+import redis
 import plotly.offline as plotly
 import plotly.graph_objs as plotgo
 import pandas as pd
@@ -84,24 +84,9 @@ def write_log(server="NA", realm="NA", faction="NA", search="NA", resp="NA",
     with open('log.tsv', 'a') as log:
         log.write(f'{date}\t{get_ip()}\t{server}\t{realm}\t{faction}\t{search}\t{time}\t{resp}\t{r_time}\t{info}\n')
 
-def setup_limiter(storage):
-    '''Create limiter instance'''
-    limiter = Limiter(
-        app,
-        key_func=get_ip,
-        default_limits=["5 per second", "200 per day", "80 per hour"],
-        strategy='fixed-window',
-        storage_uri=storage,
-        in_memory_fallback=["5 per second", "200 per day", "80 per hour"],
-    )
-    return limiter
-
 
 # Setup vars
-try:
-    limiter = setup_limiter('redis://127.0.0.1:6379')
-except limits.errors.ConfigurationError:
-    limiter = setup_limiter('memory://')
+R = redis.Redis(host="127.0.0.1", port=6379)
 
 con = sqlite.connect('file:import/auctionhistory.db?mode=ro', uri=True) #db path
 cur = con.cursor()
@@ -131,6 +116,16 @@ def contact():
 
 @app.route('/<server_arg>/<realm_arg>', methods=['GET'])
 def search(server_arg, realm_arg):
+    # Ratelimit check
+    ip = get_ip()
+    n_items = R.scard(f"{ip}")
+    if n_items == 30 or n_items >= 50:
+        pass
+        #require captcha
+    elif n_items >= 100:
+        abort(429, "items")
+        
+    
     # Validate url and set expansion
     try:
         expan = REALMS[server_arg][realm_arg]
@@ -143,7 +138,7 @@ def search(server_arg, realm_arg):
         else: # Invalid url
             abort(404)
     
-    # Setup reuest vars
+    # Setup request vars
     start_time = datetime.datetime.now()
     search_arg = request.args.get('search', '')
     time_arg = request.args.get('time', None)
@@ -172,7 +167,7 @@ def search(server_arg, realm_arg):
                            value=search_arg, tvalue=time_arg)
     
     # Check if item is known
-    log_r, log_f = realm_arg.split("_")
+    log_r, log_f = realm_arg.rsplit("_", 1)
     temp_sql = f"SELECT itemid FROM {expan}_items WHERE itemname IS ? ;"
     cur.execute(temp_sql, (search_arg,))
     
@@ -316,6 +311,14 @@ def search(server_arg, realm_arg):
     r_time = int((datetime.datetime.now() - start_time).total_seconds() * 1000)
     write_log(server=server_arg, realm=log_r, faction=log_f, search=search_arg,
               resp='graph', time=time_arg, r_time=r_time)
+    
+    # Log search for rate limiting
+    hash_obj = md5(f"{realm_arg}{item}".encode())
+    hash_id = hash_obj.hexdigest()[0:8]
+    R.sadd(f"item:{ip}", hash_id)
+    if R.ttl(f"item:{ip}") == -1:
+        R.expire(f"item:{ip}", 86400)
+    
     return render_template(html_page, title=tab, AH_title=AH_title, chart=chart,
                            value=search_arg, tvalue=time_arg, stats=card_stats)
 
@@ -323,7 +326,7 @@ def search(server_arg, realm_arg):
 @app.errorhandler(429)
 def ratelimit_handler(e):
     rule = e.description
-    write_log(reply='429', info=rule)
+    write_log(resp='429', info=rule)
     return render_template('429.html', title='Too Many Requests', limit=rule), 429
 
 @app.errorhandler(404)
