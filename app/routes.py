@@ -209,9 +209,6 @@ def search(server_arg, realm_arg):
     
     # Validate if captcha was passed if required
     if verify == 1 and capt_pass == False:
-        msg = "Please complete the ReCaptcha"
-        print(msg)
-        #TODO write log
         return render_template(html_page, title=tab, AH_title=AH_title, value=search_arg,
                         tvalue=time_arg, error=msg, capt=recaptcha)
     
