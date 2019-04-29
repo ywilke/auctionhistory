@@ -154,7 +154,9 @@ def search(server_arg, realm_arg):
     try:
         expan = REALMS[server_arg][realm_arg]
     except KeyError:
-        if f"{realm_arg}_Alliance" in REALMS[server_arg] or f"{realm_arg}_Horde" in REALMS[server_arg]:
+        if server_arg not in REALMS: # Invalid server_arg
+            abort(404)
+        elif f"{realm_arg}_Alliance" in REALMS[server_arg] or f"{realm_arg}_Horde" in REALMS[server_arg]:
             # Return faction select page
             write_log(server=server_arg, realm=realm_arg, resp="realms")
             return render_template('realms.html',server=server_arg,
@@ -209,6 +211,7 @@ def search(server_arg, realm_arg):
     
     # Validate if captcha was passed if required
     if verify == 1 and capt_pass == False:
+        msg = "Please complete the ReCaptcha"
         return render_template(html_page, title=tab, AH_title=AH_title, value=search_arg,
                         tvalue=time_arg, error=msg, capt=recaptcha)
     
