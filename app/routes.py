@@ -3,8 +3,10 @@ import math
 import sqlite3 as sqlite
 import pickle
 from hashlib import md5
+import os
 
 from flask import render_template, request, abort
+from flask_recaptcha import ReCaptcha
 import redis
 import plotly.offline as plotly
 import plotly.graph_objs as plotgo
@@ -100,6 +102,13 @@ time_dir = {'30d': 2592000,
             '1y': 31536000,
 }
 
+# Setup recaptcha
+RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", default=None)
+RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", default=None)
+
+recaptcha = ReCaptcha(app=app, site_key=RECAPTCHA_SITE_KEY,
+                      secret_key=RECAPTCHA_SECRET_KEY, theme="dark")
+
 # Routing
 @app.route('/')
 @app.route('/index')
@@ -118,14 +127,29 @@ def contact():
 def search(server_arg, realm_arg):
     # Ratelimit check
     ip = get_ip()
-    n_items = R.scard(f"{ip}")
-    if n_items == 30 or n_items >= 50:
-        pass
-        #require captcha
-    elif n_items >= 100:
-        abort(429, "items")
-        
+    try:
+        verify = int(R.get(f"ver:{ip}").decode())
+    except AttributeError:
+        verify = 0
     
+    n_items = R.scard(f"item:{ip}")
+    
+    first_check = 25
+    second_check = 60
+    if n_items == first_check or n_items >= second_check:
+        bot_check = True
+        if not (n_items < second_check and verify == 2): # dont set for verify if already passed first check and below second check
+            R.set(f"ver:{ip}", 1)
+    elif n_items >= 120: # Passed the max number of items for the day
+        abort(429, "items")
+    elif n_items < first_check:
+        bot_check = False
+        if verify == 1: # If they are below the limits remove their verify status
+            R.delete(f"ver:{ip}")
+            verify = 0
+    else:
+        bot_check = False
+        
     # Validate url and set expansion
     try:
         expan = REALMS[server_arg][realm_arg]
@@ -153,18 +177,43 @@ def search(server_arg, realm_arg):
             scantime = 0
         else:
             scantime = None
+            
+    # Check captcha response
+    capt_resp = request.args.get('g-recaptcha-response', None)
+    if capt_resp != None:
+        capt_pass = recaptcha.verify(capt_resp, ip)
+        if capt_pass == True and n_items < second_check:
+            R.set(f"ver:{ip}", 2, ex=14400)
+        elif capt_pass == True and n_items >= second_check:
+            R.delete(f"ver:{ip}")
+    else:
+        capt_pass = False
+
+    # Check if captcha needs to be rendered
+    if bot_check == False or (n_items < second_check and verify == 2) or (n_items < second_check and capt_pass == True):
+        captcha = None
+    else:
+        captcha = recaptcha
     
     # Return blank search page if no search
-    if search_arg == None or scantime == None:
+    if search_arg == None or scantime == None:        
         return render_template(html_page, title=tab, AH_title=AH_title,
-                               tvalue='3m')
-    
+                               tvalue='3m', capt=captcha) 
+        
     # Validate search argument
     if len(search_arg) > 80 or "\t" in search_arg:
         return render_template(html_page, title='Invalid search',
-                           AH_title=AH_title,
-                           error='Invalid search',
+                           AH_title=AH_title, capt=captcha,
+                           error='Invalid search. Too long or contains tabs',
                            value=search_arg, tvalue=time_arg)
+    
+    # Validate if captcha was passed if required
+    if verify == 1 and capt_pass == False:
+        msg = "Please complete the ReCaptcha"
+        print(msg)
+        #TODO write log
+        return render_template(html_page, title=tab, AH_title=AH_title, value=search_arg,
+                        tvalue=time_arg, error=msg, capt=recaptcha)
     
     # Check if item is known
     log_r, log_f = realm_arg.rsplit("_", 1)
@@ -175,7 +224,7 @@ def search(server_arg, realm_arg):
         # Search needs to be at least 3 characters
         if len(search_arg) < 3:
             return render_template(html_page, title='Item not found',
-                                   AH_title=AH_title, 
+                                   AH_title=AH_title, capt=captcha,
                                    error='Type at least 3 characters',
                                    value=search_arg, tvalue=time_arg)
         # Check for item names that contain the search string
@@ -193,12 +242,12 @@ def search(server_arg, realm_arg):
             write_log(server=server_arg, realm=log_r, faction=log_f,
                       search=search_arg, resp='suggest', r_time=r_time)
             return render_template(html_page, title=tab,
-                                   AH_title=AH_title,
+                                   AH_title=AH_title, capt=captcha,
                                    suggestions=item_suggestions,
                                    value=search_arg, tvalue=time_arg)
         else:
             return render_template(html_page, title='Item not found',
-                                   AH_title=AH_title,
+                                   AH_title=AH_title, capt=captcha,
                                    error='Item was not found in the database',
                                    value=search_arg, tvalue=time_arg)
     
@@ -214,7 +263,7 @@ def search(server_arg, realm_arg):
     if not datapoints:
         msg = "This item has not been listed on the auction house in the selected time range."
         return render_template(html_page, title='No prices available',
-                               AH_title=AH_title, error=msg,
+                               AH_title=AH_title, error=msg, capt=captcha,
                                value=search_arg, tvalue=time_arg)
     
     # Remove outliers
@@ -320,8 +369,8 @@ def search(server_arg, realm_arg):
         R.expire(f"item:{ip}", 86400)
     
     return render_template(html_page, title=tab, AH_title=AH_title, chart=chart,
-                           value=search_arg, tvalue=time_arg, stats=card_stats)
-
+                           value=search_arg, tvalue=time_arg, stats=card_stats,
+                           capt=captcha)
 
 @app.errorhandler(429)
 def ratelimit_handler(e):

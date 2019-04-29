@@ -23,6 +23,9 @@
 						<button type="submit" class="btn btn-primary">Search</button>
 					</div>
 				</div>
+				{% if capt %}
+					{{capt.get_code()|safe}}
+				{% endif %}
 			</div>
 		</form><br>
 		{% if error %}
