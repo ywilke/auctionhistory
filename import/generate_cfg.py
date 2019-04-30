@@ -53,6 +53,13 @@ def generate_import_cfg():
         config['tauri'] = {'savedvar_clas': '',
                                  'savedvar_tbc': '',
                                  'savedvar_wotlk': '',
+                                 'savedvar_api': '',
+                                 'user': '',
+                                 'pass': ''}
+
+        config['dragonblight'] = {'savedvar_clas': '',
+                                 'savedvar_tbc': '',
+                                 'savedvar_wotlk': '',
                                  'user': '',
                                  'pass': ''}
        
