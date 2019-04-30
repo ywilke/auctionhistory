@@ -182,6 +182,23 @@ SERVER_LIST = [
         "pass": cfg['tauri']['pass'],
         "savedvar": Path(cfg['tauri']['savedvar_api']),
     },
+    {
+        "server": 'dragonblight',
+        "expansion": 'wotlk',
+        "scan": 'auctionator_wotlk',
+        "realmlist": 'logon.dragonblight.eu',
+        "realms": [
+            {
+                "realm": 'Dragonblight',
+                "name": 'Dragonblight',
+                "auc_pos_A": (978, 376),
+                "auc_pos_H": (911, 300),
+            },
+        ],
+        "user": cfg['dragonblight']['user'],
+        "pass": cfg['dragonblight']['pass'],
+        "savedvar": Path(cfg['dragonblight']['savedvar_wotlk']),
+    },
 ]      
 pickle.dump(SERVER_LIST, open('SERVER_LIST.p', 'wb'))
 
