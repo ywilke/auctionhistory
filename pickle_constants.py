@@ -352,6 +352,7 @@ CAP = {"clas": 'Vanilla',
        "atlantiss": 'Atlantiss',
        "tauri": 'Tauri',
        "tauri-evermoon": 'Tauri & Evermoon',
+       "dragonblight": 'Dragonblight',
 }
 pickle.dump(CAP, open('CAP.p', 'wb'))
 

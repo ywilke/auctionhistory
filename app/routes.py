@@ -1,4 +1,5 @@
 import datetime
+import json
 import math
 import sqlite3 as sqlite
 import pickle
@@ -93,6 +94,7 @@ R = redis.Redis(host="127.0.0.1", port=6379)
 con = sqlite.connect('file:import/auctionhistory.db?mode=ro', uri=True) #db path
 cur = con.cursor()
 
+SERVER_LIST = pickle.load(open('SERVER_LIST.p', 'rb'))
 REALMS = pickle.load(open('REALMS.p', 'rb'))
 CAP = pickle.load(open('CAP.p', 'rb'))
 
@@ -101,6 +103,48 @@ time_dir = {'30d': 2592000,
             '3m': 7890000,
             '1y': 31536000,
 }
+
+# Create servers json for API
+servers_json = {"servers": list()}
+cur_servers = dict()
+cur_i = 0
+for server_obj in SERVER_LIST:
+    snameSite = server_obj["server"]
+    expan = server_obj["expansion"]
+    try:
+        snameNice = CAP[snameSite]
+    except:
+        snameNice = snameSite
+        
+    # Format realm data
+    realm_list = list()
+    for realm_obj in server_obj["realms"]:
+        rnameGame = realm_obj["realm"]
+        rnameSite = realm_obj["name"]
+        rnameNice = rnameSite.replace('_', ' ')
+            
+        rtemp_obj = {"nameNice": rnameNice,
+                     "nameSite": rnameSite,
+                     "nameGame": rnameGame,
+                     "expansion": expan}
+        
+        realm_list.append(rtemp_obj)
+    
+    # Append realm data
+    try:
+        server_i = cur_servers[snameSite]
+        servers_json["servers"][server_i]["realms"] = servers_json["servers"][server_i]["realms"] + realm_list
+        
+    except KeyError:
+        cur_servers[snameSite] = cur_i
+        cur_i += 1
+        
+        stemp_obj = {"nameSite": snameSite,
+                    "nameNice": snameNice,
+                    "realms": realm_list}
+        
+        servers_json["servers"].append(stemp_obj)
+servers_json = json.dumps(servers_json)
 
 # Setup recaptcha
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", default=None)
@@ -122,6 +166,18 @@ def contact():
     write_log(resp="contact")
     return render_template('contact.html', title='Contact')
 
+@app.route('/api/servers')
+def api_servers():
+    response = app.response_class(
+        response=servers_json,
+        status = 200,
+        mimetype='application/json'
+    )
+    return response
+
+@app.route('/api/<server_arg>/<realm>/<fac>/<command>')
+def api_command(server_arg, realm, fac, command):
+    pass
 
 @app.route('/<server_arg>/<realm_arg>', methods=['GET'])
 def search(server_arg, realm_arg):
