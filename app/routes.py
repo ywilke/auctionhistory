@@ -166,6 +166,7 @@ def contact():
     write_log(resp="contact")
     return render_template('contact.html', title='Contact')
 
+
 @app.route('/api/servers')
 def api_servers():
     response = app.response_class(
@@ -175,9 +176,6 @@ def api_servers():
     )
     return response
 
-@app.route('/api/<server_arg>/<realm>/<fac>/<command>')
-def api_command(server_arg, realm, fac, command):
-    pass
 
 @app.route('/<server_arg>/<realm_arg>', methods=['GET'])
 def search(server_arg, realm_arg):
@@ -256,7 +254,7 @@ def search(server_arg, realm_arg):
     # Return blank search page if no search
     if search_arg == None or scantime == None:        
         return render_template(html_page, title=tab, AH_title=AH_title,
-                               tvalue='3m', capt=captcha) 
+                               tvalue='all', capt=captcha) 
         
     # Validate search argument
     if len(search_arg) > 80 or "\t" in search_arg:
