@@ -2,6 +2,13 @@
 
 {% block app_content %}
 	<script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+        <style>
+        .center {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
 	<div class="container">
 		<br>
 		<h1>Search the {{AH_title}}</h1>
@@ -29,7 +36,7 @@
 			</div>
 		</form><br>
 		
-		<div class="alert alert-danger">
+		<div class="alert alert-warning">
 			Prices are no longer being updated. Raw data is for sale. Please see <a href="/contact">contact page</a>.
 		</div>
 		
@@ -96,23 +103,16 @@
 				</div>
 			</div>
 		</div>
-		<br>
 		{% endif %}
 	</div>
+
+        <a href="https://zremax.com/wow-private-servers"><img src="{{ url_for('static', filename='partner1.gif') }}" alt="Sponsored Content" class="center"></a>
+        <br>
 
 	{% if chart %}
 		{{ chart|safe }}
 	{% endif %}
-	<style>
-	.center {
-	  display: block;
-	  margin-left: auto;
-	  margin-right: auto;
-	}
-	</style>
 	<br>
-	<a href="/contact"><img src="{{ url_for('static', filename='promo.png') }}" alt="Promote your server here?" class="center"></a>
-	<br>
-	<br>
+        <br>
 
 {% endblock app_content %}
