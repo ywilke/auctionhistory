@@ -193,7 +193,7 @@ def search(server_arg, realm_arg):
     if n_items == first_check or n_items >= second_check:
         bot_check = True
         if not (n_items < second_check and verify == 2): # dont set for verify if already passed first check and below second check
-            R.set(f"ver:{ip}", 1)
+            R.set(f"ver:{ip}", 1, ex = 604800)
     elif n_items >= 120: # Passed the max number of items for the day
         abort(429, "items")
     elif n_items < first_check:
